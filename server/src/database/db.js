@@ -1,13 +1,15 @@
-const mongoose = require('mongoose')
+import { connect as _connect } from 'mongoose';
+import { config } from 'dotenv';
+config();
 
-const DB_URI = `mongodb://localhost:27017/C8-40`
+const MONGODB_URI = process.env.MONGODB_URI
 
-module.exports = () => {
+export default () => {
 
     const connect = () => {
 
-        mongoose.connect(
-            DB_URI,
+        _connect(
+            MONGODB_URI,
             {
                 keepAlive: true,
                 useNewUrlParser: true,

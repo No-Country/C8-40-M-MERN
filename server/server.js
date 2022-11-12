@@ -1,9 +1,9 @@
-const express = require('express')
+import express from 'express';
 const app = express()
-const cors = require('cors');
+import cors from 'cors';
 
 //Invocamos a la conexión para la DB
-const conexion = require('./src/database/db.js')
+import conexion from './src/database/db.js';
 
 
 app.use(cors())
