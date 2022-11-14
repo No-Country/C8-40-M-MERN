@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Categorias",
+    "elements": ["Backend", "Frontend", "Machine Learning", "DevOps", "Testing", "Qa"],
+    "id": 1
+  },
+  {
+    "name": "Lenguajes",
+    "elements": ["Python", "Javascript", "Java", "C#"],
+    "id": 2
+  }
+]
