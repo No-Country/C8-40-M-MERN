@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-const tag = new Schema({
+const tagSchema = new Schema({
     name: {
         type: String,
         enum: ['documentation', 'solutions', 'article', ' news'],
@@ -13,4 +13,4 @@ const tag = new Schema({
     }
 });
 
-export default model('tag', tag);
+export default model('tag', tagSchema);

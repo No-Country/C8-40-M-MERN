@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-const technologies = new Schema({
+const technologySchema = new Schema({
     name: {
         type: Array,
         default: [],
@@ -12,4 +12,4 @@ const technologies = new Schema({
     }
 });
 
-export default model('technology', technologies);
+export default model('technology', technologySchema);

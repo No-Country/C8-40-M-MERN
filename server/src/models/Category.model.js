@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-const categoriesSchema = new Schema({
+const categorySchema = new Schema({
     name: {
         type: String,
         enum: ['Frontend', 'Backend', 'QA', 'Testing', 'UX/UI', 'DevOps', 'Architecture', 'Data Science',' machine learning'],
@@ -13,4 +13,4 @@ const categoriesSchema = new Schema({
     }
 });
 
-export default model('category', categoriesSchema);
+export default model('category', categorySchema);
