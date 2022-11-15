@@ -1,18 +1,17 @@
 import express from 'express';
+import routes from './routes/index.js'
 const app = express()
 import cors from 'cors';
 
 //Invocamos a la conexión para la DB
-import conexion from './src/database/db.js';
+import conexion from './database/db.js';
 
 
 app.use(cors())
 
-app.use('/', (req, res) => {
-    res.send('Runn')
-})
+app.use('/', routes)
 
-app.listen(3000, () => {
+app.listen(3001, () => {
     console.log('¡Server UP!')
 })
 

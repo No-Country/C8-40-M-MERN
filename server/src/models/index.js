@@ -1,6 +1,6 @@
 import user from './User.model.js';
-import post from './Post.model';
-import category from './Category.model'
+import post from './Post.model.js';
+import category from './Category.model.js'
 import l__programing from './L__programing.js';
 import technology from './Technology.model.js';
 
