@@ -3,7 +3,7 @@ import { Schema, model } from "mongoose";
 const tagSchema = new Schema({
     name: {
         type: String,
-        enum: ['documentation', 'solutions', 'article', ' news'],
+        enum: ['documentation', 'solutions', 'article', 'news'],
         default:'documentation',
         require: true,
     },
