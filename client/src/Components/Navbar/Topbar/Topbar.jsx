@@ -1,5 +1,7 @@
 import React from 'react';
 import { BsSearch, BsFilter } from 'react-icons/bs';
+import { HiMenuAlt1 } from 'react-icons/hi';
+import { Link } from 'react-router-dom';
 const styles = {
   navbar:
     'w-full fixed z-50 h-[68px] bg-[#1E2235] flex items-center justify-between px-[30px] text-white',
@@ -10,23 +12,31 @@ const styles = {
   filterIcon: 'ml-2',
   lastContainer: ' flex gap-[12px] ',
   login: 'px-[16px] py-[12px] bg-[#424867] rounded-2xl ',
-  register: ' px-[16px] py-[12px] bg-[#2563EB] rounded-2xl '
+  register: ' px-[16px] py-[12px] bg-[#2563EB] rounded-2xl ',
+  menuHamburg: 'text-[#ABADC6] cursor-pointer'
 };
-const Navbar = () => {
+const TopNavbar = ({ handleOpenMenu }) => {
   return (
     <main className={styles.navbar}>
-      <div className={styles.logo}>Logo</div>
+      <HiMenuAlt1 className={styles.menuHamburg} size="1.5rem" onClick={handleOpenMenu} />
+      <Link to="/">
+        <div className={styles.logo}>Logo</div>
+      </Link>
       <form className={styles.form}>
         <BsSearch className={styles.searchIcon} size="1.1rem" />
         <input className={styles.input} type="text" placeholder="Buscar" />
         <BsFilter className={styles.filterIcon} size="1.8rem" />
       </form>
       <div className={styles.lastContainer}>
-        <button className={styles.login}>Ingresar</button>
-        <button className={styles.register}>Registarse</button>
+        <Link to="/login">
+          <button className={styles.login}>Ingresar</button>
+        </Link>
+        <Link to="/register">
+          <button className={styles.register}>Registarse</button>
+        </Link>
       </div>
     </main>
   );
 };
 
-export default Navbar;
+export default TopNavbar;

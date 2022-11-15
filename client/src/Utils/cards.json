@@ -1,0 +1,42 @@
+[
+  {
+    "title": "The best elemento",
+    "img": "https://cdn.britannica.com/99/143599-050-C3289491/Watermelon.jpg",
+    "desc": "sdfsdfcxvjroejwrojweorijiowepro",
+    "tags": ["Frontend", "React", "Components"],
+    "date": "12/11/1990",
+    "id": "asdasdasdasdzxv"
+  },
+  {
+    "title": "The second elemento",
+    "img": "https://cdn.britannica.com/99/143599-050-C3289491/Watermelon.jpg",
+    "desc": "weuriowejrowejrowejroejwrojweorijiowepro",
+    "tags": ["Backend", "Node", "uwu"],
+    "date": "13/10/2022",
+    "id": "asdnaskndlkasndk"
+  },
+  {
+    "title": "The thirth elemento",
+    "img": "https://cdn.britannica.com/99/143599-050-C3289491/Watermelon.jpg",
+    "desc": "wewewewewewewe",
+    "tags": ["DevOps", "Figma", "OwO"],
+    "date": "13/02/2023",
+    "id": "asdndlkasndk"
+  },
+  {
+    "title": "The cuarto elemento",
+    "img": "https://cdn.britannica.com/99/143599-050-C3289491/Watermelon.jpg",
+    "desc": "wuuwuwuwuwuwuuw",
+    "tags": ["Testing", "ReactTesting", "MochaJS"],
+    "date": "27/09/2019",
+    "id": "asdndlasdasdaskasndk"
+  },
+  {
+    "title": "The quinto elemento",
+    "img": "https://cdn.britannica.com/99/143599-050-C3289491/Watermelon.jpg",
+    "desc": "wowowowoowow",
+    "tags": ["QA", "Karma", "Jest"],
+    "date": "09/01/2018",
+    "id": "asfafzxczxcvzvz"
+  }
+]
