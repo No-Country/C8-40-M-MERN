@@ -1,32 +1,26 @@
-// import {  } from 'mongoose'
-import { request, response } from 'express' 
-import User from '../models/User.model.js'
+import User from '../models/User.model.js';
+import Post from '../models/Post.model.js';
 
-
-const createUser = async (request, response) => {
-  console.log(request)
-
-  // try {
-  //   const newuser = new User(request.body)
-  //   await newuser.save()
-  // } catch (error) {
-  //   console.log(error)
-  // }
-
-  // const data 
+const createUser = async (req, res) => {
+  let { userName, email, password, post } = req.body;
   
-  // try {
-  //   console.log(req)
-  //   const newUser = await new user.save()
-  //   res.staus(200).json(newUser)
-  // } catch (error) {
-  //   console.log(error)
-  //   res.staus(500).json({
-  //     err: ':c' ,
-  //     error: error.message
-  //   })
-  // }
-  response.status(200).json({msg: 'it works', req: request.body})
-}
+  try {
+    post = [...new Set(post)]
+    const newUser = new User({
+      userName,
+      email,
+      password,
+      post
+    });
+    
+    await newUser.save()
+    res.status(200).json(newUser); 
 
-export { createUser }
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+    });
+  }
+};
+
+export { createUser };
