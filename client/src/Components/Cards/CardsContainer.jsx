@@ -3,7 +3,7 @@ import Card from './Card';
 import cards from '../../Utils/cards.json';
 
 const styles = {
-  container: 'flex justify-evenly  m-3  '
+  container: 'flex justify-evenly    '
 };
 
 function CardContainer() {
