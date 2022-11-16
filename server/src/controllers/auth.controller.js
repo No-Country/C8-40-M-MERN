@@ -17,8 +17,8 @@ const RegisterUser = async (req, res) => {
     const token = await generateJWT(savedUser._id, savedUser.userName, savedUser.role);
 
     success({ res, message: 'User created', data: { savedUser, token }, status: 201 });
-  } catch (err) {
-    serverError(err, 400);
+  } catch (error) {
+    return serverError({ res, message: error.message });
   }
 };
 
@@ -52,8 +52,8 @@ const LoginUser = async (req, res) => {
     } else {
       error({ res, message: 'Invalid user name or password', status: 401 });
     }
-  } catch (err) {
-    return serverError({ res, message: err.message });
+  } catch (error) {
+    return serverError({ res, message: error.message });
   }
 };
 
