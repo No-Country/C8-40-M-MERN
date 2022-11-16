@@ -1,46 +1,59 @@
-import CryptoJS from 'crypto-js';
-import jwt from 'jsonwebtoken';
 import User from '../models/User.model.js';
-import response from '../helpers/responses.js';
+import { error, serverError, success } from '../helpers/responses.js';
+import { encryptPassword, comparePassword } from '../helpers/crypto.js';
+import { generateJWT, validateJWT } from '../helpers/jwt.js';
 
 const RegisterUser = async (req, res) => {
-  const newUser = new User({
-    userName: req.body.userName,
-    email: req.body.email,
-    password: CryptoJS.AES.encrypt(req.body.password, process.env.PASS_SEC).toString()
-  });
-
+  const { email, userName, password } = req.body;
   try {
+    const newUser = await new User({
+      userName: userName,
+      email: email,
+      password: encryptPassword(password),
+    });
+
     const savedUser = await newUser.save();
-    response.success(req, res, savedUser, 201);
+
+    const token = await generateJWT(savedUser._id, savedUser.userName, savedUser.role);
+
+    success({ res, message: 'User created', data: { savedUser, token }, status: 201 });
   } catch (err) {
-    response.error(err, 400);
+    serverError(err, 400);
   }
 };
 
 const LoginUser = async (req, res) => {
+  const { userName, password } = req.body;
+
   try {
-    const user = await User.findOne({ userName: req.body.userName });
-    !user && response.error(req, res, 'Wrong credentials!', 401);
+    const user = await User.findOne({ userName });
+    !user && error({ res, message: 'Wrong credentials!' });
 
-    const hashedPassword = CryptoJS.AES.decrypt(user.password, process.env.PASS_SEC);
+    const validPassword = comparePassword(password, user.password);
+    if (validPassword) {
+      const token = await generateJWT(user._id, user.role);
 
-    const OriginalPassword = hashedPassword.toString(CryptoJS.enc.Utf8);
-    OriginalPassword !== req.body.password && response.error(req, res, 'Wrong credentials!', 401);
-
-    const accessToken = jwt.sign(
-      {
-        id: user._id,
-        isAdmin: user.isAdmin
-      },
-      process.env.JWT_SEC,
-      { expiresIn: '3d' }
-    );
-
-    const { password, ...others } = user._doc;
-    response.success(req, res, { ...others, accessToken }, 200);
+      success({
+        res,
+        message: 'successfull login',
+        data: {
+          user: {
+            id: user._id,
+            userName: user.userName,
+            email: user.email,
+            isActive: user.isActive,
+            role: user.role,
+            post: user.post,
+          },
+          token,
+        },
+        status: 200,
+      });
+    } else {
+      error({ res, message: 'Invalid user name or password', status: 401 });
+    }
   } catch (err) {
-    response.error(req, res, err, 400);
+    return serverError({ res, message: err.message });
   }
 };
 

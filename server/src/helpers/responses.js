@@ -1,18 +1,17 @@
-const success = function(req, res, message, data = {}, status = 200) {
-  res.status(status).send({
-    error: '',
-    msg: message,
-    data: data
+const success = ({ res, message, data, status = 200 }) => {
+  res.status(status).json({
+    message,
+    data,
   });
 };
-const error = function(req, res, message, status = 500) {
-  res.status(status).send({
-    error: message,
-    msg: '',
-    data: {}
-  });
+
+// CONTROLLERS ERRORS
+const error = ({ res, message, status = 404 }) => {
+  res.status(status).send(message);
 };
-export default {
-  success,
-  error
+
+// SERVER ERRORS
+const serverError = ({ res, message, status = 500 }) => {
+  res.status(status).send(message);
 };
+export { success, error, serverError };
