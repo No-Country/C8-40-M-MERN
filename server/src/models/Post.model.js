@@ -45,7 +45,7 @@ const postSchema =  new Schema({
     
 },
 {
-        timestamp: boolean
+        timestamp: true
     }
 
 )

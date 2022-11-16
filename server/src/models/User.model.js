@@ -24,10 +24,10 @@ const userSchema = new Schema({
         enum: ['Admin', 'Dev'],
         default: 'Dev'
         },
-    post: {
+    post: [{
         type: Schema.Types.ObjectId,
         ref: 'post'
-    }
+    }]
 });
 
 export default model('user', userSchema);
