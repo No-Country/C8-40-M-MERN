@@ -16,7 +16,7 @@ const RegisterUser = async (req, res) => {
 
     const token = await generateJWT(savedUser._id, savedUser.userName, savedUser.role);
 
-    success({ res, message: 'User created', data: { savedUser, token }, status: 201 });
+    success({ res, message: 'user created', data: { savedUser, token }, status: 201 });
   } catch (error) {
     return serverError({ res, message: error.message });
   }
@@ -27,7 +27,7 @@ const LoginUser = async (req, res) => {
 
   try {
     const user = await User.findOne({ userName });
-    !user && error({ res, message: 'Wrong credentials!' });
+    !user && error({ res, message: 'wrong credentials!' });
 
     const validPassword = comparePassword(password, user.password);
     if (validPassword) {
@@ -50,7 +50,7 @@ const LoginUser = async (req, res) => {
         status: 200,
       });
     } else {
-      error({ res, message: 'Invalid user name or password', status: 401 });
+      error({ res, message: 'invalid user name or password', status: 401 });
     }
   } catch (error) {
     return serverError({ res, message: error.message });
