@@ -7,10 +7,10 @@ const categorySchema = new Schema({
         default: 'Frontend',
         require: true,
     },
-    post: {
+    post: [{
         type: Schema.Types.ObjectId,
         ref: 'post'
-    }
+    }]
 });
 
 export default model('category', categorySchema);

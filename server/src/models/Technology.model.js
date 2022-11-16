@@ -6,10 +6,10 @@ const technologySchema = new Schema({
         default: [],
         require: true,
     },
-    post: {
+    post: [{
         type: Schema.Types.ObjectId,
         ref: 'post'
-    }
+    }]
 });
 
 export default model('technology', technologySchema);

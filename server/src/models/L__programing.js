@@ -6,10 +6,10 @@ const l__programingSchema = new Schema({
         default: [],
         require: true,
     },
-    post: {
+    post: [{
         type: Schema.Types.ObjectId,
         ref: 'post'
-    }
+    }]
 });
 
 export default model('l__programing', l__programingSchema);
