@@ -8,6 +8,24 @@ const styles = {
 
 function CardContainer() {
   return (
+    /*<div>
+      {
+        result?.map((r)=>{
+          return 
+            <div>
+              <p>{r.categoryName}</p>
+              <span> Mas-> </span>
+            </div>
+            <div className={styles.container}>
+            {r.cards?.map((cards) => {
+              return <Card key={r.cards.id} element={r.cards.e} />;
+            })}
+          </div> 
+        } )
+      }}
+
+    </div>
+ */
     <div className={styles.container}>
       {cards?.map((e) => {
         return <Card key={e.id} element={e} />;
