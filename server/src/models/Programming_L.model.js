@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 
-const technologySchema = new Schema({
+const Programming_LSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -14,4 +14,4 @@ const technologySchema = new Schema({
   ],
 });
 
-export default model('technology', technologySchema);
+export default model('programming_l', Programming_LSchema);

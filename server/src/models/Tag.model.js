@@ -7,10 +7,10 @@ const tagSchema = new Schema({
         default:'documentation',
         require: true,
     },
-    post: {
+    post: [{
         type: Schema.Types.ObjectId,
         ref: 'post'
-    }
+    }]
 });
 
 export default model('tag', tagSchema);
