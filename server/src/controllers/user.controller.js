@@ -48,4 +48,15 @@ const createUser = async (req, res) => {
   }
 };
 
-export { createUser, userGet };
+
+const updateUser = async (req, res) => {
+  try {
+  
+} catch (error) {
+
+  }
+}
+
+
+
+export { createUser, userGet, updateUser };
