@@ -6,7 +6,7 @@ import { generateJWT, validateJWT } from '../helpers/jwt.js';
 const RegisterUser = async (req, res) => {
   const { email, userName, password } = req.body;
   try {
-    const newUser = await new User({
+    const newUser = new User({
       userName: userName,
       email: email,
       password: encryptPassword(password),
