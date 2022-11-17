@@ -1,7 +1,7 @@
 [
   {
     "name": "Categorias",
-    "elements": ["Backend", "Frontend", "Machine Learning", "DevOps", "Testing", "Qa"],
+    "elements": ["Backend", "Frontend", "Machine Learning", "DevOps", "Testing", "QA"],
     "id": 1
   },
   {
