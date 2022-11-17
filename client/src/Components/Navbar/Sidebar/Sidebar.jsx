@@ -9,8 +9,8 @@ function Sidebar({ menuPosition }) {
 
   return (
     <main className={styles.sideBar}>
-      {sideBar.map((elem) => (
-        <Category key={elem.id} elem={elem} />
+      {sideBar.map((elem, index) => (
+        <Category key={index} elem={elem} />
       ))}
       <DownButtons menuPosition={menuPosition} />
     </main>

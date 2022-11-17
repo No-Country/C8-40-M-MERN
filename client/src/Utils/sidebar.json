@@ -1,12 +1,226 @@
 [
   {
     "name": "Categorias",
-    "elements": ["Backend", "Frontend", "Machine Learning", "DevOps", "Testing", "QA"],
-    "id": 1
-  },
-  {
-    "name": "Lenguajes",
-    "elements": ["Python", "Javascript", "Java", "C#"],
-    "id": 2
+    "categories": [
+      {
+        "name": "Backend",
+        "id": "1",
+        "tools": [
+          {
+            "name": "Node",
+            "id": "1",
+            "videos": [],
+            "imagenes": [],
+            "documentacion": []
+          },
+          {
+            "name": "Express",
+            "id": "2",
+            "videos": [],
+            "imagenes": [],
+            "documentacion": []
+          },
+          {
+            "name": "Laravel",
+            "id": "3",
+            "videos": [],
+            "imagenes": [],
+            "documentacion": []
+          },
+          {
+            "name": "Ruby on Rails",
+            "id": "4",
+            "videos": [],
+            "imagenes": [],
+            "documentacion": []
+          },
+          {
+            "name": "Flask",
+            "id": "5",
+            "videos": [],
+            "imagenes": [],
+            "documentacion": []
+          },
+          {
+            "name": "Spring boot",
+            "id": "6",
+            "videos": [],
+            "imagenes": [],
+            "documentacion": []
+          }
+        ]
+      },
+      {
+        "name": "Frontend",
+        "id": "2",
+        "tools": [
+          {
+            "name": "React",
+            "id": "1",
+            "videos": [],
+            "imagenes": [],
+            "documentacion": []
+          },
+          {
+            "name": "Angular",
+            "id": "2",
+            "videos": [],
+            "imagenes": [],
+            "documentacion": []
+          },
+          {
+            "name": "Svelte",
+            "id": "3",
+            "videos": [],
+            "imagenes": [],
+            "documentacion": []
+          },
+          {
+            "name": "Vue",
+            "id": "4",
+            "videos": [],
+            "imagenes": [],
+            "documentacion": []
+          },
+          {
+            "name": "Ember",
+            "id": "5",
+            "videos": [],
+            "imagenes": [],
+            "documentacion": []
+          },
+          {
+            "name": "NextJS",
+            "id": "6",
+            "videos": [],
+            "imagenes": [],
+            "documentacion": []
+          }
+        ]
+      },
+      {
+        "name": "Machine Learning",
+        "id": "3",
+        "tools": [
+          {
+            "name": "Tensor Flow",
+            "id": "1",
+            "videos": [],
+            "imagenes": [],
+            "documentacion": []
+          },
+          {
+            "name": "Keras",
+            "id": "2",
+            "videos": [],
+            "imagenes": [],
+            "documentacion": []
+          },
+          {
+            "name": "MxNet",
+            "id": "3",
+            "videos": [],
+            "imagenes": [],
+            "documentacion": []
+          },
+          {
+            "name": "Caffe",
+            "id": "4",
+            "videos": [],
+            "imagenes": [],
+            "documentacion": []
+          },
+          {
+            "name": "H2O",
+            "id": "5",
+            "videos": [],
+            "imagenes": [],
+            "documentacion": []
+          }
+        ]
+      },
+      {
+        "name": "DevOps",
+        "id": "4",
+        "tools": [
+          {
+            "name": "Jenkins",
+            "id": "1",
+            "videos": [],
+            "imagenes": [],
+            "documentacion": []
+          },
+          {
+            "name": "Docker",
+            "id": "2",
+            "videos": [],
+            "imagenes": [],
+            "documentacion": []
+          },
+          {
+            "name": "Puppet",
+            "id": "3",
+            "videos": [],
+            "imagenes": [],
+            "documentacion": []
+          },
+          {
+            "name": "Apache",
+            "id": "4",
+            "videos": [],
+            "imagenes": [],
+            "documentacion": []
+          },
+          {
+            "name": "Gradle",
+            "id": "5",
+            "videos": [],
+            "imagenes": [],
+            "documentacion": []
+          }
+        ]
+      },
+      {
+        "name": "Testing",
+        "id": "5",
+        "tools": [
+          {
+            "name": "Serenity",
+            "id": "1",
+            "videos": [],
+            "imagenes": [],
+            "documentacion": []
+          },
+          {
+            "name": "Cypress",
+            "id": "2",
+            "videos": [],
+            "imagenes": [],
+            "documentacion": []
+          },
+          {
+            "name": "Jest",
+            "id": "3",
+            "videos": [],
+            "imagenes": [],
+            "documentacion": []
+          },
+          {
+            "name": "Robot",
+            "id": "4",
+            "videos": [],
+            "imagenes": [],
+            "documentacion": []
+          },
+          {
+            "name": "Galen",
+            "id": "5",
+            "videos": [],
+            "imagenes": [],
+            "documentacion": []
+          }
+        ]
+      }
+    ]
   }
 ]
