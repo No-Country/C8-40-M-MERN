@@ -105,7 +105,7 @@ const postById = async (req, res) => {
   try {
     const { id } = req.params;
     const post = await Post.findById(id)
-    console.log('post',post)
+    //console.log('post',post)
     if(post) {
       success({ res, message: 'post By ID', status: 201 });
     }else {
