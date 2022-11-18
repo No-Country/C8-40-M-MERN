@@ -19,9 +19,9 @@ function Category({ elem }) {
         {elem.name}
       </div>
       <ul className={styles.lists}>
-        {elem.elements.map((i) => (
-          <Link to={`/${elem.name}/${i}`} key={i}>
-            <li className={styles.listItem}>{i}</li>
+        {elem.categories.map((i, index) => (
+          <Link to={`/${elem.name}/${i.name}`} key={index}>
+            <li className={styles.listItem}>{i.name}</li>
           </Link>
         ))}
       </ul>

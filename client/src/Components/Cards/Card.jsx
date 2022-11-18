@@ -1,7 +1,7 @@
 import React from 'react';
 
 const styles = {
-  card: 'w-[224px] h-[390px] rounded-2xl border-solid	bg-[#202234] cursor-pointer shadow-lg tranform transition duration-500 hover:scale-110 hover:shadow-2xl',
+  card: 'w-[224px] h-[390px] rounded-2xl border-solid	bg-[#202234] cursor-pointer shadow-lg tranform transition duration-500 hover:scale-105 hover:shadow-2xl',
   img: ' rounded-t-2xl w-full h-[210px]',
   middle: ' mt-[12px] w-full h-[180px]  ',
   date: 'text-[#ABADC6] text-[14px] m-[9px] ',

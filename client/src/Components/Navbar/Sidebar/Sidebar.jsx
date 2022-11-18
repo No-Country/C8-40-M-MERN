@@ -4,13 +4,13 @@ import Category from './Category';
 import DownButtons from './DownButtons';
 function Sidebar({ menuPosition }) {
   const styles = {
-    sideBar: `h-[85%] overflow-y-scroll  z-30 w-[223px] text-white bg-[#1E2235] flex flex-col items-start pl-[12px] py-[100px] font-semibold fixed ${menuPosition} transition-all duration-500 `
+    sideBar: `h-[85%] overflow-y-scroll   z-30 w-[223px] text-white bg-[#1E2235] flex flex-col items-start pl-[12px] py-[100px] font-semibold fixed ${menuPosition} transition-all duration-500 `
   };
 
   return (
     <main className={styles.sideBar}>
-      {sideBar.map((elem) => (
-        <Category key={elem.id} elem={elem} />
+      {sideBar.map((elem, index) => (
+        <Category key={index} elem={elem} />
       ))}
       <DownButtons menuPosition={menuPosition} />
     </main>
