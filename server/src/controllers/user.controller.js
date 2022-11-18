@@ -1,7 +1,7 @@
 import User from '../models/User.model.js';
 import { success, error, serverError } from '../helpers/responses.js';
 
-const userGetAll = async (req, res) => {
+const getUsersAll = async (req, res) => {
   const { id, userName, limit, from } = req.query;
   const query = { isActive: true };
 
@@ -54,4 +54,4 @@ const updateUser = async (req, res) => {
   }
 };
 
-export { userGetAll, updateUser };
+export { getUsersAll, updateUser };
