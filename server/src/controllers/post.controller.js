@@ -14,7 +14,7 @@ const createPost = async (req, res) => {
     resource,
     date,
     user: id,
-    ranking,
+    ranking
   });
   try {
     /*relación con user*/
@@ -57,4 +57,48 @@ const createPost = async (req, res) => {
   }
 };
 
-export { createPost };
+const getAllPost = async (req, res) => {
+  const { title, description, resource, date, programming_l, category, ranking } = req.query;
+  const queryKey = Object.keys(req.query)[0];
+  console.log(queryKey);
+
+  try {
+    let mongoResult;
+    if (queryKey) {
+      mongoResult = await Post.aggregate([
+        {
+          $match: req.query
+        }
+      ]);
+    } else {
+      mongoResult = await Post.find();
+    }
+
+    if (mongoResult) {
+      success({ res, message: `post found successfully`, data: mongoResult });
+    } else {
+      error({ res, message: 'post found failed' });
+    }
+  } catch (error) {
+    return serverError({ res, message: error.message });
+  }
+};
+
+const updatePost = async (req, res) => {
+  const { id } = req.params;
+  const body = req.body;
+  console.log('body', body);
+  try {
+    const updatePost = await Post.findByIdAndUpdate({ _id: id }, { $set: body });
+    console.log('updatePost');
+    if (updatePost) {
+      success({ res, message: 'post updated', status: 201 });
+    } else {
+      error({ res, message: 'post not found' });
+    }
+  } catch (error) {
+    serverError({ res, message: error.message });
+  }
+};
+
+export { createPost, updatePost, getAllPost };
