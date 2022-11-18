@@ -87,10 +87,10 @@ const getAllPost = async (req, res) => {
 const updatePost = async (req, res) => {
   const { id } = req.params;
   const body = req.body;
-  console.log('body', body);
+  //console.log('body', body);
   try {
     const updatePost = await Post.findByIdAndUpdate({ _id: id }, { $set: body });
-    console.log('updatePost');
+    //console.log('updatePost');
     if (updatePost) {
       success({ res, message: 'post updated', status: 201 });
     } else {
@@ -101,4 +101,22 @@ const updatePost = async (req, res) => {
   }
 };
 
-export { createPost, updatePost, getAllPost };
+const postById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const post = await Post.findById(id)
+    console.log('post',post)
+    if(post) {
+      success({ res, message: 'post By ID', status: 201 });
+    }else {
+      error({res, message: 'post not found'})
+    }
+  } catch (error) {
+    serverError({ res, message: error.message });
+  }
+
+}
+
+
+
+export { createPost, updatePost, getAllPost, postById };
