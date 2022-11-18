@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import CardContainer from '../../Components/Cards/CardsContainer';
+import AllCards from '../../Components/Cards/AllCards';
+import Detail from '../Detail';
 import info from '../../Utils/sidebar.json';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -32,6 +34,7 @@ function Home() {
       </section>
       <TagsFilters styles={styles} filtering={filtering} />
       <CardContainer />
+      <AllCards />
     </main>
   );
 }
