@@ -3,6 +3,7 @@ import ProgrammingL from '../models/Programming_L.model.js';
 import Category from '../models/Category.model.js';
 import User from '../models/User.model.js';
 import { success, error, serverError } from '../helpers/responses.js';
+import { mongo } from 'mongoose';
 
 const createPost = async (req, res) => {
   const { title, description, resource, date, programming_l, category, ranking } = req.body;
@@ -57,19 +58,17 @@ const getAllPost = async (req, res) => {
   const queryKey = Object.keys(req.query);
 
   try {
-    let mongoResult;
-    if (queryKey) {
-      mongoResult = await Post.aggregate([
-        {
-          $match: req.query,
-        },
-      ]);
-    } else {
+    let mongoResult = await Post.aggregate([
+      {
+        $match: req.query,
+      },
+    ]);
+    if (mongoResult.length === 0 || !queryKey) {
       mongoResult = await Post.find();
     }
 
     if (mongoResult) {
-      success({ res, message: `post found successfully`, data: mongoResult });
+      success({ res, message: 'post found successfully', data: mongoResult });
     } else {
       error({ res, message: 'post found failed' });
     }
