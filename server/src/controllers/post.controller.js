@@ -16,7 +16,7 @@ const createPost = async (req, res) => {
     resource,
     date,
     user: id,
-    ranking,
+    ranking
   });
 
   try {
@@ -60,8 +60,8 @@ const getAllPost = async (req, res) => {
   try {
     let mongoResult = await Post.aggregate([
       {
-        $match: req.query,
-      },
+        $match: req.query
+      }
     ]);
     if (mongoResult.length === 0 || !queryKey) {
       mongoResult = await Post.find();
@@ -97,7 +97,7 @@ const getPostById = async (req, res) => {
     const { id } = req.params;
     const post = await Post.findById(id);
     if (post) {
-      success({ res, message: 'post by id', status: 201 });
+      success({ res, message: 'post by id', status: 201, data: post });
     } else {
       error({ res, message: 'post not found' });
     }
