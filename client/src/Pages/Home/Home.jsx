@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import CardContainer from '../../Components/Cards/CardsContainer';
+import CardContainerM from '../../Components/Cards/CardsContainerM';
 import AllCards from '../../Components/Cards/AllCards';
 import Detail from '../Detail';
 import info from '../../Utils/sidebar.json';
@@ -14,7 +15,9 @@ const styles = {
   filterButtons: 'w-full py-2 bg-gray-300',
   tagsContainer: 'w-full flex flex-wrap justify-evenly gap-4 mt-6',
   tagsButton:
-    ' py-1 w-24 flex justify-center max-h-8 text-center overflow-hidden px-6 rounded-2xl bg-gray-500'
+    ' py-1 w-24 flex justify-center max-h-8 text-center overflow-hidden px-6 rounded-2xl bg-gray-500',
+  container: 'hidden md:flex',
+  containerM: ' md:hidden'
 };
 function Home() {
   const [filtering, setFiltering] = useState(null);
@@ -33,7 +36,12 @@ function Home() {
         <button className={styles.filterButtons}>Documentación</button>
       </section>
       <TagsFilters styles={styles} filtering={filtering} />
-      <CardContainer />
+      <div className={styles.container}>
+        <CardContainer />
+      </div>
+      <div className={styles.containerM}>
+        <CardContainerM />
+      </div>
       <AllCards />
     </main>
   );
