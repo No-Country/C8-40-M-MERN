@@ -8,7 +8,7 @@ const styles = {
   titleContainer:
     'w-full flex justify-between items-center text-center text-white font-semibold text-2xl ',
   masContainer: 'flex gap-2 items-center text-xl ',
-  cardsContainer: 'flex gap-4'
+  cardsContainer: 'flex gap-4',
 };
 
 function CardContainer() {

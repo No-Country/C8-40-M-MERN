@@ -14,4 +14,10 @@ const technologySchema = new Schema({
   ],
 });
 
+technologySchema.methods.toJSON = function () {
+  const { __v, _id, ...technology } = this.toObject();
+  technology.id = _id;
+  return technology;
+};
+
 export default model('technology', technologySchema);

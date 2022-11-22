@@ -1,12 +1,11 @@
 import { connect as _connect } from 'mongoose';
-import { config } from 'dotenv';
-config();
+import config from '../config.js';
 
-const MONGODB_URI = process.env.MONGODB_URI;
+const mongoUri = config.development.mongoUri
 
 export default () => {
   const connect = () => {
-    _connect(MONGODB_URI, (err) => {
+    _connect(mongoUri, (err) => {
       if (err) {
         console.log('DB: ERROR !!');
       } else {

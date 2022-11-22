@@ -13,7 +13,7 @@ const styles = {
   lastContainer: ' flex gap-[12px] ',
   login: 'px-[16px] py-[12px] bg-[#424867] rounded-2xl hidden md:flex ',
   register: ' px-[16px] py-[12px] bg-[#2563EB] rounded-2xl ',
-  menuHamburg: 'text-[#ABADC6] cursor-pointer'
+  menuHamburg: 'text-[#ABADC6] cursor-pointer',
 };
 const TopNavbar = ({ handleOpenMenu }) => {
   return (

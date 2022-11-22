@@ -14,7 +14,7 @@ const RegisterUser = async (req, res) => {
 
     const savedUser = await newUser.save();
 
-    const token = await generateJWT(savedUser._id, savedUser.userName, savedUser.role);
+    const token = await generateJWT(savedUser.id, savedUser.userName, savedUser.role);
 
     success({ res, message: 'user created', data: { savedUser, token }, status: 201 });
   } catch (error) {
@@ -31,14 +31,14 @@ const LoginUser = async (req, res) => {
 
     const validPassword = comparePassword(password, user.password);
     if (validPassword) {
-      const token = await generateJWT(user._id, user.role);
+      const token = await generateJWT(user.id, user.role);
 
       success({
         res,
         message: 'successfull login',
         data: {
           user: {
-            id: user._id,
+            id: user.id,
             userName: user.userName,
             email: user.email,
             isActive: user.isActive,

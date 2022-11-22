@@ -4,17 +4,17 @@ const categorySchema = new Schema({
   name: {
     type: String,
     enum: [
-      'Frontend',
-      'Backend',
-      'QA',
-      'Testing',
-      'UX/UI',
-      'DevOps',
-      'Architecture',
-      'Data Science',
-      'Machine Learning',
+      'frontend',
+      'backend',
+      'qa',
+      'testing',
+      'uxui',
+      'devops',
+      'architecture',
+      'datascience',
+      'machinelearning',
     ],
-    default: 'Frontend',
+    default: 'frontend',
     require: true,
   },
   post: [
@@ -24,5 +24,11 @@ const categorySchema = new Schema({
     },
   ],
 });
+
+categorySchema.methods.toJSON = function () {
+  const { __v, _id, ...category } = this.toObject();
+  category.id = _id;
+  return category;
+};
 
 export default model('category', categorySchema);
