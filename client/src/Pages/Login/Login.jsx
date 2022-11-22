@@ -14,7 +14,7 @@ const styles = {
     'w-full flex justify-center gap-6 border-2 border-[#424867] text-[#ABADC6] py-2 rounded-xl text-sm font-semibold',
   googleImage: 'w-5',
   notRegister: 'text-[#ABADC6]',
-  createAccount: 'text-[#2563EB] font-semibold ml-2 text-sm'
+  createAccount: 'text-[#2563EB] font-semibold ml-2 text-sm',
 };
 function Login() {
   return (
@@ -33,7 +33,7 @@ function Login() {
         <button className={styles.logWithGoogle}>
           <img
             src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png"
-            alt="google image"
+            alt="google"
             className={styles.googleImage}
           />
           Ingresar con Google

@@ -8,15 +8,15 @@ const styles = {
   date: 'text-[#ABADC6] text-[14px] m-[9px] ',
   tags: 'bg-[#424867] text-[12px] text-[#DCDEF3] px-[8px] py-[4px] border-solid rounded-[25px] mr-1',
   tagcontainer: 'm-[9px] flex items-end place-content-center',
-  title: 'text-[#DCDEF3] m-[9px] text-[18px] w-full h-[50%]'
+  title: 'text-[#DCDEF3] m-[9px] text-[18px] w-full h-[50%]',
 };
 function Card({ element }) {
   return (
     <div className={styles.card}>
       {element.img ? (
-        <img className={styles.img} src={element.img} />
+        <img className={styles.img} src={element.img} alt="#" />
       ) : (
-        <iframe className={styles.video} src={element.video} />
+        <iframe className={styles.video} src={element.video} title={element.video} />
       )}
       <div className={styles.middle}>
         <p className={styles.title}>{element.title}</p>
