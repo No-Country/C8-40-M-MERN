@@ -4,7 +4,6 @@ import Category from '../models/Category.model.js';
 import Technology from '../models/Technology.model.js';
 import Tag from '../models/Tag.model.js';
 import User from '../models/User.model.js';
-import { success, error, serverError } from '../helpers/responses.js';
 
 const findById = async (id) => {
   const post = await Post.findById(id, ['title', 'description', 'resource', 'date', 'ranking'])
@@ -50,6 +49,11 @@ const findAll = async () => {
 
   return posts;
 };
+
+const findByIdAndUpdate = async (id, body) => {
+  const updatedPost = await Post.findByIdAndUpdate({ _id:id }, { $set: body });
+  return updatedPost
+}
 
 const newPost = async ({
   title,
@@ -124,4 +128,4 @@ const newPost = async ({
   return savedPost;
 };
 
-export { findById, newPost, findByQuery, findAll };
+export { findById, newPost, findByQuery, findAll ,findByIdAndUpdate};

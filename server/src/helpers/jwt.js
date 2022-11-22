@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-/* const jwt = require('jsonwebtoken'); */
+import config from '../config.js'
 
 const generateJWT = (id, userName, role) =>
   new Promise((resolve, reject) => {
@@ -7,7 +7,7 @@ const generateJWT = (id, userName, role) =>
 
     jwt.sign(
       payload,
-      process.env.JWT_SEC,
+      config.development.jwtSec,
       {
         expiresIn: '72h',
       },
@@ -28,7 +28,7 @@ const validateJWT = (token) => {
     };
   }
   try {
-    const { id, userName, role } = jwt.verify(token, process.env.JWT_SEC);
+    const { id, userName, role } = jwt.verify(token,config.development.jwtSec);
     return {
       status: true,
       message: 'success',
