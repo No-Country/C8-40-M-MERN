@@ -1,11 +1,5 @@
 import { success, error, serverError } from '../helpers/responses.js';
-import {
-  findById,
-  findByQuery,
-  findAll,
-  newPost,
-  findByIdAndUpdate
-} from '../services/post.service.js';
+import { findById, findByQuery, newPost, findByIdAndUpdate } from '../services/post.service.js';
 
 const createPost = async (req, res) => {
   const {
@@ -17,7 +11,8 @@ const createPost = async (req, res) => {
     category,
     ranking,
     technology,
-    tag
+    tag,
+    url,
   } = req.body;
 
   const { id } = req;
@@ -32,7 +27,8 @@ const createPost = async (req, res) => {
       ranking,
       technology,
       tag,
-      id
+      id,
+      url,
     });
     if (savedPost) {
       const post = await findById(savedPost.id);
@@ -47,20 +43,17 @@ const createPost = async (req, res) => {
 };
 
 const getAllPost = async (req, res) => {
+  const { query } = req;
   let data = {};
   try {
-    if (Object.keys(req.query).length === 0 && Object.keys(data).length === 0) {
-      data = await findAll();
-    } else {
-      data = await findByQuery(req);
-    }
-    if (data) {
-      success({ res, message: 'posts found successfully', data });
-    } else {
-      error({ res, message: 'posts found failed' });
-    }
+    data = await findByQuery(query);
   } catch (error) {
     return serverError({ res, message: error.message });
+  }
+  if (data) {
+    success({ res, message: 'posts found successfully', data });
+  } else {
+    error({ res, message: 'posts found failed' });
   }
 };
 

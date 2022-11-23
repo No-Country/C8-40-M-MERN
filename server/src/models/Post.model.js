@@ -5,6 +5,7 @@ const postSchema = new Schema(
     title: {
       type: String,
       require: true,
+      unique: true,
     },
     description: {
       type: String,
@@ -14,6 +15,10 @@ const postSchema = new Schema(
       type: String,
       enum: ['video', 'image', 'code'],
       default: 'code',
+      require: true,
+    },
+    url: {
+      type: String,
       require: true,
     },
     date: {

@@ -6,7 +6,14 @@ import Tag from '../models/Tag.model.js';
 import User from '../models/User.model.js';
 
 const findById = async (id) => {
-  const post = await Post.findById(id, ['title', 'description', 'resource', 'date', 'ranking'])
+  const post = await Post.findById(id, [
+    'title',
+    'description',
+    'resource',
+    'date',
+    'ranking',
+    'url',
+  ])
     .populate({ path: 'user', select: 'userName' })
     .populate({
       path: 'category',
@@ -19,25 +26,15 @@ const findById = async (id) => {
   return post;
 };
 
-const findByQuery = async (req) => {
-  const { query } = req;
-
-  const posts = await Post.find(query, ['title', 'description', 'resource', 'date', 'ranking'])
-    .populate({ path: 'user', select: 'userName' })
-    .populate({
-      path: 'category',
-      select: 'name',
-    })
-    .populate({ path: 'programming_l', select: 'name' })
-    .populate({ path: 'technology', select: 'name' })
-    .populate({ path: 'tag', select: 'name' });
-
-  return posts;
-};
-
-const findAll = async () => {
-  /* ['title', 'description', 'resource', 'date', 'ranking'] */
-  const posts = await Post.find()
+const findByQuery = async (query) => {
+  const posts = await Post.find(query, [
+    'title',
+    'description',
+    'resource',
+    'date',
+    'url',
+    'ranking',
+  ])
     .populate({ path: 'user', select: 'userName' })
     .populate({
       path: 'category',
@@ -51,9 +48,9 @@ const findAll = async () => {
 };
 
 const findByIdAndUpdate = async (id, body) => {
-  const updatedPost = await Post.findByIdAndUpdate({ _id:id }, { $set: body });
-  return updatedPost
-}
+  const updatedPost = await Post.findByIdAndUpdate({ _id: id }, { $set: body });
+  return updatedPost;
+};
 
 const newPost = async ({
   title,
@@ -65,6 +62,7 @@ const newPost = async ({
   ranking,
   technology,
   tag,
+  url,
   id,
 }) => {
   const newPost = new Post({
@@ -74,6 +72,7 @@ const newPost = async ({
     date,
     user: id,
     ranking,
+    url,
   });
 
   const user = await User.findById(id);
@@ -128,4 +127,4 @@ const newPost = async ({
   return savedPost;
 };
 
-export { findById, newPost, findByQuery, findAll ,findByIdAndUpdate};
+export { findById, newPost, findByQuery, findByIdAndUpdate };
