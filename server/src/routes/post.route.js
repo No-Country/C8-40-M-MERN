@@ -6,9 +6,14 @@ import { isCurrentUser } from '../middlewares/isCurrentUser.js';
 import { isAuth } from '../middlewares/isAuth.js';
 import { validateFields, validateParams, validateQueries } from '../validators/post.validator.js';
 
-router.post('/', isAuth, validateFields, createPost);
-router.get('/', validateQueries, getAllPost);
-router.get('/:postId', validateParams, getPostById);
-router.put('/:postId', isAuth, isCurrentUser, validateParams, updatePost);
+
+
+router.route('/')
+    .post(isAuth, validateFields, createPost)
+    .get( validateQueries, getAllPost)
+
+router.route('/:postId')
+    .get(validateParams, getPostById)
+    .put(isAuth, isCurrentUser, validateParams, updatePost)
 
 export default router;

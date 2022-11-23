@@ -11,12 +11,9 @@ const isAuth = async (req, res, next) => {
   } = validateJWT(token);
 
   if (!id) return error({ res, message: 'unauthorized: id is required', status: 401 });
-
   req.id = id;
   req.userName = userName;
   req.role = role;
-  console.log('Role', role);
-  console.log('token', token);
 
   return next();
 };
