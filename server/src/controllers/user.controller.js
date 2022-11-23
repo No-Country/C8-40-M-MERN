@@ -1,5 +1,6 @@
 import User from '../models/User.model.js';
 import Post from '../models/Post.model.js';
+import { encryptPassword } from '../helpers/crypto.js';
 
 import { success, error, serverError } from '../helpers/responses.js';
 
@@ -9,41 +10,22 @@ const getUsersAll = async (req, res) => {
 
   try {
     if (id) {
-      /*       const user = await User.find({ id }).populate({
-        path: 'post',
-        populate: { path: 'title', select: 'title' },
-      }); */
       const user = await User.findById(id, ['userName', 'email', 'role']);
-
-      /*  .populate({
-        path: 'post',
-        select: ['title', 'date', 'resource', 'description', 'ranking'],
-      }); */
 
       const userPosts = await Post.find({ user: id }, [
         'title',
         'description',
         'resource',
         'date',
-        'ranking',
+        'ranking'
       ])
         .populate({
           path: 'category',
-          select: 'name',
+          select: 'name'
         })
         .populate({ path: 'programming_l', select: 'name' })
         .populate({ path: 'technology', select: 'name' })
         .populate({ path: 'tag', select: 'name' });
-      /*
-      .populate({ path: 'lessons', select: 'lectures' })
-                .populate({ path: 'grades', select: 'studentGrades' })
-                .populate({ path: 'events', select: 'events' })
-                .populate({ path: 'students', select: 'fullName' })
-                .populate({ path: 'teacher', select: 'fullName' }) */
-      /*  .populate({
-          /*         populate: { path: 'technology', select: ['name'] },
-
-        }); */
 
       if (Object.keys(user).length > 0) {
         success({ res, message: `user id: ${id}`, data: { user, userPosts } });
@@ -60,7 +42,10 @@ const getUsersAll = async (req, res) => {
     } else {
       const [total, users] = await Promise.all([
         await User.countDocuments(query),
-        await User.find(query).skip(Number(from)).limit(Number(limit)).exec(),
+        await User.find(query)
+          .skip(Number(from))
+          .limit(Number(limit))
+          .exec()
       ]);
 
       if (users.length > 0) {
@@ -75,19 +60,22 @@ const getUsersAll = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const { id } = req.params;
-  const body = req.body;
-  console.log('body', body);
+  const { userId } = req.params;
+  const { userName, password, role, isActive } = req.body;
+
   try {
-    const updatedUser = await User.findByIdAndUpdate({ id }, { $set: body });
-    console.log('updatedUser');
+    const updatedUser = await User.findByIdAndUpdate(
+      { _id: userId },
+      { $set: { userName, password: encryptPassword(password), role, isActive } }
+    );
+
     if (updatedUser) {
       success({ res, message: 'user updated', status: 201 });
     } else {
       error({ res, message: 'user not found' });
     }
   } catch (error) {
-    serverError({ res, message: err.message });
+    serverError({ res, message: error.message });
   }
 };
 

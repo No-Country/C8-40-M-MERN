@@ -1,5 +1,5 @@
-import { check } from 'express-validator'
-import { validateResult } from '../middlewares/validateResult.js'
+import { check } from 'express-validator';
+import { validateResult } from '../middlewares/validateResult.js';
 
 const validateFields = [
   check('title', 'Enter a title')
@@ -29,30 +29,25 @@ const validateFields = [
     .exists()
     .isDate({ format: 'MM-DD-YYYY' }),
 
-  check('category', 'Enter a category')
-    .exists(),
+  check('category', 'Enter a category').exists(),
 
-  check('programming_l', 'Enter a programming language')
-    .exists(),
+  check('programming_l', 'Enter a programming language').exists(),
 
-  check('technology', 'Enter a technology')
-    .exists(),
+  check('technology', 'Enter a technology').exists(),
 
-  check('tag', 'Enter a tag')
-    .exists(),
+  check('tag', 'Enter a tag').exists(),
 
-    (req, res, next) => {
+  (req, res, next) => {
     validateResult(req, res, next);
-  },
+  }
 ];
 
 const validateParams = [
-  check('id', 'Invalid id')
-    .isMongoId(),
+  check('postId', 'Invalid id').isMongoId(),
 
-    (req, res, next) => {
+  (req, res, next) => {
     validateResult(req, res, next);
-  },
+  }
 ];
 
 const validateQueries = [
@@ -94,10 +89,9 @@ const validateQueries = [
     .optional()
     .isMongoId(),
 
-    (req, res, next) => {
+  (req, res, next) => {
     validateResult(req, res, next);
-  },
-]
+  }
+];
 
-
-export { validateFields,validateParams, validateQueries }
+export { validateFields, validateParams, validateQueries };

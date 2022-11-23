@@ -1,15 +1,19 @@
 import express from 'express';
 const router = express.Router();
 
-
 import { createPost, getAllPost, getPostById, updatePost } from '../controllers/post.controller.js';
-import { isAuth } from '../middlewares/verifyToken.js';
-import {validateFields, validateParams, validateQueries } from '../validators/post.validator.js'
+import { isCurrentUser } from '../middlewares/isCurrentUser.js';
+import { isAuth } from '../middlewares/isAuth.js';
+import { validateFields, validateParams, validateQueries } from '../validators/post.validator.js';
 
-router.post('/', isAuth,validateFields, createPost)
-router.get('/', validateQueries, getAllPost)
-router.get('/:id',validateParams, getPostById)
-router.put('/',validateParams, updatePost)
 
+
+router.route('/')
+    .post(isAuth, validateFields, createPost)
+    .get( validateQueries, getAllPost)
+
+router.route('/:postId')
+    .get(validateParams, getPostById)
+    .put(isAuth, isCurrentUser, validateParams, updatePost)
 
 export default router;

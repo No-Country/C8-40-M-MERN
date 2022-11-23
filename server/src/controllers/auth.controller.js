@@ -4,12 +4,14 @@ import { encryptPassword, comparePassword } from '../helpers/crypto.js';
 import { generateJWT, validateJWT } from '../helpers/jwt.js';
 
 const RegisterUser = async (req, res) => {
-  const { email, userName, password } = req.body;
+  const { email, userName, password, role, isActive } = req.body;
   try {
     const newUser = new User({
       userName: userName,
       email: email,
       password: encryptPassword(password),
+      role,
+      isActive
     });
 
     const savedUser = await newUser.save();
@@ -24,6 +26,7 @@ const RegisterUser = async (req, res) => {
 
 const LoginUser = async (req, res) => {
   const { email, password } = req.body;
+  console.log(email, password);
 
   try {
     const user = await User.findOne({ email });
@@ -43,11 +46,11 @@ const LoginUser = async (req, res) => {
             email: user.email,
             isActive: user.isActive,
             role: user.role,
-            post: user.post,
+            post: user.post
           },
-          token,
+          token
         },
-        status: 200,
+        status: 200
       });
     } else {
       error({ res, message: 'invalid email or password', status: 401 });
