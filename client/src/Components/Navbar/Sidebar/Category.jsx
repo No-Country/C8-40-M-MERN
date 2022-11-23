@@ -3,7 +3,7 @@ import { BsHouseDoor } from 'react-icons/bs';
 import { BiBrain } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
 
-function Category({ elem }) {
+function Category({ elem, title }) {
   const [dropDown, setDropwDown] = useState(false);
   const styles = {
     categories:
@@ -12,18 +12,20 @@ function Category({ elem }) {
       dropDown ? 'flex' : 'hidden'
     } animate__animated animate__flipInX `
   };
+
   return (
     <>
       <div className={styles.categories} onClick={() => setDropwDown(!dropDown)}>
-        {elem.name === 'Categorias' ? <BsHouseDoor /> : <BiBrain />}
-        {elem.name}
+        {elem === 'Categories' ? <BiBrain /> : <BsHouseDoor />}
+        <h1>{title}</h1>
       </div>
       <ul className={styles.lists}>
-        {elem.elements.map((i) => (
-          <Link to={`/${elem.name}/${i}`} key={i}>
-            <li className={styles.listItem}>{i}</li>
-          </Link>
-        ))}
+        {elem &&
+          elem.map((i) => (
+            <Link to={`/${elem.name}/${i}`} key={i._id}>
+              <li className={styles.listItem}>{i.name}</li>
+            </Link>
+          ))}
       </ul>
     </>
   );
