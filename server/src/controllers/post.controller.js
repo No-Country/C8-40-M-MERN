@@ -1,51 +1,28 @@
-import Post from '../models/Post.model.js';
-import ProgrammingL from '../models/Programming_L.model.js';
-import Category from '../models/Category.model.js';
-import User from '../models/User.model.js';
 import { success, error, serverError } from '../helpers/responses.js';
-import { mongo } from 'mongoose';
+import { findById, findByQuery, findAll, newPost,findByIdAndUpdate } from '../services/post.service.js';
 
 const createPost = async (req, res) => {
-  const { title, description, resource, date, programming_l, category, ranking } = req.body;
+  const { title, description, resource, date, programming_l, category, ranking, technology, tag } =
+    req.body;
 
   const { id } = req;
-
-  const newPost = new Post({
-    title,
-    description,
-    resource,
-    date,
-    user: id,
-    ranking
-  });
-
   try {
-    const user = await User.findById(id);
-    user.post.push(newPost._id);
-    await user.save();
-    const language = await ProgrammingL.findOneAndUpdate(
-      { name: programming_l },
-      { $set: { name: programming_l } },
-      { upsert: true, new: true }
-    );
-
-    language.post.push(newPost._id);
-    await language.save();
-    const postCategory = await Category.findOneAndUpdate(
-      { name: category },
-      { $set: { name: category } },
-      { upsert: true, new: true }
-    );
-
-    postCategory.post.push(newPost._id);
-    await postCategory.save();
-    newPost.category = postCategory._id;
-    newPost.programming_l = language._id;
-
-    const savedPost = await newPost.save();
-
+    const savedPost = await newPost({
+      title,
+      description,
+      resource,
+      date,
+      programming_l,
+      category,
+      ranking,
+      technology,
+      tag,
+      id,
+    });
     if (savedPost) {
-      success({ res, message: `post created successfully`, data: savedPost });
+      const post = await findById(savedPost.id);
+
+      success({ res, message: 'post created successfully', data: post });
     } else {
       error({ res, message: 'post creation failed' });
     }
@@ -55,35 +32,29 @@ const createPost = async (req, res) => {
 };
 
 const getAllPost = async (req, res) => {
-  const queryKey = Object.keys(req.query);
-
+  let data = {};
   try {
-    let mongoResult = await Post.aggregate([
-      {
-        $match: req.query
-      }
-    ]);
-    if (mongoResult.length === 0 || !queryKey) {
-      mongoResult = await Post.find();
-    }
-
-    if (mongoResult) {
-      success({ res, message: 'post found successfully', data: mongoResult });
+    if (Object.keys(req.query).length === 0 && Object.keys(data).length === 0) {
+      data = await findAll();
     } else {
-      error({ res, message: 'post found failed' });
+      data = await findByQuery(req);
+    }
+    if (data) {
+      success({ res, message: 'posts found successfully', data });
+    } else {
+      error({ res, message: 'posts found failed' });
     }
   } catch (error) {
     return serverError({ res, message: error.message });
   }
 };
 
-const updatePost = async (req, res) => {
-  const { id } = req.params;
-  const body = req.body;
+const getPostById = async (req, res) => {
   try {
-    const updatePost = await Post.findByIdAndUpdate({ _id: id }, { $set: body });
-    if (updatePost) {
-      success({ res, message: 'post updated', status: 201 });
+    const { id } = req.params;
+    const post = await findById(id);
+    if (post) {
+      success({ res, message: `post id: ${id}`, status: 201, data: post });
     } else {
       error({ res, message: 'post not found' });
     }
@@ -92,12 +63,14 @@ const updatePost = async (req, res) => {
   }
 };
 
-const getPostById = async (req, res) => {
+const updatePost = async (req, res) => {
+  const { id } = req.params;
+  const body = req.body;
   try {
-    const { id } = req.params;
-    const post = await Post.findById(id);
-    if (post) {
-      success({ res, message: 'post by id', status: 201, data: post });
+    const updatePost = await findByIdAndUpdate(id, body);
+
+    if (updatePost) {
+      success({ res, message: 'post updated', status: 201 });
     } else {
       error({ res, message: 'post not found' });
     }

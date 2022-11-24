@@ -14,7 +14,7 @@ const styles = {
   cardsContainer: 'flex gap-2 ',
   motionDiv1: 'w-[350px] overflow-hidden ',
   motionDiv2: ' flex gap-2 ',
-  motionDivCard: ''
+  motionDivCard: '',
 };
 
 function CardContainerM() {
@@ -42,7 +42,8 @@ function CardContainerM() {
         <motion.div
           drag="x"
           dragConstraints={{ right: 0, left: -width }}
-          className={styles.motionDiv2}>
+          className={styles.motionDiv2}
+        >
           {cards?.map((e) => {
             return (
               <motion.div className={styles.motionDivCard} key={e.date}>

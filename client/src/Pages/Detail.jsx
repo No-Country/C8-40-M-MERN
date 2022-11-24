@@ -15,24 +15,33 @@ const styles = {
   tagcontainer: ' flex ',
   tags: 'bg-[#424867] text-[12px] md:text-[18px] text-[#DCDEF3] px-[8px] py-[4px] border-solid rounded-[25px] mr-1',
   title: 'w-full p-2 flex text-[14px] md:text-[25px] text-[#FFFFFF] ml-[16px] ',
-  desc: 'w-full p-2 flex text-[11px] md:text-[18px] text-[#ABADC6] mb-[15px] ml-[16px] '
+  desc: 'w-full p-2 flex text-[11px] md:text-[18px] text-[#ABADC6] mb-[15px] ml-[16px] ',
 };
 
 function Detail() {
   const cardTest = cards[0];
+
   return (
     <div className={styles.containerDetail}>
       <AiOutlineArrowLeft className={styles.arrow} />
       <div className={styles.detailCard}>
         {cardTest.img ? (
-          <img className={styles.img} src={cardTest.img} />
+          <img className={styles.img} src={cardTest.img} alt="#" />
         ) : (
-          <iframe className={styles.video} src={cardTest.video} allowFullScreen />
+          <iframe
+            title={cardTest.video}
+            className={styles.video}
+            src={cardTest.video}
+            allowFullScreen
+          />
         )}
+
         <div className={styles.dateTags}>
           <p className={styles.date}>{cardTest.date}</p>
+
           <div className={styles.tagcontainer}>
             <span className={styles.tags}>{cardTest.tags[0]}</span>
+
             <span className={styles.tags}>{cardTest.tags[1]}</span>
           </div>
         </div>

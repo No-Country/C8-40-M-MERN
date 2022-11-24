@@ -12,8 +12,8 @@ const postSchema = new Schema(
     },
     resource: {
       type: String,
-      enum: ['Video', 'Image', 'Code'],
-      default: 'Code',
+      enum: ['video', 'image', 'code'],
+      default: 'code',
       require: true,
     },
     date: {
@@ -35,10 +35,24 @@ const postSchema = new Schema(
     ranking: {
       type: Number,
     },
+    technology: {
+      type: Schema.Types.ObjectId,
+      ref: 'technology',
+    },
+    tag: {
+      type: Schema.Types.ObjectId,
+      ref: 'tag',
+    },
   },
   {
     timestamp: true,
   }
 );
+
+postSchema.methods.toJSON = function () {
+  const { __v, _id, ...post } = this.toObject();
+  post.id = _id;
+  return post;
+};
 
 export default model('post', postSchema);

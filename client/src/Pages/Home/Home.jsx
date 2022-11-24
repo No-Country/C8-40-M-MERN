@@ -17,24 +17,36 @@ const styles = {
   tagsButton:
     ' py-1 w-24 flex justify-center max-h-8 text-center overflow-hidden px-6 rounded-2xl bg-gray-500',
   container: 'hidden md:flex',
-  containerM: ' md:hidden'
+  containerM: ' md:hidden',
 };
+
 function Home() {
   const [filtering, setFiltering] = useState(null);
   const { categories, category } = useParams();
 
-  useEffect(() => {
-    setFiltering(info[0].categories.filter((cat) => cat.name === category));
+  /*  useEffect(() => {
+    setFiltering(
+      info[0].categories.filter((cat) => {
+        return cat.name === category;
+      })
+    );
+
     console.log(filtering);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category]);
+ */
   return (
     <main className={styles.mainContainer}>
       <h1 className={styles.categoryTitle}>{filtering && filtering[0].name}</h1>
+
       <section className={styles.buttonSection}>
         <button className={styles.filterButtons}>Videos</button>
+
         <button className={styles.filterButtons}>Imagenes</button>
+
         <button className={styles.filterButtons}>Documentación</button>
       </section>
+
       <TagsFilters styles={styles} filtering={filtering} />
       <div className={styles.container}>
         <CardContainer />
@@ -42,6 +54,7 @@ function Home() {
       <div className={styles.containerM}>
         <CardContainerM />
       </div>
+
       <AllCards />
     </main>
   );

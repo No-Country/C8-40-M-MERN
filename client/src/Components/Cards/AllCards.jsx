@@ -4,7 +4,7 @@ import cards from '../../Utils/cards.json';
 
 const styles = {
   container: 'flex flex-col w-full gap-8',
-  cardsDisplayer: 'flex gap-4 '
+  cardsDisplayer: 'flex gap-4 ',
 };
 
 function AllCards() {
