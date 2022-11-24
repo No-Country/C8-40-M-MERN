@@ -6,7 +6,14 @@ import Tag from '../models/Tag.model.js';
 import User from '../models/User.model.js';
 
 const findById = async (id) => {
-  const post = await Post.findById(id, ['title', 'description', 'resource', 'date', 'ranking'])
+  const post = await Post.findById(id, [
+    'title',
+    'description',
+    'resource',
+    'date',
+    'ranking',
+    'url',
+  ])
     .populate({ path: 'user', select: 'userName' })
     .populate({
       path: 'category',
@@ -19,10 +26,15 @@ const findById = async (id) => {
   return post;
 };
 
-const findByQuery = async (req) => {
-  const { query } = req;
-
-  const posts = await Post.find(query, ['title', 'description', 'resource', 'date', 'ranking'])
+const findByQuery = async (query) => {
+  const posts = await Post.find(query, [
+    'title',
+    'description',
+    'resource',
+    'date',
+    'url',
+    'ranking',
+  ])
     .populate({ path: 'user', select: 'userName' })
     .populate({
       path: 'category',
@@ -35,25 +47,73 @@ const findByQuery = async (req) => {
   return posts;
 };
 
-const findAll = async () => {
-  /* ['title', 'description', 'resource', 'date', 'ranking'] */
-  const posts = await Post.find()
-    .populate({ path: 'user', select: 'userName' })
-    .populate({
-      path: 'category',
-      select: 'name',
-    })
-    .populate({ path: 'programming_l', select: 'name' })
-    .populate({ path: 'technology', select: 'name' })
-    .populate({ path: 'tag', select: 'name' });
+const findByIdAndUpdate = async ({
+  postId,
+  title,
+  description,
+  resource,
+  url,
+  date,
+  programming_l,
+  category,
+  ranking,
+  technology,
+  tag,
+}) => {
+  const postLanguage = await ProgrammingL.findOneAndUpdate(
+    { name: programming_l },
+    { $set: { name: programming_l } },
+    { upsert: true, new: true }
+  );
 
-  return posts;
+  await postLanguage.save();
+
+  const postCategory = await Category.findOneAndUpdate(
+    { name: category },
+    { $set: { name: category } },
+    { upsert: true, new: true }
+  );
+
+  await postCategory.save();
+  const postTechnology = await Technology.findOneAndUpdate(
+    { name: technology },
+    { $set: { name: technology } },
+    { upsert: true, new: true }
+  );
+
+  await postTechnology.save();
+
+  const postTag = await Tag.findOneAndUpdate(
+    { name: tag },
+    { $set: { name: tag } },
+    { upsert: true, new: true }
+  );
+
+  await postTag.save();
+
+  const updatedPost = await Post.findByIdAndUpdate(
+    { _id: postId },
+    {
+      $set: {
+        title,
+        description,
+        resource,
+        url,
+        date,
+        ranking,
+        programming_l: postLanguage._id,
+        technology: postTechnology._id,
+        tag: postTag._id,
+        category: postCategory._id,
+      },
+    },
+    { new: true }
+  );
+
+  const data = findById(updatedPost._id);
+
+  return data;
 };
-
-const findByIdAndUpdate = async (id, body) => {
-  const updatedPost = await Post.findByIdAndUpdate({ _id:id }, { $set: body });
-  return updatedPost
-}
 
 const newPost = async ({
   title,
@@ -65,6 +125,7 @@ const newPost = async ({
   ranking,
   technology,
   tag,
+  url,
   id,
 }) => {
   const newPost = new Post({
@@ -74,6 +135,7 @@ const newPost = async ({
     date,
     user: id,
     ranking,
+    url,
   });
 
   const user = await User.findById(id);
@@ -128,4 +190,4 @@ const newPost = async ({
   return savedPost;
 };
 
-export { findById, newPost, findByQuery, findAll ,findByIdAndUpdate};
+export { findById, newPost, findByQuery, findByIdAndUpdate };

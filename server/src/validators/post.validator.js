@@ -1,5 +1,6 @@
-import { check } from 'express-validator';
+import { check, query, param } from 'express-validator';
 import { validateResult } from '../middlewares/validateResult.js';
+import { findByQuery } from '../services/post.service.js';
 
 const validateFields = [
   check('title', 'Enter a title')
@@ -8,15 +9,23 @@ const validateFields = [
     .withMessage('Title must be between 3-30 letters')
     .isLength({ max: 30 })
     .withMessage('Title must be between 3-30 letters')
+    .custom(async (value) => {
+      const matchedTitle = await findByQuery({ title: value });
+      if (matchedTitle.length > 0) {
+        throw new Error('Post title must be unique');
+      } else {
+        return true;
+      }
+    })
     .trim()
     .escape(),
 
   check('description', 'Enter the post description')
     .exists()
     .isLength({ min: 30 })
-    .withMessage('Description must be between 30-300 letters')
+    .withMessage('Description must be between 30-500 letters')
     .isLength({ max: 500 })
-    .withMessage('Description must be between 30-300 letters')
+    .withMessage('Description must be between 30-500 letters')
     .trim()
     .escape(),
 
@@ -37,61 +46,96 @@ const validateFields = [
 
   check('tag', 'Enter a tag').exists(),
 
-  (req, res, next) => {
-    validateResult(req, res, next);
-  }
-];
-
-const validateParams = [
-  check('postId', 'Invalid id').isMongoId(),
+  check('url', 'Enter a url').exists().isURL().withMessage('Enter a valid url'),
 
   (req, res, next) => {
     validateResult(req, res, next);
-  }
+  },
 ];
 
 const validateQueries = [
-  check('title', 'Title must be between 3-30 letters')
+  query('title', 'Title must be between 3-30 letters')
     .optional()
     .isLength({ min: 5 })
     .isLength({ max: 30 })
     .trim()
     .escape(),
 
-  check('description', 'Description must be between 30-300 letters')
+  query('description', 'Description must be between 30-300 letters')
     .optional()
     .isLength({ min: 30 })
     .isLength({ max: 500 })
     .trim()
     .escape(),
 
-  check('resource', `Resource must be 'video', 'image' or 'code'`)
+  query('resource', `Resource must be 'video', 'image' or 'code'`)
     .optional()
     .isIn(['video', 'image', 'code']),
 
-  check('date', `Date format must be 'MM-DD-YYYY'`)
-    .optional()
-    .isDate({ format: 'MM-DD-YYYY' }),
+  query('date', `Date format must be 'MM-DD-YYYY'`).optional().isDate({ format: 'MM-DD-YYYY' }),
 
-  check('category', 'Category must be an id')
-    .optional()
-    .isMongoId(),
+  query('category', 'Category must be an id').optional().isMongoId(),
 
-  check('programming_l', 'Programming_l must be an id')
-    .optional()
-    .isMongoId(),
+  query('programming_l', 'Programming_l must be an id').optional().isMongoId(),
 
-  check('technology', 'Technology must be an id')
-    .optional()
-    .isMongoId(),
+  query('technology', 'Technology must be an id').optional().isMongoId(),
 
-  check('tag', 'Tag must be an id')
-    .optional()
-    .isMongoId(),
+  query('tag', 'Tag must be an id').optional().isMongoId(),
 
   (req, res, next) => {
     validateResult(req, res, next);
-  }
+  },
 ];
 
-export { validateFields, validateParams, validateQueries };
+const validateUpdateFields = [
+  check('title', 'Enter a title')
+    .optional()
+    .isLength({ min: 5 })
+    .withMessage('Title must be between 3-30 letters')
+    .isLength({ max: 30 })
+    .withMessage('Title must be between 3-30 letters')
+    .custom(async (value) => {
+      const matchedTitle = await findByQuery({ title: value });
+      if (matchedTitle.length > 0) {
+        throw new Error('Post title must be unique');
+      } else {
+        return true;
+      }
+    })
+    .trim()
+    .escape(),
+
+  check('description', 'Enter the post description')
+    .optional()
+    .isLength({ min: 30 })
+    .withMessage('Description must be between 30-500 letters')
+    .isLength({ max: 500 })
+    .withMessage('Description must be between 30-500 letters')
+    .trim()
+    .escape(),
+
+  check('resource', `Enter a resource's type`)
+    .optional()
+    .isIn(['video', 'image', 'code'])
+    .withMessage(`Resource must be 'video', 'image' or 'code'`),
+
+  check('date', 'Enter the date the material was created or updated')
+    .optional()
+    .isDate({ format: 'MM-DD-YYYY' }),
+
+  check('url', 'Enter a url').optional().isURL().withMessage('Enter a valid url'),
+
+  (req, res, next) => {
+    validateResult(req, res, next);
+  },
+];
+
+const validateParams = [
+  param('postId', 'Invalid id').isMongoId(),
+
+  (req, res, next) => {
+    validateResult(req, res, next);
+  },
+];
+
+export { validateFields, validateParams, validateQueries, validateUpdateFields };

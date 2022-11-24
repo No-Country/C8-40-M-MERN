@@ -4,18 +4,22 @@ import { validateJWT } from '../helpers/jwt.js';
 const isAuth = async (req, res, next) => {
   let token = req.headers?.authorization;
 
-  token = token.split(' ')[1];
+  if (token) {
+    token = token.split(' ')[1];
 
-  const {
-    data: { id, userName, role }
-  } = validateJWT(token);
+    const {
+      data: { id, userName, role },
+    } = validateJWT(token);
 
-  if (!id) return error({ res, message: 'unauthorized: id is required', status: 401 });
-  req.id = id;
-  req.userName = userName;
-  req.role = role;
+    if (!id) return error({ res, message: 'unauthorized: id is required', status: 401 });
+    req.id = id;
+    req.userName = userName;
+    req.role = role;
 
-  return next();
+    return next();
+  } else {
+    return error({ res, message: 'unauthorized: id is required', status: 401 });
+  }
 };
 
 export { isAuth };
