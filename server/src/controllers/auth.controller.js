@@ -1,15 +1,18 @@
 import User from '../models/User.model.js';
 import { error, serverError, success } from '../helpers/responses.js';
 import { encryptPassword, comparePassword } from '../helpers/crypto.js';
-import { generateJWT, validateJWT } from '../helpers/jwt.js';
+import { generateJWT } from '../helpers/jwt.js';
 
 const RegisterUser = async (req, res) => {
-  const { email, userName, password } = req.body;
+  const { email, userName, password, role, isActive, avatar } = req.body;
   try {
     const newUser = new User({
       userName: userName,
       email: email,
       password: encryptPassword(password),
+      role,
+      isActive,
+      avatar,
     });
 
     const savedUser = await newUser.save();
@@ -24,6 +27,7 @@ const RegisterUser = async (req, res) => {
 
 const LoginUser = async (req, res) => {
   const { email, password } = req.body;
+  console.log(email, password);
 
   try {
     const user = await User.findOne({ email });

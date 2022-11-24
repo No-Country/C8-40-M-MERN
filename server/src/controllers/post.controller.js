@@ -1,11 +1,22 @@
 import { success, error, serverError } from '../helpers/responses.js';
-import { findById, findByQuery, findAll, newPost,findByIdAndUpdate } from '../services/post.service.js';
+import { findById, findByQuery, newPost, findByIdAndUpdate } from '../services/post.service.js';
 
 const createPost = async (req, res) => {
-  const { title, description, resource, date, programming_l, category, ranking, technology, tag } =
-    req.body;
+  const {
+    title,
+    description,
+    resource,
+    date,
+    programming_l,
+    category,
+    ranking,
+    technology,
+    tag,
+    url,
+  } = req.body;
 
   const { id } = req;
+
   try {
     const savedPost = await newPost({
       title,
@@ -18,7 +29,9 @@ const createPost = async (req, res) => {
       technology,
       tag,
       id,
+      url,
     });
+
     if (savedPost) {
       const post = await findById(savedPost.id);
 
@@ -32,29 +45,26 @@ const createPost = async (req, res) => {
 };
 
 const getAllPost = async (req, res) => {
+  const { query } = req;
   let data = {};
   try {
-    if (Object.keys(req.query).length === 0 && Object.keys(data).length === 0) {
-      data = await findAll();
-    } else {
-      data = await findByQuery(req);
-    }
-    if (data) {
-      success({ res, message: 'posts found successfully', data });
-    } else {
-      error({ res, message: 'posts found failed' });
-    }
+    data = await findByQuery(query);
   } catch (error) {
     return serverError({ res, message: error.message });
+  }
+  if (data) {
+    success({ res, message: 'posts found successfully', data });
+  } else {
+    error({ res, message: 'posts found failed' });
   }
 };
 
 const getPostById = async (req, res) => {
   try {
-    const { id } = req.params;
-    const post = await findById(id);
+    const { postId } = req.params;
+    const post = await findById(postId);
     if (post) {
-      success({ res, message: `post id: ${id}`, status: 201, data: post });
+      success({ res, message: `post id: ${postId}`, status: 201, data: post });
     } else {
       error({ res, message: 'post not found' });
     }
@@ -64,18 +74,64 @@ const getPostById = async (req, res) => {
 };
 
 const updatePost = async (req, res) => {
-  const { id } = req.params;
-  const body = req.body;
-  try {
-    const updatePost = await findByIdAndUpdate(id, body);
+  const { postId } = req.params;
+  const {
+    title,
+    description,
+    resource,
+    url,
+    date,
+    programming_l,
+    category,
+    ranking,
+    technology,
+    tag,
+  } = req.body;
 
-    if (updatePost) {
-      success({ res, message: 'post updated', status: 201 });
-    } else {
-      error({ res, message: 'post not found' });
-    }
+  if (category) {
+    if (
+      category !== 'frontend' &&
+      category !== 'backend' &&
+      category !== 'qa' &&
+      category !== 'testing' &&
+      category !== 'uxui' &&
+      category !== 'devops' &&
+      category !== 'architecture' &&
+      category !== 'datascience' &&
+      category !== 'machinelearning'
+    )
+      return error({ res, message: 'not valid category', status: 400 });
+  }
+
+  if (tag) {
+    if (tag !== 'documentation' && tag !== 'solution' && tag !== 'article' && tag !== 'news')
+      return error({ res, message: 'not valid tag', status: 400 });
+  }
+
+  let data = {};
+  try {
+    const updatePost = await findByIdAndUpdate({
+      postId,
+      title,
+      description,
+      resource,
+      url,
+      date,
+      programming_l,
+      category,
+      ranking,
+      technology,
+      tag,
+    });
+    data = updatePost;
   } catch (error) {
-    serverError({ res, message: error.message });
+    return serverError({ res, message: error.message });
+  }
+
+  if (Object.keys(data).length > 0) {
+    return success({ res, message: 'post updated', data, status: 201 });
+  } else {
+    return error({ res, message: 'post not found' });
   }
 };
 
