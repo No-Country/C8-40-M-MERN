@@ -47,9 +47,72 @@ const findByQuery = async (query) => {
   return posts;
 };
 
-const findByIdAndUpdate = async (id, body) => {
-  const updatedPost = await Post.findByIdAndUpdate({ _id: id }, { $set: body });
-  return updatedPost;
+const findByIdAndUpdate = async ({
+  postId,
+  title,
+  description,
+  resource,
+  url,
+  date,
+  programming_l,
+  category,
+  ranking,
+  technology,
+  tag,
+}) => {
+  const postLanguage = await ProgrammingL.findOneAndUpdate(
+    { name: programming_l },
+    { $set: { name: programming_l } },
+    { upsert: true, new: true }
+  );
+
+  await postLanguage.save();
+
+  const postCategory = await Category.findOneAndUpdate(
+    { name: category },
+    { $set: { name: category } },
+    { upsert: true, new: true }
+  );
+
+  await postCategory.save();
+  const postTechnology = await Technology.findOneAndUpdate(
+    { name: technology },
+    { $set: { name: technology } },
+    { upsert: true, new: true }
+  );
+
+  await postTechnology.save();
+
+  const postTag = await Tag.findOneAndUpdate(
+    { name: tag },
+    { $set: { name: tag } },
+    { upsert: true, new: true }
+  );
+
+  await postTag.save();
+
+  const updatedPost = await Post.findByIdAndUpdate(
+    { _id: postId },
+    {
+      $set: {
+        title,
+        description,
+        resource,
+        url,
+        date,
+        ranking,
+        programming_l: postLanguage._id,
+        technology: postTechnology._id,
+        tag: postTag._id,
+        category: postCategory._id,
+      },
+    },
+    { new: true }
+  );
+
+  const data = findById(updatedPost._id);
+
+  return data;
 };
 
 const newPost = async ({

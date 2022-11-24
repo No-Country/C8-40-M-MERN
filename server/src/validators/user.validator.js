@@ -48,17 +48,6 @@ const validateRegisterFields = [
     .withMessage('Password must include an uppercase letter')
     .trim()
     .escape(),
-  //Por resolver//
-  // check('passwordConfirmation')
-  //     .exists()
-  //     .withMessage('Ingrese nuevamente su contraseña')
-  //     .custom((value, { req }) => {
-  //         if (value !== req.body.password) {
-  //             throw new Error('Las contraseñas deben coinciden');
-  //         } else {
-  //             return true;
-  //         }
-  //     }),
 
   check('isActive', 'isActive must be a boolean').optional().isBoolean(),
 
@@ -102,4 +91,47 @@ const validateParams = [
   },
 ];
 
-export { validateRegisterFields, validateParams, validateLoginFields };
+const validateUpdateFields = [
+  check('userName', 'Enter a valid name')
+    .optional()
+    .isLength({ min: 3 })
+    .withMessage('Name must be between 3-15 letters')
+    .isLength({ max: 15 })
+    .withMessage('Name must be between 3-15 letters')
+    .custom(async (value) => {
+      const matchedUserName = await User.findOne({ userName: value });
+      if (matchedUserName) {
+        throw new Error('User name already exists');
+      } else {
+        return true;
+      }
+    })
+    .trim()
+    .escape(),
+
+  check(
+    'password',
+    'Password must be at least 8 characters, including an uppercase letter and a number'
+  )
+    .optional()
+    .isLength({ min: 8 })
+    .withMessage('Password must be at least 8 characters')
+    .matches(/\d/)
+    .withMessage('Password must include a number')
+    .matches('[A-Z]')
+    .withMessage('Password must include an uppercase letter')
+    .trim()
+    .escape(),
+
+  check('isActive', 'isActive must be a boolean').optional().isBoolean(),
+
+  check('role', `Role must be 'admin' or 'dev'`).optional().isIn(['admin', 'dev']),
+
+  check('avatar', 'Enter an avatar url').optional().isURL().withMessage('Enter a valid url'),
+
+  (req, res, next) => {
+    validateResult(req, res, next);
+  },
+];
+
+export { validateRegisterFields, validateParams, validateLoginFields, validateUpdateFields };

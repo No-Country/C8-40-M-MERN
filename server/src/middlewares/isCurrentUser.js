@@ -15,7 +15,7 @@ const isCurrentUser = async (req, res, next) => {
 
   if (postId) {
     const post = await findById(postId);
-    if (id !== post.user.id && role !== 'admin') {
+    if (id !== post.user._id && role !== 'admin') {
       return error({ res, message: 'forbidden: unauthorized user', status: 403 });
     }
     return next();

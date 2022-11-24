@@ -16,6 +16,7 @@ const createPost = async (req, res) => {
   } = req.body;
 
   const { id } = req;
+
   try {
     const savedPost = await newPost({
       title,
@@ -30,6 +31,7 @@ const createPost = async (req, res) => {
       id,
       url,
     });
+
     if (savedPost) {
       const post = await findById(savedPost.id);
 
@@ -73,17 +75,63 @@ const getPostById = async (req, res) => {
 
 const updatePost = async (req, res) => {
   const { postId } = req.params;
-  const body = req.body;
-  try {
-    const updatePost = await findByIdAndUpdate(postId, body);
+  const {
+    title,
+    description,
+    resource,
+    url,
+    date,
+    programming_l,
+    category,
+    ranking,
+    technology,
+    tag,
+  } = req.body;
 
-    if (updatePost) {
-      success({ res, message: 'post updated', status: 201 });
-    } else {
-      error({ res, message: 'post not found' });
-    }
+  if (category) {
+    if (
+      category !== 'frontend' &&
+      category !== 'backend' &&
+      category !== 'qa' &&
+      category !== 'testing' &&
+      category !== 'uxui' &&
+      category !== 'devops' &&
+      category !== 'architecture' &&
+      category !== 'datascience' &&
+      category !== 'machinelearning'
+    )
+      return error({ res, message: 'not valid category', status: 400 });
+  }
+
+  if (tag) {
+    if (tag !== 'documentation' && tag !== 'solution' && tag !== 'article' && tag !== 'news')
+      return error({ res, message: 'not valid tag', status: 400 });
+  }
+
+  let data = {};
+  try {
+    const updatePost = await findByIdAndUpdate({
+      postId,
+      title,
+      description,
+      resource,
+      url,
+      date,
+      programming_l,
+      category,
+      ranking,
+      technology,
+      tag,
+    });
+    data = updatePost;
   } catch (error) {
-    serverError({ res, message: error.message });
+    return serverError({ res, message: error.message });
+  }
+
+  if (Object.keys(data).length > 0) {
+    return success({ res, message: 'post updated', data, status: 201 });
+  } else {
+    return error({ res, message: 'post not found' });
   }
 };
 
