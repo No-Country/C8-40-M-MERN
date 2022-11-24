@@ -1,8 +1,7 @@
-import { configureStore } from "@reduxjs/toolkit"
+import { configureStore } from '@reduxjs/toolkit';
 
-import userReducer from './Slices/userSlice'
-import { apiSlice } from "./Api/apiSlice"
-
+import userReducer from './Slices/userSlice';
+import { apiSlice } from './Api/apiSlice';
 
 const reduxStore = configureStore({
   reducer: {
@@ -11,6 +10,6 @@ const reduxStore = configureStore({
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware),
   devTools: process.env.ENVIRONMENT && true,
-})
+});
 
-export default reduxStore
+export default reduxStore;
