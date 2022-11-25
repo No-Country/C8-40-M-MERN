@@ -1,5 +1,6 @@
 import React from 'react';
 import { FiLogOut } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 
 function DownButtons({ menuPosition }) {
   const styles = {
@@ -19,7 +20,9 @@ function DownButtons({ menuPosition }) {
       </div>
       <div className={styles.container}>
         <FiLogOut size="1.5rem" />
-        <p>Iniciar sesión</p>
+        <Link to="/login">
+          <p>Iniciar sesión</p>
+        </Link>
       </div>
     </main>
   );
