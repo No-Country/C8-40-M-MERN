@@ -1,8 +1,10 @@
 import Navbar from './Components/Navbar/Navbar';
 import { Routes, Route } from 'react-router-dom';
 import Login from './Pages/Login/Login';
+
 import Home from './Pages/Home/Home';
 import Detail from './Pages/Detail';
+
 
 function App() {
   return (
