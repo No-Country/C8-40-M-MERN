@@ -9,7 +9,7 @@ import { useEffect } from 'react';
 import TagsFilters from '../../Components/Home/TagsFilters';
 
 const styles = {
-  mainContainer: 'pt-[80px] px-[17%] w-full ',
+  mainContainer: 'pt-[80px] md:px-[17%] w-full ',
   categoryTitle: 'text-4xl text-white',
   buttonSection: 'w-full flex justify-between gap-4 mt-6',
   filterButtons: 'w-full py-2 bg-gray-300',
