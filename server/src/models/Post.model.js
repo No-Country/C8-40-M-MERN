@@ -13,8 +13,8 @@ const postSchema = new Schema(
     },
     resource: {
       type: String,
-      enum: ['video', 'image', 'code'],
-      default: 'code',
+      enum: ['video', 'image', 'document'],
+      default: 'document',
       require: true,
     },
     url: {

@@ -1,19 +1,17 @@
 import { success, error, serverError } from '../helpers/responses.js';
-import Programming_L from '../models/Programming_L.model.js';
-import Category from '../models/Category.model.js';
+import { findAll } from '../services/sibebar.service.js';
 
 const getForSideBar = async (req, res) => {
+  let data = {};
   try {
-    const categories = await Category.find({}, 'name');
-    const programmingL = await Programming_L.find({}, 'name');
-    const data = { categories, programmingL };
-    if (data) {
-      success({ res, message: 'sidebar', data });
-    } else {
-      error({ res, message: 'data not found' });
-    }
+    data = await findAll();
   } catch (error) {
     return serverError({ res, message: error.message });
+  }
+  if (Object.keys(data).length > 0) {
+    success({ res, message: 'sidebar', data });
+  } else {
+    error({ res, message: 'data not found' });
   }
 };
 export { getForSideBar };

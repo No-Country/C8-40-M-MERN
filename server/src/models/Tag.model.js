@@ -4,7 +4,7 @@ const tagSchema = new Schema({
   name: {
     type: String,
     enum: ['documentation', 'solution', 'article', 'news'],
-    default: 'documentation',
+    default: 'article',
     require: true,
   },
   post: [

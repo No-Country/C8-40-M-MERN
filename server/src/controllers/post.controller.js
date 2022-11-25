@@ -94,11 +94,11 @@ const updatePost = async (req, res) => {
       category !== 'backend' &&
       category !== 'qa' &&
       category !== 'testing' &&
-      category !== 'uxui' &&
+      category !== 'ux/ui' &&
       category !== 'devops' &&
       category !== 'architecture' &&
-      category !== 'datascience' &&
-      category !== 'machinelearning'
+      category !== 'data science' &&
+      category !== 'machine learning'
     )
       return error({ res, message: 'not valid category', status: 400 });
   }
