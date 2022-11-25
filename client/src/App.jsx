@@ -5,7 +5,6 @@ import Login from './Pages/Login/Login';
 import Home from './Pages/Home/Home';
 import Detail from './Pages/Detail';
 
-
 function App() {
   return (
     <>

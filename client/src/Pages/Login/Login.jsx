@@ -8,7 +8,7 @@ function Login() {
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
   } = useForm();
 
   const styles = {
@@ -28,7 +28,7 @@ function Login() {
     googleImage: 'w-5',
     notRegister: 'text-[#ABADC6]',
     createAccount: 'text-[#2563EB] font-semibold ml-2 text-sm',
-    passwordErrorText: 'text-sm text-[#EF4444] absolute bottom-64 left-6'
+    passwordErrorText: 'text-sm text-[#EF4444] absolute bottom-64 left-6',
   };
 
   const handleOnSubmit = (data) => {
@@ -45,7 +45,7 @@ function Login() {
           className={styles.inputs}
           placeholder="Ingrese su email"
           {...register('email', {
-            required: true
+            required: true,
           })}
         />
 
@@ -55,7 +55,7 @@ function Login() {
           placeholder="Ingrese su contraseña"
           {...register('password', {
             required: true,
-            minLength: 8
+            minLength: 8,
           })}
         />
         {errors.password?.type === 'minLength' && (

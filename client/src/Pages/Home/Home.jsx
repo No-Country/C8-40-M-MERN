@@ -2,10 +2,7 @@ import React, { useState } from 'react';
 import CardContainer from '../../Components/Cards/CardsContainer';
 import CardContainerM from '../../Components/Cards/CardsContainerM';
 import AllCards from '../../Components/Cards/AllCards';
-import Detail from '../Detail';
-import info from '../../Utils/sidebar.json';
 import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
 import TagsFilters from '../../Components/Home/TagsFilters';
 
 const styles = {

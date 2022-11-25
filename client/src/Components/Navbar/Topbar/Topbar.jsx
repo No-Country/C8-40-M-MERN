@@ -19,7 +19,7 @@ const styles = {
     'px-[16px] py-[12px] bg-[#424867] rounded-2xl hidden md:flex hover:bg-[#303650] focus:border-2 focus:border-white focus:px-[14px] focus:py-[10px] ',
   register:
     'px-[16px] py-[12px] bg-[#2563EB] rounded-2xl hover:bg-[#1E40AF] focus:border-2 focus:border-white focus:px-[13px] focus:py-[10px] ',
-  menuHamburg: 'text-[#ABADC6] cursor-pointer'
+  menuHamburg: 'text-[#ABADC6] cursor-pointer',
 };
 
 const TopNavbar = ({ handleOpenMenu }) => {
