@@ -1,5 +1,4 @@
 import React from 'react';
-import { useEffect } from 'react';
 import { useState } from 'react';
 import { BsSearch, BsFilter } from 'react-icons/bs';
 import { HiMenuAlt1 } from 'react-icons/hi';
