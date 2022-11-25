@@ -1,7 +1,6 @@
 import { Schema, model } from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate-v2';
 
-
 const postSchema = new Schema(
   {
     title: {
@@ -41,6 +40,8 @@ const postSchema = new Schema(
     },
     ranking: {
       type: Number,
+      min: 0,
+      max: 5,
     },
     technology: {
       type: Schema.Types.ObjectId,

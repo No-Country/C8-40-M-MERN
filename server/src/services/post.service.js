@@ -27,27 +27,40 @@ const findById = async (id) => {
 };
 
 const findByQuery = async (query) => {
-  const page = parseInt(query.page) || 1
-  const limit = parseInt(query.limit) || 10
+  const page = parseInt(query.page) || 1;
+  const limit = parseInt(query.limit) || 10;
   const sort = query.sort || 'desc';
-  let direction= -1
-  if(sort === 'asc' ) {
+  const search = query.search;
+  let direction = -1;
+
+  if (sort === 'asc') {
     direction = 1;
   }
+
   let options = {
     populate: [
       { path: 'user', select: 'userName' },
-      { path: 'category', select: 'name',},
+      { path: 'category', select: 'name' },
       { path: 'programming_l', select: 'name' },
       { path: 'technology', select: 'name' },
-      { path: 'tag', select: 'name' }
+      { path: 'tag', select: 'name' },
     ],
     sort: { createdAt: direction },
     page,
     limit,
-  }
+  };
 
-  const posts = await Post.paginate(query, options)
+  if (search)
+    query = {
+      ...query,
+      $or: [
+        { title: { $regex: search, $options: 'i' } },
+        { description: { $regex: search, $options: 'i' } },
+      ],
+    };
+
+  const posts = await Post.paginate(query, options);
+
   return posts;
 };
 
@@ -64,59 +77,71 @@ const findByIdAndUpdate = async ({
   technology,
   tag,
 }) => {
+  let options = {
+    title,
+    description,
+    resource,
+    url,
+    date,
+    ranking,
+  };
 
-  if(programming_l ) {
+  if (programming_l) {
     const postLanguage = await ProgrammingL.findOneAndUpdate(
-    { name: programming_l },
-    { $set: { name: programming_l } },
-    { upsert: true, new: true }
+      { name: programming_l },
+      { $set: { name: programming_l } },
+      { upsert: true, new: true }
     );
-  await postLanguage.save();
+    await postLanguage.save();
+    options.programming_l = postLanguage._id;
   }
-  
+
   if (category) {
     const postCategory = await Category.findOneAndUpdate(
-    { name: category },
-    { $set: { name: category } },
-    { upsert: true, new: true }
-  );
-  await postCategory.save();
+      { name: category },
+      { $set: { name: category } },
+      { upsert: true, new: true }
+    );
+    await postCategory.save();
+    options.category = postCategory._id;
   }
 
-  if (technology){
+  if (technology) {
     const postTechnology = await Technology.findOneAndUpdate(
-    { name: technology },
-    { $set: { name: technology } },
-    { upsert: true, new: true }
-  );
-  await postTechnology.save();
+      { name: technology },
+      { $set: { name: technology } },
+      { upsert: true, new: true }
+    );
+    await postTechnology.save();
+    options.technology = postTechnology._id;
   }
 
-if(tag) {
-  const postTag = await Tag.findOneAndUpdate(
-    { name: tag },
-    { $set: { name: tag } },
-    { upsert: true, new: true }
-  );
-  await postTag.save();
-}
+  if (tag) {
+    const postTag = await Tag.findOneAndUpdate(
+      { name: tag },
+      { $set: { name: tag } },
+      { upsert: true, new: true }
+    );
+    await postTag.save();
+    options.tag = postTag._id;
+  }
 
+  if (ranking) {
+    const post = await findById(postId);
+    let previousRanking = 0;
+    let newVote = parseInt(ranking);
+    let newRanking = newVote;
+    if (post.ranking) {
+      previousRanking = post.ranking;
+      newRanking = (newVote + previousRanking) / 2;
+    }
+    options.ranking = newRanking;
+  }
 
   const updatedPost = await Post.findByIdAndUpdate(
     { _id: postId },
     {
-      $set: {
-        title,
-        description,
-        resource,
-        url,
-        date,
-        ranking,
-        programming_l: postLanguage._id,
-        technology: postTechnology._id,
-        tag: postTag._id,
-        category: postCategory._id,
-      },
+      $set: options,
     },
     { new: true }
   );

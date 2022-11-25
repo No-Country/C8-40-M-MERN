@@ -88,26 +88,6 @@ const updatePost = async (req, res) => {
     tag,
   } = req.body;
 
-  if (category) {
-    if (
-      category !== 'frontend' &&
-      category !== 'backend' &&
-      category !== 'qa' &&
-      category !== 'testing' &&
-      category !== 'ux/ui' &&
-      category !== 'devops' &&
-      category !== 'architecture' &&
-      category !== 'data science' &&
-      category !== 'machine learning'
-    )
-      return error({ res, message: 'not valid category', status: 400 });
-  }
-
-  if (tag) {
-    if (tag !== 'documentation' && tag !== 'solution' && tag !== 'article' && tag !== 'news')
-      return error({ res, message: 'not valid tag', status: 400 });
-  }
-
   let data = {};
   try {
     const updatePost = await findByIdAndUpdate({
