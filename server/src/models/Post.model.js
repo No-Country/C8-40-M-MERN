@@ -1,4 +1,6 @@
 import { Schema, model } from 'mongoose';
+import mongoosePaginate from 'mongoose-paginate-v2';
+
 
 const postSchema = new Schema(
   {
@@ -59,5 +61,6 @@ postSchema.methods.toJSON = function () {
   post.id = _id;
   return post;
 };
+postSchema.plugin(mongoosePaginate);
 
 export default model('post', postSchema);
