@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 import { useForm } from 'react-hook-form';
 import EmailError from '../../Components/Login/EmailError/EmailError';
 
@@ -69,6 +70,7 @@ function Login() {
         <button className={styles.loginButton} type="submit">
           Ingresar
         </button>
+
         <div className={styles.linesDiv}>
           <span className={styles.lines}></span>
           <p>O</p>

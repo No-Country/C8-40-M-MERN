@@ -1,31 +1,18 @@
 import { connect as _connect } from 'mongoose';
-import { config } from 'dotenv';
-config();
+import config from '../config.js';
 
-const MONGODB_URI = process.env.MONGODB_URI
+const mongoUri = config.development.mongoUri
 
 export default () => {
+  const connect = () => {
+    _connect(mongoUri, (err) => {
+      if (err) {
+        console.log('DB: ERROR !!');
+      } else {
+        console.log('Conexion correcta!!');
+      }
+    });
+  };
 
-    const connect = () => {
-
-        _connect(
-            MONGODB_URI,
-            {
-                keepAlive: true,
-                useNewUrlParser: true,
-                useUnifiedTopology: true
-            },
-            (err) => {
-                if (err) {
-                    console.log('DB: ERROR !!');
-                } else {
-                    console.log('Conexion correcta!!')
-                }
-            }
-        )
-
-    }
-
-    connect();
-
-}
+  connect();
+};

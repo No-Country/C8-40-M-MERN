@@ -1,18 +1,20 @@
-import CardContainer from './Components/Cards/CardsContainer';
 import Navbar from './Components/Navbar/Navbar';
 import { Routes, Route } from 'react-router-dom';
 import Login from './Pages/Login/Login';
+
+import Home from './Pages/Home/Home';
+import Detail from './Pages/Detail';
+
 
 function App() {
   return (
     <>
       <Navbar />
-      <div className=" pt-[80px]">
-        <Routes>
-          <Route exact path="/" element={<CardContainer />}></Route>
-          <Route exact path="/login" element={<Login />}></Route>
-        </Routes>
-      </div>
+      <Routes>
+        <Route exact path="/:categories/:category" element={<Home />}></Route>
+        <Route exact path="/login" element={<Login />}></Route>
+        <Route exact path="/detail" element={<Detail />}></Route>
+      </Routes>
     </>
   );
 }
