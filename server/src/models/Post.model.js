@@ -50,7 +50,7 @@ const postSchema = new Schema(
     },
   },
   {
-    timestamp: true,
+    timestamps: true,
   }
 );
 
