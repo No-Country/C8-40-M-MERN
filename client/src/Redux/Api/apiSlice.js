@@ -4,10 +4,10 @@ const baseQuery = fetchBaseQuery({
   // baseUrl: `http://localhost:3000/api/`,
   baseUrl: 'https://c8-40-m-mern-kappa.vercel.app/api',
   prepareHeaders: (headers, { getState }) => {
-    const token = getState();
-    console.log(token);
-    // const token = sessionStorage.getItem('token');
-    // if (token) headers.set('authorization', `Bearer ${token}`);
+    const state = getState();
+    console.log(state);
+    const token = sessionStorage.getItem('token');
+    if (token) headers.set('authorization', `Bearer ${token}`);
     return headers;
   },
 });
@@ -37,8 +37,6 @@ export const apiSlice = createApi({
         body: userData,
       }),
     }),
-
-    // ! "unauthorized: id is required" error :  "SyntaxError: Unexpected token 'u', \"unauthoriz\"... is not valid JSON"
     updateUser: builder.mutation({
       query: ({ id, ...userData }) => ({
         url: `/users/${id}`,
@@ -46,38 +44,59 @@ export const apiSlice = createApi({
         body: userData,
       }),
     }),
-
+    getAllUsers: builder.query({
+      query: () => ({
+        url: '/users',
+      }),
+    }),
+    getUserbyId: builder.query({
+      query: (id) => ({
+        url: `/users?_id=${id}`,
+      }),
+    }),
     // products endpoints
     getAllPosts: builder.query({
       query: () => ({
         url: '/posts',
       }),
     }),
-    // addNewPosts: builder.mutation({
-    //   query: (postData) => ({
-    //     url: '/post',
-    //     method: 'POST',
-    //     body: postData,
-    //   }),
-    // }),
+    getPostsById: builder.query({
+      query: (id) => ({
+        url: `/posts/${id}`,
+      }),
+    }),
+    addNewPost: builder.mutation({
+      query: (postData) => ({
+        url: '/posts',
+        method: 'POST',
+        body: postData,
+      }),
+    }),
+
+    // ??
     // getUserPosts: builder.query({
     //   query: () => ({
-    //     url: `/post`,
+    //     url: `/pend`,
     //   }),
     // }),
-    // updatePosts: builder.mutation({
-    //   query: ({ id, ...postData }) => ({
-    //     url: `/posts`,
-    //     method: 'PATCH',
-    //     body: postData,
-    //   }),
-    // }),
+    // ??
+
+    updatePost: builder.mutation({
+      query: ({ id, ...postData }) => ({
+        url: `/posts/${id}`,
+        method: 'PUT',
+        body: postData,
+      }),
+    }),
+
+    // ??
     // deletePosts: builder.mutation({
     //   query: (xxxx) => ({
     //     url: `/posts`,
     //     method: 'DELETE',
     //   }),
     // }),
+    // ??
   }),
 });
 
@@ -87,10 +106,15 @@ export const {
   useLoginUserMutation,
   useCreateUserMutation,
   useUpdateUserMutation,
+  useGetAllUsersQuery,
+
+  //
+  useGetUserbyIdQuery,
+  //
 
   useGetAllPostsQuery,
-  useAddNewPostsMutation,
-  useGetUserPostsQuery,
-  useUpdatePostsMutation,
-  useDeletePostsMutation,
+  useAddNewPostMutation,
+  // useGetUserPostsQuery,
+  useUpdatePostMutation,
+  // useDeletePostsMutation,
 } = apiSlice;
