@@ -9,7 +9,10 @@ const getUsersAll = async (req, res) => {
     const users = await findUserByQuery(query);
     data = users;
   } catch (error) {
-    return serverError({ res, message: error.message });
+    return serverError({
+      res,
+      message: error.message,
+    });
   }
 
   let string = '';
@@ -20,11 +23,14 @@ const getUsersAll = async (req, res) => {
   if (Object.keys(data).length > 0) {
     success({
       res,
-      message: query ? `user/s filtered by` + string : 'all users',
+      message: query ? `user/s filtered by${string}` : 'all users',
       data,
     });
   } else {
-    error({ res, message: 'users not found' });
+    error({
+      res,
+      message: 'users not found',
+    });
   }
 };
 
@@ -36,12 +42,22 @@ const updateUser = async (req, res) => {
     const updatedUser = await findByIdAndUpdate(userId, userName, password, role, isActive, avatar);
 
     if (updatedUser) {
-      success({ res, message: 'user updated', status: 201 });
+      success({
+        res,
+        message: 'user updated',
+        status: 201,
+      });
     } else {
-      error({ res, message: 'user not found' });
+      error({
+        res,
+        message: 'user not found',
+      });
     }
   } catch (error) {
-    serverError({ res, message: error.message });
+    serverError({
+      res,
+      message: error.message,
+    });
   }
 };
 

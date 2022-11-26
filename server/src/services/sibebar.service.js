@@ -8,7 +8,12 @@ const findAll = async () => {
   const programmingL = await Programming_L.find({}, 'name');
   const tags = await Tag.find({}, 'name');
   const technologies = await Technology.find({}, 'name');
-  return { categories, programmingL, tags, technologies };
+  return {
+    categories,
+    programmingL,
+    tags,
+    technologies,
+  };
 };
 
 export { findAll };

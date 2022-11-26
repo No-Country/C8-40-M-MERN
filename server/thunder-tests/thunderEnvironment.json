@@ -1,0 +1,12 @@
+[
+  {
+    "_id": "35c2c37d-70d8-466b-9789-d61e137608b5",
+    "name": "(Global Env)",
+    "default": false,
+    "global": true,
+    "sortNum": -2,
+    "created": "2022-11-26T00:06:30.786Z",
+    "modified": "2022-11-26T00:06:30.786Z",
+    "data": []
+  }
+]

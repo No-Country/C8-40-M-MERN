@@ -1,24 +1,21 @@
 import jwt from 'jsonwebtoken';
-import config from '../config.js'
+import config from '../config.js';
 
 const generateJWT = (id, userName, role) =>
   new Promise((resolve, reject) => {
-    const payload = { id, userName, role };
+  const payload = {
+    id,
+    userName,
+    role,
+  };
 
-    jwt.sign(
-      payload,
-      config.development.jwtSec,
-      {
-        expiresIn: '72h',
-      },
-      (err, token) => {
-        if (err) {
-          reject(Error('no se pudo generar el token'));
-        }
-        resolve(token);
-      }
-    );
+  jwt.sign(payload, config.development.jwtSec, { expiresIn: '72h' }, (err, token) => {
+    if (err) {
+      reject(Error('no se pudo generar el token'));
+    }
+    resolve(token);
   });
+});
 
 const validateJWT = (token) => {
   if (!token) {
@@ -28,7 +25,7 @@ const validateJWT = (token) => {
     };
   }
   try {
-    const { id, userName, role } = jwt.verify(token,config.development.jwtSec);
+    const { id, userName, role } = jwt.verify(token, config.development.jwtSec);
     return {
       status: true,
       message: 'success',

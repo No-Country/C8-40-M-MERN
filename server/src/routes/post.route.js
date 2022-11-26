@@ -1,5 +1,4 @@
 import express from 'express';
-const router = express.Router();
 
 import { createPost, getAllPost, getPostById, updatePost } from '../controllers/post.controller.js';
 import { isCurrentUser } from '../middlewares/isCurrentUser.js';
@@ -10,6 +9,8 @@ import {
   validateQueries,
   validateUpdateFields,
 } from '../validators/post.validator.js';
+
+const router = express.Router();
 
 router.route('/').post(isAuth, validateFields, createPost).get(validateQueries, getAllPost);
 

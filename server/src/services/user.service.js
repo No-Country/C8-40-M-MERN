@@ -13,15 +13,21 @@ const findByQuery = async (query) => {
   const users = await User.find(query, ['userName', 'email', 'avatar', 'role', 'post']);
 
   if (count > 1) {
-    for (let user of users) {
+    for (const user of users) {
       const posts = await findPostByQuery({ user: user._id });
       user.post = posts;
     }
 
-    data = { count, users };
+    data = {
+      count,
+      users,
+    };
     return data;
   }
-  data = { count, users };
+  data = {
+    count,
+    users,
+  };
 
   return data;
 };
@@ -29,7 +35,15 @@ const findByQuery = async (query) => {
 const findByIdAndUpdate = async (userId, userName, password, role, isActive, avatar) => {
   const updatedUser = await User.findByIdAndUpdate(
     { _id: userId },
-    { $set: { userName, password: encryptPassword(password), role, isActive, avatar } }
+    {
+      $set: {
+        userName,
+        password: encryptPassword(password),
+        role,
+        isActive,
+        avatar,
+      },
+    }
   );
   return updatedUser;
 };

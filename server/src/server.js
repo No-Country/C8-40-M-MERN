@@ -1,16 +1,16 @@
 import express from 'express';
-import config from './config.js'
+import cors from 'cors';
+import config from './config.js';
 import postRoutes from './routes/post.route.js';
 import authRoutes from './routes/auth.route.js';
 import usersRoutes from './routes/user.route.js';
 import sideBarRoutes from './routes/sidebar.route.js';
 
+// Invocamos a la conexión para la DB
+import conexion from './database/db.js';
+
 const app = express();
 const port = config.development.port || 3001;
-import cors from 'cors';
-
-//Invocamos a la conexión para la DB
-import conexion from './database/db.js';
 
 app.use(express.json());
 app.use(cors());

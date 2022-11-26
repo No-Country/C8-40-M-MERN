@@ -51,7 +51,7 @@ const validateRegisterFields = [
 
   check('isActive', 'isActive must be a boolean').optional().isBoolean(),
 
-  check('role', `Role must be 'admin' or 'dev'`).optional().isIn(['admin', 'dev']),
+  check('role', "Role must be 'admin' or 'dev'").optional().isIn(['admin', 'dev']),
 
   check('avatar', 'Enter an avatar url').optional().isURL().withMessage('Enter a valid url'),
 
@@ -69,9 +69,8 @@ const validateLoginFields = [
       const matchedMail = await User.findOne({ email: value });
       if (matchedMail) {
         return true;
-      } else {
-        throw new Error('Email is not registered');
       }
+      throw new Error('Email is not registered');
     })
     .trim()
     .escape(),
@@ -125,7 +124,7 @@ const validateUpdateFields = [
 
   check('isActive', 'isActive must be a boolean').optional().isBoolean(),
 
-  check('role', `Role must be 'admin' or 'dev'`).optional().isIn(['admin', 'dev']),
+  check('role', "Role must be 'admin' or 'dev'").optional().isIn(['admin', 'dev']),
 
   check('avatar', 'Enter an avatar url').optional().isURL().withMessage('Enter a valid url'),
 

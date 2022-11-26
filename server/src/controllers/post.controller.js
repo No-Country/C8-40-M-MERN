@@ -35,12 +35,22 @@ const createPost = async (req, res) => {
     if (savedPost) {
       const post = await findById(savedPost.id);
 
-      success({ res, message: 'post created successfully', data: post });
+      success({
+        res,
+        message: 'post created successfully',
+        data: post,
+      });
     } else {
-      error({ res, message: 'post creation failed' });
+      error({
+        res,
+        message: 'post creation failed',
+      });
     }
   } catch (error) {
-    return serverError({ res, message: error.message });
+    return serverError({
+      res,
+      message: error.message,
+    });
   }
 };
 
@@ -50,12 +60,22 @@ const getAllPost = async (req, res) => {
   try {
     data = await findByQuery(query);
   } catch (error) {
-    return serverError({ res, message: error.message });
+    return serverError({
+      res,
+      message: error.message,
+    });
   }
   if (data) {
-    success({ res, message: 'posts found successfully', data });
+    success({
+      res,
+      message: 'posts found successfully',
+      data,
+    });
   } else {
-    error({ res, message: 'posts found failed' });
+    error({
+      res,
+      message: 'posts found failed',
+    });
   }
 };
 
@@ -64,12 +84,23 @@ const getPostById = async (req, res) => {
     const { postId } = req.params;
     const post = await findById(postId);
     if (post) {
-      success({ res, message: `post id: ${postId}`, status: 201, data: post });
+      success({
+        res,
+        message: `post id: ${postId}`,
+        status: 201,
+        data: post,
+      });
     } else {
-      error({ res, message: 'post not found' });
+      error({
+        res,
+        message: 'post not found',
+      });
     }
   } catch (error) {
-    serverError({ res, message: error.message });
+    serverError({
+      res,
+      message: error.message,
+    });
   }
 };
 
@@ -105,14 +136,24 @@ const updatePost = async (req, res) => {
     });
     data = updatePost;
   } catch (error) {
-    return serverError({ res, message: error.message });
+    return serverError({
+      res,
+      message: error.message,
+    });
   }
 
   if (Object.keys(data).length > 0) {
-    return success({ res, message: 'post updated', data, status: 201 });
-  } else {
-    return error({ res, message: 'post not found' });
+    return success({
+      res,
+      message: 'post updated',
+      data,
+      status: 201,
+    });
   }
+  return error({
+    res,
+    message: 'post not found',
+  });
 };
 
 export { createPost, updatePost, getAllPost, getPostById };

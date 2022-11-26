@@ -1,7 +1,7 @@
 import { connect as _connect } from 'mongoose';
 import config from '../config.js';
 
-const mongoUri = config.development.mongoUri
+const { mongoUri } = config.development;
 
 export default () => {
   const connect = () => {

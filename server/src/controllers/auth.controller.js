@@ -1,14 +1,15 @@
-import User from '../models/User.model.js';
+import { User } from '../models/User.model.js';
 import { error, serverError, success } from '../helpers/responses.js';
 import { encryptPassword, comparePassword } from '../helpers/crypto.js';
 import { generateJWT } from '../helpers/jwt.js';
 
 const RegisterUser = async (req, res) => {
   const { email, userName, password, role, isActive, avatar } = req.body;
+  let data = {};
   try {
     const newUser = new User({
-      userName: userName,
-      email: email,
+      userName,
+      email,
       password: encryptPassword(password),
       role,
       isActive,
@@ -19,10 +20,23 @@ const RegisterUser = async (req, res) => {
 
     const token = await generateJWT(savedUser.id, savedUser.userName, savedUser.role);
 
-    success({ res, message: 'user created', data: { savedUser, token }, status: 201 });
-  } catch (error) {
-    return serverError({ res, message: error.message });
+    data = {
+      savedUser,
+      token,
+    };
+  } catch (err) {
+    return serverError({
+      res,
+      message: err.message,
+    });
   }
+
+  return success({
+    res,
+    message: 'user created',
+    data,
+    status: 201,
+  });
 };
 
 const LoginUser = async (req, res) => {
@@ -31,7 +45,11 @@ const LoginUser = async (req, res) => {
 
   try {
     const user = await User.findOne({ email });
-    !user && error({ res, message: 'wrong credentials!' });
+    !user &&
+      error({
+        res,
+        message: 'wrong credentials!',
+      });
 
     const validPassword = comparePassword(password, user.password);
     if (validPassword) {
@@ -54,10 +72,17 @@ const LoginUser = async (req, res) => {
         status: 200,
       });
     } else {
-      error({ res, message: 'invalid email or password', status: 401 });
+      error({
+        res,
+        message: 'invalid email or password',
+        status: 401,
+      });
     }
   } catch (error) {
-    return serverError({ res, message: error.message });
+    return serverError({
+      res,
+      message: error.message,
+    });
   }
 };
 

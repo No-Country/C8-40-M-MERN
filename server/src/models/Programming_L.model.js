@@ -1,18 +1,10 @@
 import { Schema, model } from 'mongoose';
 
-const Programming_LSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  post: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'post',
-    },
-  ],
-});
+const Programming_LSchema = new Schema({ name: { type: String,
+  required: true,
+  unique: true},
+post: [{ type: Schema.Types.ObjectId, ref: 'post' }],
+], });
 
 Programming_LSchema.methods.toJSON = function () {
   const { __v, _id, ...programming_L } = this.toObject();

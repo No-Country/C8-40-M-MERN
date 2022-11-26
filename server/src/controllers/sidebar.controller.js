@@ -6,12 +6,22 @@ const getForSideBar = async (req, res) => {
   try {
     data = await findAll();
   } catch (error) {
-    return serverError({ res, message: error.message });
+    return serverError({
+      res,
+      message: error.message,
+    });
   }
   if (Object.keys(data).length > 0) {
-    success({ res, message: 'sidebar', data });
+    success({
+      res,
+      message: 'sidebar',
+      data,
+    });
   } else {
-    error({ res, message: 'data not found' });
+    error({
+      res,
+      message: 'data not found',
+    });
   }
 };
 export { getForSideBar };

@@ -52,9 +52,7 @@ const postSchema = new Schema(
       ref: 'tag',
     },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true },
 );
 
 postSchema.methods.toJSON = function () {

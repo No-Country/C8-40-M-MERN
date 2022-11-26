@@ -29,10 +29,10 @@ const validateFields = [
     .trim()
     .escape(),
 
-  check('resource', `Enter a resource's type`)
+  check('resource', "Enter a resource's type")
     .exists()
     .isIn(['video', 'image', 'code'])
-    .withMessage(`Resource must be 'video', 'image' or 'code'`),
+    .withMessage("Resource must be 'video', 'image' or 'code'"),
 
   check('date', 'Enter the date the material was created or updated')
     .exists()
@@ -68,11 +68,11 @@ const validateQueries = [
     .trim()
     .escape(),
 
-  query('resource', `Resource must be 'video', 'image' or 'code'`)
+  query('resource', "Resource must be 'video', 'image' or 'code'")
     .optional()
     .isIn(['video', 'image', 'code']),
 
-  query('date', `Date format must be 'MM-DD-YYYY'`).optional().isDate({ format: 'MM-DD-YYYY' }),
+  query('date', "Date format must be 'MM-DD-YYYY'").optional().isDate({ format: 'MM-DD-YYYY' }),
 
   query('category', 'Category must be an id').optional().isMongoId(),
 
@@ -114,10 +114,10 @@ const validateUpdateFields = [
     .trim()
     .escape(),
 
-  check('resource', `Enter a resource's type`)
+  check('resource', "Enter a resource's type")
     .optional()
     .isIn(['video', 'image', 'code'])
-    .withMessage(`Resource must be 'video', 'image' or 'code'`),
+    .withMessage("Resource must be 'video', 'image' or 'code'"),
 
   check('date', 'Enter the date the material was created or updated')
     .optional()
@@ -145,7 +145,13 @@ const validateUpdateFields = [
     ])
     .withMessage('Enter a valid category'),
 
-  check('ranking').optional().isInt({ min: 0, max: 5 }).withMessage('Ranking must be between 0-5'),
+  check('ranking')
+    .optional()
+    .isInt({
+      min: 0,
+      max: 5,
+    })
+    .withMessage('Ranking must be between 0-5'),
 
   (req, res, next) => {
     validateResult(req, res, next);
