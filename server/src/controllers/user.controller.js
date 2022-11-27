@@ -1,37 +1,46 @@
 import { success, error, serverError } from '../helpers/responses.js';
-import { findByQuery as findUserByQuery, findByIdAndUpdate } from '../services/user.service.js';
 
-const getUsersAll = async (req, res) => {
+import { findByQuery, findByIdAndUpdate } from '../services/user.service.js';
+
+const getAllUsers = async (req, res) => {
   const { query } = req;
 
+  let reponseMessage = 'all users';
+
   let data = {};
+
   try {
-    const users = await findUserByQuery(query);
+    const users = await findByQuery(query);
     data = users;
-  } catch (error) {
+  } catch (err) {
     return serverError({
       res,
-      message: error.message,
+      message: err.message,
     });
   }
 
-  let string = '';
-  for (const [key, value] of Object.entries(query)) {
-    string += ` ${key}: ${value} -`;
+  if (Object.keys(query).length > 0) {
+    reponseMessage = 'user/s filtered by:';
+
+    const queriesArray = Object.entries(query);
+
+    queriesArray.forEach((q) => {
+      reponseMessage += ` ${q[0]} as ${q[1]} .`;
+    });
   }
 
-  if (Object.keys(data).length > 0) {
-    success({
+  if (data.count > 0) {
+    return success({
       res,
-      message: query ? `user/s filtered by${string}` : 'all users',
+      message: reponseMessage,
       data,
     });
-  } else {
-    error({
-      res,
-      message: 'users not found',
-    });
   }
+
+  return error({
+    res,
+    message: 'users not found',
+  });
 };
 
 const updateUser = async (req, res) => {
@@ -53,12 +62,12 @@ const updateUser = async (req, res) => {
         message: 'user not found',
       });
     }
-  } catch (error) {
+  } catch (err) {
     serverError({
       res,
-      message: error.message,
+      message: err.message,
     });
   }
 };
 
-export { getUsersAll, updateUser };
+export { getAllUsers, updateUser };

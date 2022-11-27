@@ -1,0 +1,24 @@
+{
+  /* thunder */
+  "thunder-client.workspaceRelativePath": "./server/",
+  "thunder-client.saveToWorkspace": true,
+  // end of line LF
+  "files.eol": "\r\n",
+  /* prettier */
+  /*   "prettier.configPath": ".prettierrc", */
+  "editor.formatOnPaste": false,
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  /*"editor.defaultFormatter": "dbaeumer.vscode-eslint", */
+  /*  "prettier.ignorePath": ".prettierignore", */
+  /* eslint */
+  "eslint.run": "onSave",
+  "eslint.format.enable": true,
+  // show eslint icon at bottom toolbar
+  "eslint.alwaysShowStatus": true,
+  // tell the ESLint plugin to run on save
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  }
+}

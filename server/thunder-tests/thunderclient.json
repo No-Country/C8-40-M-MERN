@@ -3,12 +3,12 @@
     "_id": "94c326a7-2312-4217-9eb9-87528f183a1c",
     "colId": "89a2bd2b-923f-43bb-a007-bf3524fbf413",
     "containerId": "",
-    "name": "GET /sidebar",
-    "url": "http://localhost:3001/api/sidebar",
+    "name": "GET /sidebar DEV",
+    "url": "{{urlDev}}sidebar",
     "method": "GET",
     "sortNum": 10000,
     "created": "2022-11-25T23:46:49.430Z",
-    "modified": "2022-11-25T23:49:30.256Z",
+    "modified": "2022-11-27T07:18:05.083Z",
     "headers": [],
     "params": [],
     "tests": []
@@ -17,24 +17,263 @@
     "_id": "247ac65b-3d84-49d8-9cf5-6cffa05101f7",
     "colId": "cfaa43d9-c5cd-418e-85c0-f5576308441f",
     "containerId": "",
-    "name": "GET /users",
-    "url": "",
+    "name": "GET /users?nestedqueries PRO",
+    "url": "{{urlPro}}users",
     "method": "GET",
     "sortNum": 10000,
     "created": "2022-11-25T23:56:04.904Z",
-    "modified": "2022-11-25T23:56:04.904Z",
-    "headers": []
+    "modified": "2022-11-27T16:47:52.645Z",
+    "headers": [
+      {
+        "name": "Authorization",
+        "value": "{{adminToken}}"
+      }
+    ],
+    "params": [],
+    "tests": []
   },
   {
     "_id": "1567a068-698d-4385-a8f1-8555440687cb",
     "colId": "cfaa43d9-c5cd-418e-85c0-f5576308441f",
     "containerId": "",
-    "name": "updateUser",
-    "url": "http://localhost:3001/api/users/637e7b0a2166cec691d889e7",
+    "name": "PUT /users/:id DEV",
+    "url": "{{urlDev}}users/6380d9e52b997d036e5e8d51",
     "method": "PUT",
     "sortNum": 5000,
     "created": "2022-11-26T00:03:58.254Z",
-    "modified": "2022-11-26T00:04:13.014Z",
+    "modified": "2022-11-27T18:08:13.488Z",
+    "headers": [
+      {
+        "name": "Authorization",
+        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzN2U3YjBhMjE2NmNlYzY5MWQ4ODllNyIsInVzZXJOYW1lIjoiWmF5cmEgVWx0aW1vIiwicm9sZSI6ImRldiIsImlhdCI6MTY2OTIzMzQxOCwiZXhwIjoxNjY5NDkyNjE4fQ.ICbAeZEwwvaOzxA9aBbCVoaRppkX3TGUX0dIrKAE7DI",
+        "isDisabled": true
+      },
+      {
+        "name": "Authorization",
+        "value": "{{adminToken}}"
+      }
+    ],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n \"userName\": \"TestUser9\",\n \"email\":\"deberiadarerror@mail.com\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "ca730d29-7929-43a7-9cda-0f44e93a479e",
+    "colId": "cfaa43d9-c5cd-418e-85c0-f5576308441f",
+    "containerId": "",
+    "name": "GET /users?nestedqueries DEV",
+    "url": "{{urlDev}}users?_id=6380d9e52b997d036e5e8d51",
+    "method": "GET",
+    "sortNum": 20000,
+    "created": "2022-11-26T00:03:58.282Z",
+    "modified": "2022-11-27T18:08:57.301Z",
+    "headers": [
+      {
+        "name": "Authorization",
+        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzN2U3YjYxMjE2NmNlYzY5MWQ4ODllZSIsInVzZXJOYW1lIjoiWmF5cmEgQWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NjkyMzM1MDUsImV4cCI6MTY2OTQ5MjcwNX0.FuPGAdI1MlpinC_0xE2otcXv05lSGSzFH43zRysGZIQ",
+        "isDisabled": true
+      },
+      {
+        "name": "Authorization",
+        "value": "{{adminToken}}"
+      }
+    ],
+    "params": [
+      {
+        "name": "_id",
+        "value": "6380d9e52b997d036e5e8d51",
+        "isPath": false
+      }
+    ],
+    "tests": []
+  },
+  {
+    "_id": "7dd45161-2b97-45d8-a240-2f66a94dce3e",
+    "colId": "f9259617-2970-40ef-ac5e-e3e57f773bda",
+    "containerId": "",
+    "name": "POST auth/register DEV",
+    "url": "{{urlDev}}auth/register",
+    "method": "POST",
+    "sortNum": 10000,
+    "created": "2022-11-26T00:03:58.283Z",
+    "modified": "2022-11-27T18:15:16.688Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"userName\": \"TestUser5\",\n  \"email\": \"user5@mail.com\",\n  \"password\": \"userPass1\",\n  \"isActive\": true,\n  \"avatar\":\"https://res.cloudinary.com/dxpndulok/image/upload/v1666038626/18_jhzwwd_02354deba2.jpg\",\n  \"role\": \"dev\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "5286944a-c719-4ee5-87f1-ecccf1134cf3",
+    "colId": "f9259617-2970-40ef-ac5e-e3e57f773bda",
+    "containerId": "",
+    "name": "POST auth/login DEV",
+    "url": "{{urlDev}}auth/login",
+    "method": "POST",
+    "sortNum": 20000,
+    "created": "2022-11-26T00:03:58.284Z",
+    "modified": "2022-11-27T07:21:02.569Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"email\": \"user4@mail.com\",\n  \"password\": \"userPass1\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "1f0b8288-59d8-42bf-80e4-ee4c91d7d4a7",
+    "colId": "147d3365-6f70-43fe-a65c-355f047b6deb",
+    "containerId": "",
+    "name": "POST /posts DEV",
+    "url": "{{urlDev}}posts",
+    "method": "POST",
+    "sortNum": 50000,
+    "created": "2022-11-26T00:03:58.286Z",
+    "modified": "2022-11-27T20:22:18.467Z",
+    "headers": [
+      {
+        "name": "Authorization",
+        "value": "{{adminToken}}"
+      },
+      {
+        "name": "User-Agent",
+        "value": "Thunder Client (https://www.thunderclient.com)",
+        "isDisabled": true
+      }
+    ],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"title\": \"prueba 14\",\n  \"description\": \"prueba description prueba description 15\",\n  \"resource\": \"document\",\n  \"date\": \"10-12-2022\",\n  \"category\": \"backend\",\n  \"programmingL\": \"c++\",\n  \"technology\": \"next\",\n  \"tag\": \"documentation\",\n  \"url\":\"https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "d044a006-a246-4f74-b8f4-05a8c75b21d1",
+    "colId": "147d3365-6f70-43fe-a65c-355f047b6deb",
+    "containerId": "",
+    "name": "GET /posts DEV",
+    "url": "{{urlDev}}posts?category=637f960df3ee5834ef0180de",
+    "method": "GET",
+    "sortNum": 60000,
+    "created": "2022-11-26T00:03:58.287Z",
+    "modified": "2022-11-27T20:11:47.613Z",
+    "headers": [
+      {
+        "name": "Authorization",
+        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzN2U3YjYxMjE2NmNlYzY5MWQ4ODllZSIsInVzZXJOYW1lIjoiWmF5cmEgQWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NjkyMzM1MDUsImV4cCI6MTY2OTQ5MjcwNX0.FuPGAdI1MlpinC_0xE2otcXv05lSGSzFH43zRysGZIQ"
+      }
+    ],
+    "params": [
+      {
+        "name": "limit",
+        "value": "2",
+        "isDisabled": true,
+        "isPath": false
+      },
+      {
+        "name": "page",
+        "value": "2",
+        "isDisabled": true,
+        "isPath": false
+      },
+      {
+        "name": "sort",
+        "value": "asc",
+        "isDisabled": true,
+        "isPath": false
+      },
+      {
+        "name": "category",
+        "value": "637f960df3ee5834ef0180de",
+        "isPath": false
+      },
+      {
+        "name": "search",
+        "value": "prueba",
+        "isDisabled": true,
+        "isPath": false
+      }
+    ],
+    "tests": []
+  },
+  {
+    "_id": "75fb377b-af85-47e7-babe-7c7c0f9f18b6",
+    "colId": "147d3365-6f70-43fe-a65c-355f047b6deb",
+    "containerId": "",
+    "name": "GET /posts/:id DEV",
+    "url": "{{urlDev}}posts/6383c6f785e452f6ffb5e765",
+    "method": "GET",
+    "sortNum": 72500,
+    "created": "2022-11-26T00:03:58.289Z",
+    "modified": "2022-11-27T21:01:07.743Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": " {\n      \"title\": \"UPD1\"}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "68984e9d-e73a-41fd-84ce-cbbc65d6e7d6",
+    "colId": "147d3365-6f70-43fe-a65c-355f047b6deb",
+    "containerId": "",
+    "name": "PUT /posts/:id DEV",
+    "url": "{{urlDev}}posts/6383c6f785e452f6ffb5e765",
+    "method": "PUT",
+    "sortNum": 75000,
+    "created": "2022-11-26T00:03:58.290Z",
+    "modified": "2022-11-27T21:08:38.132Z",
+    "headers": [
+      {
+        "name": "Authorization",
+        "value": "{{adminToken}}"
+      }
+    ],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "   {\n      \"title\": \"test post 14 updated\",\n      \"description\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\",\n      \"resource\": \"image\",\n      \"date\": \"05-10-2022\",\n      \"user\": \"zayra\",\n      \"ranking\": 3,\n      \"category\": \"frontend\",\n      \"programming_l\": \"java\",\n      \"technology\": \"node\",\n      \"tag\": \"documentation\",\n      \"id\": \"637e5e5b59b80619a2aae1d9\",\n      \"url\":\"https://www.google.com/imgres?imgurl=https%3A%2F%2Fcdn.pixabay.com%2Fphoto%2F2013%2F07%2F13%2F12%2F07%2Favatar-159236__340.png&imgrefurl=https%3A%2F%2Fpixabay.com%2Fes%2Fimages%2Fsearch%2Favatar%2F&tbnid=_NlvBF0glxxY4M&vet=12ahUKEwj85N3Sg8f7AhXBs5UCHbE8AtAQMygIegUIARDVAQ..i&docid=TB9zJ3jzkC_W5M&w=381&h=340&q=imagen%20gratis%20avatar&hl=es&ved=2ahUKEwj85N3Sg8f7AhXBs5UCHbE8AtAQMygIegUIARDVAQ\"\n    }",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "b48483b2-6308-40f6-b49a-362c6019a082",
+    "colId": "89a2bd2b-923f-43bb-a007-bf3524fbf413",
+    "containerId": "",
+    "name": "GET /sidebar PRO ",
+    "url": "{{urlPro}}sidebar",
+    "method": "GET",
+    "sortNum": 20000,
+    "created": "2022-11-26T00:03:58.291Z",
+    "modified": "2022-11-27T07:21:51.907Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "e4cfe4f7-7e1e-4be1-b692-1d22cd7003e1",
+    "colId": "cfaa43d9-c5cd-418e-85c0-f5576308441f",
+    "containerId": "",
+    "name": "PUT /users/:id PRO",
+    "url": "http://localhost:3001/api/users/637e7b0a2166cec691d889e7",
+    "method": "PUT",
+    "sortNum": 7500,
+    "created": "2022-11-27T08:08:24.634Z",
+    "modified": "2022-11-27T08:08:24.634Z",
     "headers": [
       {
         "name": "Authorization",
@@ -50,132 +289,53 @@
     "tests": []
   },
   {
-    "_id": "ca730d29-7929-43a7-9cda-0f44e93a479e",
-    "colId": "cfaa43d9-c5cd-418e-85c0-f5576308441f",
-    "containerId": "",
-    "name": "getUsers",
-    "url": "http://localhost:3001/api/users?_id=637e7b0a2166cec691d889e7",
-    "method": "GET",
-    "sortNum": 20000,
-    "created": "2022-11-26T00:03:58.282Z",
-    "modified": "2022-11-26T00:04:40.889Z",
-    "headers": [
-      {
-        "name": "Authorization",
-        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzN2U3YjYxMjE2NmNlYzY5MWQ4ODllZSIsInVzZXJOYW1lIjoiWmF5cmEgQWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NjkyMzM1MDUsImV4cCI6MTY2OTQ5MjcwNX0.FuPGAdI1MlpinC_0xE2otcXv05lSGSzFH43zRysGZIQ"
-      }
-    ],
-    "params": [
-      {
-        "name": "_id",
-        "value": "637e7b0a2166cec691d889e7",
-        "isPath": false
-      }
-    ],
-    "tests": []
-  },
-  {
-    "_id": "7dd45161-2b97-45d8-a240-2f66a94dce3e",
+    "_id": "18cce073-3a41-4823-a851-588a521a1c9e",
     "colId": "f9259617-2970-40ef-ac5e-e3e57f773bda",
     "containerId": "",
-    "name": "POST auth/register",
+    "name": "POST auth/register PRO",
     "url": "http://localhost:3001/api/auth/register",
     "method": "POST",
-    "sortNum": 10000,
-    "created": "2022-11-26T00:03:58.283Z",
-    "modified": "2022-11-26T00:04:53.192Z",
+    "sortNum": 15000,
+    "created": "2022-11-27T18:12:45.304Z",
+    "modified": "2022-11-27T18:12:45.304Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"userName\": \"Ana Admin\",\n  \"email\": \"anaAdm@mail.com\",\n  \"password\": \"Password1\",\n  \"isActive\": true,\n  \"avatar\":\"https://res.cloudinary.com/dxpndulok/image/upload/v1666038626/18_jhzwwd_02354deba2.jpg\",\n  \"role\": \"admin\"\n}",
+      "raw": "{\n  \"userName\": \"TestUser4\",\n  \"email\": \"user4@mail.com\",\n  \"password\": \"userPass1\",\n  \"isActive\": true,\n  \"avatar\":\"https://res.cloudinary.com/dxpndulok/image/upload/v1666038626/18_jhzwwd_02354deba2.jpg\",\n  \"role\": \"admin\"\n}",
       "form": []
     },
     "tests": []
   },
   {
-    "_id": "5286944a-c719-4ee5-87f1-ecccf1134cf3",
+    "_id": "5e7dc219-7aa6-4cd6-b4bc-930c8be9ee93",
     "colId": "f9259617-2970-40ef-ac5e-e3e57f773bda",
     "containerId": "",
-    "name": "POST auth/login",
-    "url": "http://localhost:3001/api/auth/login",
+    "name": "POST auth/login PRO",
+    "url": "{{urlPro}}auth/login",
     "method": "POST",
-    "sortNum": 20000,
-    "created": "2022-11-26T00:03:58.284Z",
-    "modified": "2022-11-26T00:04:58.796Z",
+    "sortNum": 30000,
+    "created": "2022-11-27T18:12:50.552Z",
+    "modified": "2022-11-27T18:18:48.746Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": " { \"email\": \"zayr@mail.com\"\n \n}",
+      "raw": "{\n  \"email\": \"user4@mail.com\",\n  \"password\": \"userPass1\"\n}",
       "form": []
     },
     "tests": []
   },
   {
-    "_id": "2db30419-e677-4a0c-bbad-53ab28407d2e",
-    "colId": "cfaa43d9-c5cd-418e-85c0-f5576308441f",
-    "containerId": "",
-    "name": "getById",
-    "url": "https://c8-40-m-mern-kappa.vercel.app/api/users?_id=637e77105539d7aefa8e38a1",
-    "method": "GET",
-    "sortNum": 30000,
-    "created": "2022-11-26T00:03:58.285Z",
-    "modified": "2022-11-26T00:05:12.730Z",
-    "headers": [
-      {
-        "name": "Authorization",
-        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzODBkYTMwMmI5OTdkMDM2ZTVlOGQ1ZSIsInVzZXJOYW1lIjoiQ2FybG9zQ2hlY2siLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NjkzODg4NDgsImV4cCI6MTY2OTY0ODA0OH0.alvoOq7IOwH74wShLHWQFZc_Mj1Vq-gdS-ip7ICXkHw"
-      }
-    ],
-    "params": [
-      {
-        "name": "_id",
-        "value": "637e77105539d7aefa8e38a1",
-        "isPath": false
-      }
-    ],
-    "tests": []
-  },
-  {
-    "_id": "1f0b8288-59d8-42bf-80e4-ee4c91d7d4a7",
+    "_id": "0b012beb-13fe-487b-8773-a9aa4321339d",
     "colId": "147d3365-6f70-43fe-a65c-355f047b6deb",
     "containerId": "",
-    "name": "postPosts",
-    "url": "http://localhost:3001/api/posts",
-    "method": "POST",
-    "sortNum": 50000,
-    "created": "2022-11-26T00:03:58.286Z",
-    "modified": "2022-11-26T00:03:58.286Z",
-    "headers": [
-      {
-        "name": "Authorization",
-        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzN2U3YjBhMjE2NmNlYzY5MWQ4ODllNyIsInVzZXJOYW1lIjoiWmF5cmEgVWx0aW1vIiwicm9sZSI6ImRldiIsImlhdCI6MTY2OTIzMzQxOCwiZXhwIjoxNjY5NDkyNjE4fQ.ICbAeZEwwvaOzxA9aBbCVoaRppkX3TGUX0dIrKAE7DI"
-      },
-      {
-        "name": "User-Agent",
-        "value": "Thunder Client (https://www.thunderclient.com)",
-        "isDisabled": true
-      }
-    ],
-    "params": [],
-    "body": {
-      "type": "json",
-      "raw": "{\n  \"title\": \"prueba 14\",\n  \"description\": \"prueba description 3 prueba description 3\",\n  \"resource\": \"image\",\n  \"date\": \"10-10-2022\",\n  \"category\": \"backend\",\n  \"programming_l\": \"c++\",\n  \"technology\": \"angular\",\n  \"tag\": \"documentation\",\n  \"url\":\"https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty\"\n}",
-      "form": []
-    },
-    "tests": []
-  },
-  {
-    "_id": "d044a006-a246-4f74-b8f4-05a8c75b21d1",
-    "colId": "147d3365-6f70-43fe-a65c-355f047b6deb",
-    "containerId": "",
-    "name": "getAllPosts",
-    "url": "https://c8-40-m-mern-kappa.vercel.app/api/posts?category=637f960df3ee5834ef0180de",
+    "name": "GET /posts PRO",
+    "url": "{{urlPro}}posts?category=637f960df3ee5834ef0180de",
     "method": "GET",
-    "sortNum": 60000,
-    "created": "2022-11-26T00:03:58.287Z",
-    "modified": "2022-11-26T00:03:58.287Z",
+    "sortNum": 65000,
+    "created": "2022-11-27T19:31:36.885Z",
+    "modified": "2022-11-27T20:36:23.397Z",
     "headers": [
       {
         "name": "Authorization",
@@ -192,23 +352,46 @@
     "tests": []
   },
   {
-    "_id": "75fb377b-af85-47e7-babe-7c7c0f9f18b6",
+    "_id": "9f9e2bc3-e194-4bcc-aca9-3ffb36f084ad",
     "colId": "147d3365-6f70-43fe-a65c-355f047b6deb",
     "containerId": "",
-    "name": "getOnePost",
-    "url": "http://localhost:3001/api/posts?_id=637e9f68ca5f9c791397c311",
-    "method": "GET",
-    "sortNum": 70000,
-    "created": "2022-11-26T00:03:58.289Z",
-    "modified": "2022-11-26T00:03:58.289Z",
-    "headers": [],
-    "params": [
+    "name": "POST /posts PRO",
+    "url": "{{urlPro}}posts",
+    "method": "POST",
+    "sortNum": 55000,
+    "created": "2022-11-27T20:13:24.493Z",
+    "modified": "2022-11-27T20:37:20.826Z",
+    "headers": [
       {
-        "name": "_id",
-        "value": "637e9f68ca5f9c791397c311",
-        "isPath": false
+        "name": "Authorization",
+        "value": "{{devToken}}"
+      },
+      {
+        "name": "User-Agent",
+        "value": "Thunder Client (https://www.thunderclient.com)",
+        "isDisabled": true
       }
     ],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"title\": \"prueba 15\",\n  \"description\": \"prueba description prueba description 15\",\n  \"resource\": \"image\",\n  \"date\": \"10-10-2022\",\n  \"category\": \"backend\",\n  \"programmingL\": \"java\",\n  \"technology\": \"angular\",\n  \"tag\": \"documentation\",\n  \"url\":\"https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "d227f6ac-9671-4ae0-9e0e-ec0fa5b0479f",
+    "colId": "147d3365-6f70-43fe-a65c-355f047b6deb",
+    "containerId": "",
+    "name": "GET /posts/:id PRO",
+    "url": "{{urlPro}}posts/6383c6f785e452f6ffb5e765",
+    "method": "GET",
+    "sortNum": 73750,
+    "created": "2022-11-27T20:58:31.427Z",
+    "modified": "2022-11-27T21:01:50.827Z",
+    "headers": [],
+    "params": [],
     "body": {
       "type": "json",
       "raw": " {\n      \"title\": \"UPD1\"}",
@@ -217,15 +400,15 @@
     "tests": []
   },
   {
-    "_id": "68984e9d-e73a-41fd-84ce-cbbc65d6e7d6",
+    "_id": "8465cf99-9f43-4436-b8b7-8bd064b87550",
     "colId": "147d3365-6f70-43fe-a65c-355f047b6deb",
     "containerId": "",
-    "name": "updatePost",
+    "name": "PUT /posts/:id PRO",
     "url": "http://localhost:3001/api/posts/637e9f68ca5f9c791397c311",
     "method": "PUT",
-    "sortNum": 75000,
-    "created": "2022-11-26T00:03:58.290Z",
-    "modified": "2022-11-26T00:03:58.290Z",
+    "sortNum": 85000,
+    "created": "2022-11-27T21:01:56.294Z",
+    "modified": "2022-11-27T21:01:56.294Z",
     "headers": [
       {
         "name": "Authorization",
@@ -238,20 +421,6 @@
       "raw": "   {\n      \"title\": \"POST LAST UPDATED 6\",\n      \"description\": \"prueba prueba prueba prueba prueba UPDATED UPDATED\",\n      \"resource\": \"image\",\n      \"date\": \"05-12-2022\",\n      \"user\": \"zayra\",\n      \"ranking\": 3,\n      \"category\": \"frontend\",\n      \"programming_l\": \"java\",\n      \"technology\": \"node\",\n      \"tag\": \"documentation\",\n      \"id\": \"637e5e5b59b80619a2aae1d9\",\n      \"url\":\"https://www.google.com/imgres?imgurl=https%3A%2F%2Fcdn.pixabay.com%2Fphoto%2F2013%2F07%2F13%2F12%2F07%2Favatar-159236__340.png&imgrefurl=https%3A%2F%2Fpixabay.com%2Fes%2Fimages%2Fsearch%2Favatar%2F&tbnid=_NlvBF0glxxY4M&vet=12ahUKEwj85N3Sg8f7AhXBs5UCHbE8AtAQMygIegUIARDVAQ..i&docid=TB9zJ3jzkC_W5M&w=381&h=340&q=imagen%20gratis%20avatar&hl=es&ved=2ahUKEwj85N3Sg8f7AhXBs5UCHbE8AtAQMygIegUIARDVAQ\"\n    }",
       "form": []
     },
-    "tests": []
-  },
-  {
-    "_id": "b48483b2-6308-40f6-b49a-362c6019a082",
-    "colId": "89a2bd2b-923f-43bb-a007-bf3524fbf413",
-    "containerId": "",
-    "name": "getSideBar",
-    "url": "http://localhost:3001/api/sidebar",
-    "method": "GET",
-    "sortNum": 20000,
-    "created": "2022-11-26T00:03:58.291Z",
-    "modified": "2022-11-26T00:05:38.304Z",
-    "headers": [],
-    "params": [],
     "tests": []
   }
 ]

@@ -1,13 +1,16 @@
 import { Schema, model } from 'mongoose';
 
-const technologySchema = new Schema({ name: { type: String,
-  required: true,
-  unique: true},
-post: [{ type: Schema.Types.ObjectId, ref: 'post' }],
-], });
+const technologySchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  post: [{ type: Schema.Types.ObjectId, ref: 'post' }],
+});
 
-technologySchema.methods.toJSON = function () {
-  const { __v, _id, ...technology } = this.toObject();
+technologySchema.methods.toJSON = function idSetter() {
+  const { _id, ...technology } = this.toObject();
   technology.id = _id;
   return technology;
 };

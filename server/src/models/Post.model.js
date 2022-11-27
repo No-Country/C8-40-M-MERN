@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+
 import mongoosePaginate from 'mongoose-paginate-v2';
 
 const postSchema = new Schema(
@@ -30,9 +31,9 @@ const postSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'user',
     },
-    programming_l: {
+    programmingL: {
       type: Schema.Types.ObjectId,
-      ref: 'programming_l',
+      ref: 'programmingL',
     },
     category: {
       type: Schema.Types.ObjectId,
@@ -52,14 +53,15 @@ const postSchema = new Schema(
       ref: 'tag',
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
-postSchema.methods.toJSON = function () {
-  const { __v, _id, ...post } = this.toObject();
+postSchema.methods.toJSON = function idSetter() {
+  const { _id, ...post } = this.toObject();
   post.id = _id;
   return post;
 };
+
 postSchema.plugin(mongoosePaginate);
 
 export default model('post', postSchema);

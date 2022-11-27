@@ -1,27 +1,29 @@
 import { success, error, serverError } from '../helpers/responses.js';
-import { findAll } from '../services/sibebar.service.js';
 
-const getForSideBar = async (req, res) => {
+import findAll from '../services/sibebar.service.js';
+
+export default async function getForSideBar(req, res) {
   let data = {};
+
   try {
     data = await findAll();
-  } catch (error) {
+  } catch (err) {
     return serverError({
       res,
-      message: error.message,
+      message: err.message,
     });
   }
+
   if (Object.keys(data).length > 0) {
-    success({
+    return success({
       res,
       message: 'sidebar',
       data,
     });
-  } else {
-    error({
-      res,
-      message: 'data not found',
-    });
   }
-};
-export { getForSideBar };
+
+  return error({
+    res,
+    message: 'data not found',
+  });
+}

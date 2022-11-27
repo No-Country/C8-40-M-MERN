@@ -1,29 +1,46 @@
+/* eslint-disable object-curly-newline */
 import User from '../models/User.model.js';
-import { findByQuery as findPostByQuery } from './post.service.js';
+
 import { encryptPassword } from '../helpers/crypto.js';
 
 const findById = async (id) => {
-  const user = await User.findById(id, ['userName', 'email', 'avatar', 'role']);
+  const user = await User.findById(id, ['userName', 'email', 'avatar', 'role']).populate('post');
+  return user;
+};
+
+const findMatch = async (query) => {
+  const matched = await User.findOne(query);
+  return !!matched;
+};
+
+const findByEmail = async (email) => {
+  const user = await User.findOne({ email }, [
+    'userName',
+    'password',
+    'email',
+    'avatar',
+    'role',
+    'isActive',
+    'createdAt',
+    'updatedAt',
+  ]).populate('post');
   return user;
 };
 
 const findByQuery = async (query) => {
   let data = {};
+
+  const users = await User.find(query, [
+    'userName',
+    'email',
+    'avatar',
+    'role',
+    'isActive',
+    'post',
+  ]).populate('post');
+
   const count = await User.countDocuments(query);
-  const users = await User.find(query, ['userName', 'email', 'avatar', 'role', 'post']);
 
-  if (count > 1) {
-    for (const user of users) {
-      const posts = await findPostByQuery({ user: user._id });
-      user.post = posts;
-    }
-
-    data = {
-      count,
-      users,
-    };
-    return data;
-  }
   data = {
     count,
     users,
@@ -48,4 +65,21 @@ const findByIdAndUpdate = async (userId, userName, password, role, isActive, ava
   return updatedUser;
 };
 
-export { findById, findByQuery, findByIdAndUpdate };
+const newUser = async (body) => {
+  const { email, userName, password, role, isActive, avatar } = body;
+
+  const user = new User({
+    userName,
+    email,
+    password: encryptPassword(password),
+    role,
+    isActive,
+    avatar,
+  });
+
+  const savedUser = await user.save();
+
+  return savedUser;
+};
+
+export { findById, findMatch, findByEmail, findByQuery, findByIdAndUpdate, newUser };

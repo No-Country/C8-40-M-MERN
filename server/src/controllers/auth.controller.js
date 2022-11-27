@@ -1,22 +1,16 @@
-import { User } from '../models/User.model.js';
 import { error, serverError, success } from '../helpers/responses.js';
-import { encryptPassword, comparePassword } from '../helpers/crypto.js';
+
+import { comparePassword } from '../helpers/crypto.js';
+
 import { generateJWT } from '../helpers/jwt.js';
 
-const RegisterUser = async (req, res) => {
-  const { email, userName, password, role, isActive, avatar } = req.body;
-  let data = {};
-  try {
-    const newUser = new User({
-      userName,
-      email,
-      password: encryptPassword(password),
-      role,
-      isActive,
-      avatar,
-    });
+import { newUser, findByEmail } from '../services/user.service.js';
 
-    const savedUser = await newUser.save();
+const RegisterUser = async (req, res) => {
+  let data = {};
+
+  try {
+    const savedUser = await newUser(req.body);
 
     const token = await generateJWT(savedUser.id, savedUser.userName, savedUser.role);
 
@@ -41,49 +35,45 @@ const RegisterUser = async (req, res) => {
 
 const LoginUser = async (req, res) => {
   const { email, password } = req.body;
-  console.log(email, password);
+
+  let user = {};
 
   try {
-    const user = await User.findOne({ email });
-    !user &&
-      error({
-        res,
-        message: 'wrong credentials!',
-      });
-
-    const validPassword = comparePassword(password, user.password);
-    if (validPassword) {
-      const token = await generateJWT(user.id, user.role);
-
-      success({
-        res,
-        message: 'successfull login',
-        data: {
-          user: {
-            id: user.id,
-            userName: user.userName,
-            email: user.email,
-            isActive: user.isActive,
-            role: user.role,
-            post: user.post,
-          },
-          token,
-        },
-        status: 200,
-      });
-    } else {
-      error({
-        res,
-        message: 'invalid email or password',
-        status: 401,
-      });
-    }
-  } catch (error) {
+    user = await findByEmail(email);
+  } catch (err) {
     return serverError({
       res,
-      message: error.message,
+      message: err.message,
     });
   }
+
+  const { password: userPassword, ...userWithoutPassword } = user.toObject();
+
+  const validPassword = comparePassword(password, userPassword);
+
+  if (validPassword) {
+    let token = '';
+    try {
+      token = await generateJWT(user.id, user.role);
+    } catch (err) {
+      return serverError({
+        res,
+        message: err.message,
+      });
+    }
+
+    return success({
+      res,
+      message: 'successfull login',
+      data: { user: userWithoutPassword, token },
+      status: 200,
+    });
+  }
+  return error({
+    res,
+    message: 'invalid password',
+    status: 401,
+  });
 };
 
 export { RegisterUser, LoginUser };

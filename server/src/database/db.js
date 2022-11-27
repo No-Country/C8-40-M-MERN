@@ -1,4 +1,5 @@
 import { connect as _connect } from 'mongoose';
+
 import config from '../config.js';
 
 const { mongoUri } = config.development;
@@ -7,9 +8,11 @@ export default () => {
   const connect = () => {
     _connect(mongoUri, (err) => {
       if (err) {
-        console.log('DB: ERROR !!');
+        // eslint-disable-next-line no-console
+        console.error(new Error('( ͠° ͟ʖ ͡°) Connection error!'));
       } else {
-        console.log('Conexion correcta!!');
+        // eslint-disable-next-line no-console
+        console.log('Successfull connection!');
       }
     });
   };
