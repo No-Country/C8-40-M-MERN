@@ -1,118 +1,124 @@
 import { success, error, serverError } from '../helpers/responses.js';
+
 import { findById, findByQuery, newPost, findByIdAndUpdate } from '../services/post.service.js';
 
 const createPost = async (req, res) => {
-  const {
-    title,
-    description,
-    resource,
-    date,
-    programming_l,
-    category,
-    ranking,
-    technology,
-    tag,
-    url,
-  } = req.body;
+  const { body } = req;
 
   const { id } = req;
 
+  let savedPost = {};
+
   try {
-    const savedPost = await newPost({
-      title,
-      description,
-      resource,
-      date,
-      programming_l,
-      category,
-      ranking,
-      technology,
-      tag,
-      id,
-      url,
+    savedPost = await newPost({ id, body });
+  } catch (err) {
+    return serverError({
+      res,
+      message: err.message,
     });
-
-    if (savedPost) {
-      const post = await findById(savedPost.id);
-
-      success({ res, message: 'post created successfully', data: post });
-    } else {
-      error({ res, message: 'post creation failed' });
-    }
-  } catch (error) {
-    return serverError({ res, message: error.message });
   }
+
+  if (Object.keys(savedPost).length > 0) {
+    const post = await findById(savedPost.id);
+
+    return success({
+      res,
+      message: 'post created successfully',
+      data: post,
+    });
+  }
+
+  return error({
+    res,
+    message: 'post creation failed',
+  });
 };
 
 const getAllPost = async (req, res) => {
   const { query } = req;
+
   let data = {};
+
   try {
     data = await findByQuery(query);
-  } catch (error) {
-    return serverError({ res, message: error.message });
+  } catch (err) {
+    return serverError({
+      res,
+      message: err.message,
+    });
   }
-  if (data) {
-    success({ res, message: 'posts found successfully', data });
-  } else {
-    error({ res, message: 'posts found failed' });
+
+  if (data.totalDocs > 0) {
+    return success({
+      res,
+      message: 'all posts',
+      data,
+    });
   }
+
+  return error({
+    res,
+    message: 'posts not found',
+  });
 };
 
 const getPostById = async (req, res) => {
+  const { postId } = req.params;
+  let post = {};
+
   try {
-    const { postId } = req.params;
-    const post = await findById(postId);
-    if (post) {
-      success({ res, message: `post id: ${postId}`, status: 201, data: post });
-    } else {
-      error({ res, message: 'post not found' });
-    }
-  } catch (error) {
-    serverError({ res, message: error.message });
+    post = await findById(postId);
+  } catch (err) {
+    serverError({
+      res,
+      message: err.message,
+    });
   }
+
+  if (Object.keys(post).length > 0) {
+    return success({
+      res,
+      message: `post id: ${postId}`,
+      status: 201,
+      data: post,
+    });
+  }
+
+  return error({
+    res,
+    message: 'post not found',
+  });
 };
 
 const updatePost = async (req, res) => {
   const { postId } = req.params;
-  const {
-    title,
-    description,
-    resource,
-    url,
-    date,
-    programming_l,
-    category,
-    ranking,
-    technology,
-    tag,
-  } = req.body;
+
+  const { body } = req;
 
   let data = {};
+
   try {
-    const updatePost = await findByIdAndUpdate({
-      postId,
-      title,
-      description,
-      resource,
-      url,
-      date,
-      programming_l,
-      category,
-      ranking,
-      technology,
-      tag,
+    data = await findByIdAndUpdate({ postId, body });
+  } catch (err) {
+    return serverError({
+      res,
+      message: err.message,
     });
-    data = updatePost;
-  } catch (error) {
-    return serverError({ res, message: error.message });
   }
 
   if (Object.keys(data).length > 0) {
-    return success({ res, message: 'post updated', data, status: 201 });
-  } else {
-    return error({ res, message: 'post not found' });
+    return success({
+      res,
+      message: 'post updated',
+      data,
+      status: 201,
+    });
   }
+
+  return error({
+    res,
+    message: 'post not found',
+  });
 };
 
 export { createPost, updatePost, getAllPost, getPostById };
