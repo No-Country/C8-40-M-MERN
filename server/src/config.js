@@ -8,5 +8,6 @@ export default {
     jwtSec: process.env.JWT_SEC,
     passSec: process.env.PASS_SEC,
     mongoUri: process.env.MONGODB_URI,
+    url: process.env.URL,
   },
 };

@@ -11,7 +11,7 @@ const categorySchema = new Schema({
       'ux/ui',
       'devops',
       'architecture',
-      'datas cience',
+      'datas science',
       'machine learning',
     ],
     default: 'frontend',
