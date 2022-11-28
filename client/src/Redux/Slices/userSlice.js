@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { apiSlice } from '../Api/apiSlice';
 
 const initialState = {
+  token: null,
   userId: null,
   isAuth: false,
   userInfo: {},
@@ -17,10 +18,6 @@ const userSlice = createSlice({
       state.isAuth = false;
       state.userInfo = {};
     },
-    checkAuth: (state, action) => {
-      console.log(action.payload);
-      if (action.payload !== null) state.isAuth = true;
-    },
   },
   extraReducers: (builder) => {
     builder
@@ -31,6 +28,7 @@ const userSlice = createSlice({
         const { token, savedUser } = action.payload.data;
 
         sessionStorage.setItem('token', token);
+        state.token = token;
         state.userInfo = savedUser;
         state.userId = savedUser.id;
         state.isAuth = true;
@@ -45,12 +43,13 @@ const userSlice = createSlice({
         const { token, user } = action.payload.data;
 
         sessionStorage.setItem('token', token);
+        state.token = token;
         state.userInfo = user;
         state.userId = user.id;
         state.isAuth = true;
       })
       .addMatcher(apiSlice.endpoints.loginUser.matchRejected, (state, action) => {})
-      // ------------------------- login user promise result
+      // ------------------------- update user promise result
       .addMatcher(apiSlice.endpoints.updateUser.matchFulfilled, (state, action) => {
         console.log('update user matchFulfilled', action.payload);
       })

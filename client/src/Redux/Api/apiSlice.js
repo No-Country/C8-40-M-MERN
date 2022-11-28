@@ -1,11 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const baseQuery = fetchBaseQuery({
-  // baseUrl: `http://localhost:3000/api/`,
+  // baseUrl: `http://localhost:3000/api`,
   baseUrl: 'https://c8-40-m-mern-kappa.vercel.app/api',
   prepareHeaders: (headers, { getState }) => {
-    const state = getState();
-    console.log(state);
+    // const state = getState();
+    // console.log('state', state);
     const token = sessionStorage.getItem('token');
     if (token) headers.set('authorization', `Bearer ${token}`);
     return headers;
@@ -107,12 +107,10 @@ export const {
   useCreateUserMutation,
   useUpdateUserMutation,
   useGetAllUsersQuery,
-
-  //
-  useGetUserbyIdQuery,
-  //
+  useGetUserbyIdQuery, // only admins
 
   useGetAllPostsQuery,
+  useGetPostsByIdQuery,
   useAddNewPostMutation,
   // useGetUserPostsQuery,
   useUpdatePostMutation,
