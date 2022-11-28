@@ -4,7 +4,15 @@ import User from '../models/User.model.js';
 import { encryptPassword } from '../helpers/crypto.js';
 
 const findById = async (id) => {
-  const user = await User.findById(id, ['userName', 'email', 'avatar', 'role']).populate('post');
+  const user = await User.findById(id, [
+    'userName',
+    'email',
+    'avatar',
+    'role',
+    'isActive',
+    'createdAt',
+    'updatedAt',
+  ]).populate('post');
   return user;
 };
 
@@ -77,7 +85,9 @@ const newUser = async (body) => {
     avatar,
   });
 
-  const savedUser = await user.save();
+  await user.save();
+
+  const savedUser = await findById(user._id);
 
   return savedUser;
 };

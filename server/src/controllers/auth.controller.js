@@ -15,7 +15,7 @@ const RegisterUser = async (req, res) => {
     const token = await generateJWT(savedUser.id, savedUser.userName, savedUser.role);
 
     data = {
-      savedUser,
+      user: savedUser,
       token,
     };
   } catch (err) {
