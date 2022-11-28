@@ -1,17 +1,19 @@
 import { check, query, param } from 'express-validator';
-import { validateResult } from '../middlewares/validateResult.js';
-import { findByQuery } from '../services/post.service.js';
+
+import validateResult from '../middlewares/validateResult.js';
+
+import { findByQuery as findMatch } from '../services/post.service.js';
 
 const validateFields = [
   check('title', 'Enter a title')
     .exists()
     .isLength({ min: 5 })
-    .withMessage('Title must be between 3-30 letters')
+    .withMessage('Title must be between 5-30 letters')
     .isLength({ max: 30 })
-    .withMessage('Title must be between 3-30 letters')
+    .withMessage('Title must be between 5-30 letters')
     .custom(async (value) => {
-      const matchedTitle = await findByQuery({ title: value });
-      if (matchedTitle.length > 0) {
+      const matchedPost = await findMatch({ title: value });
+      if (matchedPost.length > 0) {
         throw new Error('Post title must be unique');
       } else {
         return true;
@@ -29,18 +31,19 @@ const validateFields = [
     .trim()
     .escape(),
 
-  check('resource', `Enter a resource's type`)
+  check('resource', "Enter a resource's type")
     .exists()
-    .isIn(['video', 'image', 'code'])
-    .withMessage(`Resource must be 'video', 'image' or 'code'`),
+    .isIn(['video', 'image', 'document'])
+    .withMessage("Resource must be 'video', 'image' or 'document'"),
 
-  check('date', 'Enter the date the material was created or updated')
+  check('date', 'Enter the date the original data was created or updated')
     .exists()
-    .isDate({ format: 'MM-DD-YYYY' }),
+    .isDate({ format: 'MM-DD-YYYY' })
+    .withMessage("Date format: 'MM-DD-YYYY'"),
 
   check('category', 'Enter a category').exists(),
 
-  check('programming_l', 'Enter a programming language').exists(),
+  check('programmingL', 'Enter a programming language').exists(),
 
   check('technology', 'Enter a technology').exists(),
 
@@ -54,7 +57,7 @@ const validateFields = [
 ];
 
 const validateQueries = [
-  query('title', 'Title must be between 3-30 letters')
+  query('title', 'Title must be between 5-30 letters')
     .optional()
     .isLength({ min: 5 })
     .isLength({ max: 30 })
@@ -68,15 +71,15 @@ const validateQueries = [
     .trim()
     .escape(),
 
-  query('resource', `Resource must be 'video', 'image' or 'code'`)
+  query('resource', "Resource must be 'video', 'image' or 'document'")
     .optional()
-    .isIn(['video', 'image', 'code']),
+    .isIn(['video', 'image', 'document']),
 
-  query('date', `Date format must be 'MM-DD-YYYY'`).optional().isDate({ format: 'MM-DD-YYYY' }),
+  query('date', "Date format must be 'MM-DD-YYYY'").optional().isDate({ format: 'MM-DD-YYYY' }),
 
   query('category', 'Category must be an id').optional().isMongoId(),
 
-  query('programming_l', 'Programming_l must be an id').optional().isMongoId(),
+  query('programmingL', 'ProgrammingL must be an id').optional().isMongoId(),
 
   query('technology', 'Technology must be an id').optional().isMongoId(),
 
@@ -95,8 +98,8 @@ const validateUpdateFields = [
     .isLength({ max: 30 })
     .withMessage('Title must be between 3-30 letters')
     .custom(async (value) => {
-      const matchedTitle = await findByQuery({ title: value });
-      if (matchedTitle.length > 0) {
+      const matchedPost = await findMatch({ title: value });
+      if (matchedPost.length > 0) {
         throw new Error('Post title must be unique');
       } else {
         return true;
@@ -114,10 +117,10 @@ const validateUpdateFields = [
     .trim()
     .escape(),
 
-  check('resource', `Enter a resource's type`)
+  check('resource', "Enter a resource's type")
     .optional()
-    .isIn(['video', 'image', 'code'])
-    .withMessage(`Resource must be 'video', 'image' or 'code'`),
+    .isIn(['video', 'image', 'document'])
+    .withMessage("Resource must be 'video', 'image' or 'document'"),
 
   check('date', 'Enter the date the material was created or updated')
     .optional()
@@ -145,7 +148,13 @@ const validateUpdateFields = [
     ])
     .withMessage('Enter a valid category'),
 
-  check('ranking').optional().isInt({ min: 0, max: 5 }).withMessage('Ranking must be between 0-5'),
+  check('ranking')
+    .optional()
+    .isInt({
+      min: 0,
+      max: 5,
+    })
+    .withMessage('Ranking must be between 0-5'),
 
   (req, res, next) => {
     validateResult(req, res, next);

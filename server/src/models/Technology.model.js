@@ -6,16 +6,11 @@ const technologySchema = new Schema({
     required: true,
     unique: true,
   },
-  post: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'post',
-    },
-  ],
+  post: [{ type: Schema.Types.ObjectId, ref: 'post' }],
 });
 
-technologySchema.methods.toJSON = function () {
-  const { __v, _id, ...technology } = this.toObject();
+technologySchema.methods.toJSON = function idSetter() {
+  const { _id, ...technology } = this.toObject();
   technology.id = _id;
   return technology;
 };

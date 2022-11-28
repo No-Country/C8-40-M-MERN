@@ -3,7 +3,6 @@ import { Schema, model } from 'mongoose';
 const categorySchema = new Schema({
   name: {
     type: String,
-
     enum: [
       'frontend',
       'backend',
@@ -18,16 +17,11 @@ const categorySchema = new Schema({
     default: 'frontend',
     require: true,
   },
-  post: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'post',
-    },
-  ],
+  post: [{ type: Schema.Types.ObjectId, ref: 'post' }],
 });
 
-categorySchema.methods.toJSON = function () {
-  const { __v, _id, ...category } = this.toObject();
+categorySchema.methods.toJSON = function idSetter() {
+  const { _id, ...category } = this.toObject();
   category.id = _id;
   return category;
 };

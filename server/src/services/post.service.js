@@ -1,8 +1,13 @@
 import Post from '../models/Post.model.js';
-import ProgrammingL from '../models/Programming_L.model.js';
+
+import ProgrammingL from '../models/ProgrammingL.model.js';
+
 import Category from '../models/Category.model.js';
+
 import Technology from '../models/Technology.model.js';
+
 import Tag from '../models/Tag.model.js';
+
 import User from '../models/User.model.js';
 
 const findById = async (id) => {
@@ -13,71 +18,118 @@ const findById = async (id) => {
     'date',
     'ranking',
     'url',
+    'createdAt',
+    'updatedAt',
   ])
-    .populate({ path: 'user', select: 'userName' })
+    .populate({
+      path: 'user',
+      select: 'userName',
+    })
     .populate({
       path: 'category',
       select: 'name',
     })
-    .populate({ path: 'programming_l', select: 'name' })
-    .populate({ path: 'technology', select: 'name' })
-    .populate({ path: 'tag', select: 'name' });
+    .populate({
+      path: 'programmingL',
+      select: 'name',
+    })
+    .populate({
+      path: 'technology',
+      select: 'name',
+    })
+    .populate({
+      path: 'tag',
+      select: 'name',
+    });
 
   return post;
 };
 
 const findByQuery = async (query) => {
-  const page = parseInt(query.page) || 1;
-  const limit = parseInt(query.limit) || 10;
+  const page = parseInt(query.page, 10) || 1;
+
+  const limit = parseInt(query.limit, 10) || 10;
+
   const sort = query.sort || 'desc';
-  const search = query.search;
+
+  const { search } = query;
+
+  let finalSearch = {};
+
   let direction = -1;
 
   if (sort === 'asc') {
     direction = 1;
   }
 
-  let options = {
+  if (search) {
+    finalSearch = {
+      ...query,
+      $or: [
+        {
+          title: {
+            $regex: search,
+            $options: 'i',
+          },
+        },
+        {
+          description: {
+            $regex: search,
+            $options: 'i',
+          },
+        },
+      ],
+    };
+  }
+
+  const options = {
     populate: [
-      { path: 'user', select: 'userName' },
-      { path: 'category', select: 'name' },
-      { path: 'programming_l', select: 'name' },
-      { path: 'technology', select: 'name' },
-      { path: 'tag', select: 'name' },
+      {
+        path: 'user',
+        select: 'userName',
+      },
+      {
+        path: 'category',
+        select: 'name',
+      },
+      {
+        path: 'programmingL',
+        select: 'name',
+      },
+      {
+        path: 'technology',
+        select: 'name',
+      },
+      {
+        path: 'tag',
+        select: 'name',
+      },
     ],
     sort: { createdAt: direction },
     page,
     limit,
   };
 
-  if (search)
-    query = {
-      ...query,
-      $or: [
-        { title: { $regex: search, $options: 'i' } },
-        { description: { $regex: search, $options: 'i' } },
-      ],
-    };
-
-  const posts = await Post.paginate(query, options);
+  const posts = await Post.paginate(finalSearch, options);
 
   return posts;
 };
 
-const findByIdAndUpdate = async ({
-  postId,
-  title,
-  description,
-  resource,
-  url,
-  date,
-  programming_l,
-  category,
-  ranking,
-  technology,
-  tag,
-}) => {
-  let options = {
+const findByIdAndUpdate = async ({ postId, body }) => {
+  const {
+    title,
+    description,
+    resource,
+    url,
+    date,
+    programmingL,
+    category,
+    ranking,
+    technology,
+    tag,
+  } = body;
+
+  const options = {
     title,
     description,
     resource,
@@ -86,21 +138,27 @@ const findByIdAndUpdate = async ({
     ranking,
   };
 
-  if (programming_l) {
+  if (programmingL) {
     const postLanguage = await ProgrammingL.findOneAndUpdate(
-      { name: programming_l },
-      { $set: { name: programming_l } },
-      { upsert: true, new: true }
+      { name: programmingL },
+      { $set: { name: programmingL } },
+      {
+        upsert: true,
+        new: true,
+      }
     );
     await postLanguage.save();
-    options.programming_l = postLanguage._id;
+    options.programmingL = postLanguage._id;
   }
 
   if (category) {
     const postCategory = await Category.findOneAndUpdate(
       { name: category },
       { $set: { name: category } },
-      { upsert: true, new: true }
+      {
+        upsert: true,
+        new: true,
+      }
     );
     await postCategory.save();
     options.category = postCategory._id;
@@ -110,7 +168,10 @@ const findByIdAndUpdate = async ({
     const postTechnology = await Technology.findOneAndUpdate(
       { name: technology },
       { $set: { name: technology } },
-      { upsert: true, new: true }
+      {
+        upsert: true,
+        new: true,
+      }
     );
     await postTechnology.save();
     options.technology = postTechnology._id;
@@ -120,7 +181,10 @@ const findByIdAndUpdate = async ({
     const postTag = await Tag.findOneAndUpdate(
       { name: tag },
       { $set: { name: tag } },
-      { upsert: true, new: true }
+      {
+        upsert: true,
+        new: true,
+      }
     );
     await postTag.save();
     options.tag = postTag._id;
@@ -129,7 +193,7 @@ const findByIdAndUpdate = async ({
   if (ranking) {
     const post = await findById(postId);
     let previousRanking = 0;
-    let newVote = parseInt(ranking);
+    const newVote = parseInt(ranking, 10);
     let newRanking = newVote;
     if (post.ranking) {
       previousRanking = post.ranking;
@@ -140,9 +204,7 @@ const findByIdAndUpdate = async ({
 
   const updatedPost = await Post.findByIdAndUpdate(
     { _id: postId },
-    {
-      $set: options,
-    },
+    { $set: options },
     { new: true }
   );
 
@@ -151,20 +213,21 @@ const findByIdAndUpdate = async ({
   return data;
 };
 
-const newPost = async ({
-  title,
-  description,
-  resource,
-  date,
-  programming_l,
-  category,
-  ranking,
-  technology,
-  tag,
-  url,
-  id,
-}) => {
-  const newPost = new Post({
+const newPost = async ({ id, body }) => {
+  const {
+    title,
+    description,
+    resource,
+    date,
+    programmingL,
+    category,
+    ranking,
+    technology,
+    tag,
+    url,
+  } = body;
+
+  const post = new Post({
     title,
     description,
     resource,
@@ -174,55 +237,61 @@ const newPost = async ({
     url,
   });
 
-  const user = await User.findById(id);
-  user.post.push(newPost.id);
-  await user.save();
-  /* -- */
-  const postLanguage = await ProgrammingL.findOneAndUpdate(
-    { name: programming_l },
-    { $set: { name: programming_l } },
-    { upsert: true, new: true }
-  );
+  const postUser = await User.findById(id);
+  postUser.post.push(post.id);
+  await postUser.save();
 
-  postLanguage.post.push(newPost.id);
+  const postLanguage = await ProgrammingL.findOneAndUpdate(
+    { name: programmingL },
+    { $set: { name: programmingL } },
+    {
+      upsert: true,
+      new: true,
+    }
+  );
+  postLanguage.post.push(post.id);
   await postLanguage.save();
-  /* -- */
+
   const postCategory = await Category.findOneAndUpdate(
     { name: category },
     { $set: { name: category } },
-    { upsert: true, new: true }
+    {
+      upsert: true,
+      new: true,
+    }
   );
-
-  postCategory.post.push(newPost.id);
+  postCategory.post.push(post.id);
   await postCategory.save();
-  /* -- */
+
   const postTechnology = await Technology.findOneAndUpdate(
     { name: technology },
     { $set: { name: technology } },
-    { upsert: true, new: true }
+    {
+      upsert: true,
+      new: true,
+    }
   );
-
-  postTechnology.post.push(newPost.id);
+  postTechnology.post.push(post.id);
   await postTechnology.save();
 
-  /* -- */
   const postTag = await Tag.findOneAndUpdate(
     { name: tag },
     { $set: { name: tag } },
-    { upsert: true, new: true }
+    {
+      upsert: true,
+      new: true,
+    }
   );
-
-  postTag.post.push(newPost.id);
+  postTag.post.push(post.id);
   await postTag.save();
 
-  /* -- */
+  post.category = postCategory.id;
+  post.programmingL = postLanguage.id;
+  post.technology = postTechnology.id;
+  post.tag = postTag.id;
 
-  newPost.category = postCategory.id;
-  newPost.programming_l = postLanguage.id;
-  newPost.technology = postTechnology.id;
-  newPost.tag = postTag.id;
+  const savedPost = await post.save();
 
-  const savedPost = await newPost.save();
   return savedPost;
 };
 
