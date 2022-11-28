@@ -5,6 +5,8 @@ import AllCards from '../../Components/Cards/AllCards';
 import { useParams } from 'react-router-dom';
 import TagsFilters from '../../Components/Home/TagsFilters';
 
+import { useGetAllPostsQuery, useGetCategoriesQuery } from '../../Redux/Api/apiSlice';
+
 const styles = {
   mainContainer: 'pt-[80px] md:px-[17%] w-full ',
   categoryTitle: 'text-4xl text-white',
@@ -18,6 +20,9 @@ const styles = {
 };
 
 function Home() {
+  const { data, isLoading, isFetching, isError } = useGetAllPostsQuery();
+  console.log(data, isLoading, isFetching, isError);
+
   const [filtering, setFiltering] = useState(null);
   const { categories, category } = useParams();
 
@@ -52,7 +57,7 @@ function Home() {
         <CardContainerM />
       </div>
 
-      <AllCards />
+      <AllCards data={data?.data.docs} />
     </main>
   );
 }
