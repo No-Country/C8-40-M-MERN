@@ -125,6 +125,28 @@ const validateUpdateFields = [
 
   check('url', 'Enter a url').optional().isURL().withMessage('Enter a valid url'),
 
+  check('tag')
+    .optional()
+    .isIn(['documentation', 'solution', 'article', 'news'])
+    .withMessage('Enter a valid tag'),
+
+  check('category')
+    .optional()
+    .isIn([
+      'frontend',
+      'backend',
+      'qa',
+      'testing',
+      'ux/ui',
+      'devops',
+      'architecture',
+      'data science',
+      'machine learning',
+    ])
+    .withMessage('Enter a valid category'),
+
+  check('ranking').optional().isInt({ min: 0, max: 5 }).withMessage('Ranking must be between 0-5'),
+
   (req, res, next) => {
     validateResult(req, res, next);
   },

@@ -3,16 +3,17 @@ import { Schema, model } from 'mongoose';
 const categorySchema = new Schema({
   name: {
     type: String,
+
     enum: [
       'frontend',
       'backend',
       'qa',
       'testing',
-      'uxui',
+      'ux/ui',
       'devops',
       'architecture',
-      'datascience',
-      'machinelearning',
+      'datas cience',
+      'machine learning',
     ],
     default: 'frontend',
     require: true,

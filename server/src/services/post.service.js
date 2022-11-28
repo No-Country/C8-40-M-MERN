@@ -27,22 +27,39 @@ const findById = async (id) => {
 };
 
 const findByQuery = async (query) => {
-  const posts = await Post.find(query, [
-    'title',
-    'description',
-    'resource',
-    'date',
-    'url',
-    'ranking',
-  ])
-    .populate({ path: 'user', select: 'userName' })
-    .populate({
-      path: 'category',
-      select: 'name',
-    })
-    .populate({ path: 'programming_l', select: 'name' })
-    .populate({ path: 'technology', select: 'name' })
-    .populate({ path: 'tag', select: 'name' });
+  const page = parseInt(query.page) || 1;
+  const limit = parseInt(query.limit) || 10;
+  const sort = query.sort || 'desc';
+  const search = query.search;
+  let direction = -1;
+
+  if (sort === 'asc') {
+    direction = 1;
+  }
+
+  let options = {
+    populate: [
+      { path: 'user', select: 'userName' },
+      { path: 'category', select: 'name' },
+      { path: 'programming_l', select: 'name' },
+      { path: 'technology', select: 'name' },
+      { path: 'tag', select: 'name' },
+    ],
+    sort: { createdAt: direction },
+    page,
+    limit,
+  };
+
+  if (search)
+    query = {
+      ...query,
+      $or: [
+        { title: { $regex: search, $options: 'i' } },
+        { description: { $regex: search, $options: 'i' } },
+      ],
+    };
+
+  const posts = await Post.paginate(query, options);
 
   return posts;
 };
@@ -60,52 +77,71 @@ const findByIdAndUpdate = async ({
   technology,
   tag,
 }) => {
-  const postLanguage = await ProgrammingL.findOneAndUpdate(
-    { name: programming_l },
-    { $set: { name: programming_l } },
-    { upsert: true, new: true }
-  );
+  let options = {
+    title,
+    description,
+    resource,
+    url,
+    date,
+    ranking,
+  };
 
-  await postLanguage.save();
+  if (programming_l) {
+    const postLanguage = await ProgrammingL.findOneAndUpdate(
+      { name: programming_l },
+      { $set: { name: programming_l } },
+      { upsert: true, new: true }
+    );
+    await postLanguage.save();
+    options.programming_l = postLanguage._id;
+  }
 
-  const postCategory = await Category.findOneAndUpdate(
-    { name: category },
-    { $set: { name: category } },
-    { upsert: true, new: true }
-  );
+  if (category) {
+    const postCategory = await Category.findOneAndUpdate(
+      { name: category },
+      { $set: { name: category } },
+      { upsert: true, new: true }
+    );
+    await postCategory.save();
+    options.category = postCategory._id;
+  }
 
-  await postCategory.save();
-  const postTechnology = await Technology.findOneAndUpdate(
-    { name: technology },
-    { $set: { name: technology } },
-    { upsert: true, new: true }
-  );
+  if (technology) {
+    const postTechnology = await Technology.findOneAndUpdate(
+      { name: technology },
+      { $set: { name: technology } },
+      { upsert: true, new: true }
+    );
+    await postTechnology.save();
+    options.technology = postTechnology._id;
+  }
 
-  await postTechnology.save();
+  if (tag) {
+    const postTag = await Tag.findOneAndUpdate(
+      { name: tag },
+      { $set: { name: tag } },
+      { upsert: true, new: true }
+    );
+    await postTag.save();
+    options.tag = postTag._id;
+  }
 
-  const postTag = await Tag.findOneAndUpdate(
-    { name: tag },
-    { $set: { name: tag } },
-    { upsert: true, new: true }
-  );
-
-  await postTag.save();
+  if (ranking) {
+    const post = await findById(postId);
+    let previousRanking = 0;
+    let newVote = parseInt(ranking);
+    let newRanking = newVote;
+    if (post.ranking) {
+      previousRanking = post.ranking;
+      newRanking = (newVote + previousRanking) / 2;
+    }
+    options.ranking = newRanking;
+  }
 
   const updatedPost = await Post.findByIdAndUpdate(
     { _id: postId },
     {
-      $set: {
-        title,
-        description,
-        resource,
-        url,
-        date,
-        ranking,
-        programming_l: postLanguage._id,
-        technology: postTechnology._id,
-        tag: postTag._id,
-        category: postCategory._id,
-      },
+      $set: options,
     },
     { new: true }
   );
