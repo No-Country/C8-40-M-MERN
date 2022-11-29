@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import CardContainer from '../../Components/Cards/CardsContainer';
 import CardContainerM from '../../Components/Cards/CardsContainerM';
 import AllCards from '../../Components/Cards/AllCards';
+
+import Detail from '../Detail';
+
 import { useParams } from 'react-router-dom';
 import TagsFilters from '../../Components/Home/TagsFilters';
 

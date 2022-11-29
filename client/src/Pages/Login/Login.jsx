@@ -12,7 +12,7 @@ function Login() {
   } = useForm();
 
   const styles = {
-    mainContainer: 'w-full h-[80vh] flex flex-col gap-8 justify-center items-center ',
+    mainContainer: 'w-full h-[80vh] flex flex-col gap-8 justify-center items-center pt-40',
     logo: 'w-full text-[30px] text-white text-start font-semibold mb-10',
     form: 'flex flex-col gap-6 items-center w-full sm:w-[420px] px-6 relative',
     inputs: `w-full h-[44px] border-2 bg-transparent rounded-xl px-3 outline-none text-[#ABADC6] border-[#424867]`,
