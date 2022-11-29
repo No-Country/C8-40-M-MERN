@@ -4,19 +4,14 @@ const tagSchema = new Schema({
   name: {
     type: String,
     enum: ['documentation', 'solution', 'article', 'news'],
-    default: 'documentation',
+    default: 'article',
     require: true,
   },
-  post: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'post',
-    },
-  ],
+  post: [{ type: Schema.Types.ObjectId, ref: 'post' }],
 });
 
-tagSchema.methods.toJSON = function () {
-  const { __v, _id, ...tag } = this.toObject();
+tagSchema.methods.toJSON = function idSetter() {
+  const { _id, ...tag } = this.toObject();
   tag.id = _id;
   return tag;
 };

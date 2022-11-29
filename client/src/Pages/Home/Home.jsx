@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import CardContainer from '../../Components/Cards/CardsContainer';
 import CardContainerM from '../../Components/Cards/CardsContainerM';
 import AllCards from '../../Components/Cards/AllCards';
+
 import Detail from '../Detail';
+
 import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
 import TagsFilters from '../../Components/Home/TagsFilters';
 
 const styles = {
-  mainContainer: 'pt-[80px] px-[17%] w-full ',
+  mainContainer: 'pt-[80px] md:px-[17%] w-full ',
   categoryTitle: 'text-4xl text-white',
   buttonSection: 'w-full flex justify-between gap-4 mt-6',
   filterButtons: 'w-full py-2 bg-gray-300',

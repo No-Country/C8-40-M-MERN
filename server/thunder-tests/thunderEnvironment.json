@@ -1,0 +1,45 @@
+[
+  {
+    "_id": "35c2c37d-70d8-466b-9789-d61e137608b5",
+    "name": "(Global Env)",
+    "default": false,
+    "global": true,
+    "sortNum": -2,
+    "created": "2022-11-26T00:06:30.786Z",
+    "modified": "2022-11-26T00:06:30.786Z",
+    "data": [
+      {
+        "name": "adminToken",
+        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzODI5MWQyODc0NDMzY2E5ZmY2NThmNCIsInVzZXJOYW1lIjoiVGVzdFVzZXI0Iiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjY5NTAxMzk1LCJleHAiOjE2Njk3NjA1OTV9.5VQ9Y3zkyGfGNZR4zJ1Q2sG7bKqZnW2pg7o2iSRElJ8"
+      },
+      {
+        "name": "adminEmail",
+        "value": "user4@mail.com"
+      },
+      {
+        "name": "adminPassword",
+        "value": "userPass1"
+      },
+      {
+        "name": "devToken",
+        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzODNhOTM0YjVhZmFjOTkyODhlODY5NyIsInVzZXJOYW1lIjoiVGVzdFVzZXI1Iiwicm9sZSI6ImRldiIsImlhdCI6MTY2OTU3MjkxNiwiZXhwIjoxNjY5ODMyMTE2fQ.iGayOuHFgvDoUhY0GegF8QyHAAWcQgKx-Ne0QQWQx-k"
+      },
+      {
+        "name": "devEmail",
+        "value": "user5@mail.com"
+      },
+      {
+        "name": "devPassword",
+        "value": "userPass1"
+      },
+      {
+        "name": "urlPro",
+        "value": "https://c8-40-m-mern-kappa.vercel.app/api/"
+      },
+      {
+        "name": "urlDev",
+        "value": "http://localhost:3001/api/"
+      }
+    ]
+  }
+]
