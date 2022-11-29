@@ -62,7 +62,7 @@ export const apiSlice = createApi({
     }),
     getPostsById: builder.query({
       query: (id) => ({
-        url: `/posts/${id}`,
+        url: `/posts/` + id,
       }),
     }),
     addNewPost: builder.mutation({

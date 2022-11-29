@@ -6,7 +6,7 @@ import CardMobile from './CardMobile';
 const styles = {
   container: 'flex flex-col w-full ',
   sectionTitle: 'text-[#FFFFFF] px-[6px]',
-  cardsDisplayer: 'hidden md:flex gap-2 ',
+  cardsDisplayer: 'hidden md:flex flex-wrap gap-2 ',
   cardsDisplayerM:
     'md:hidden grid grid-rows-15 grid-cols-2 gap-y-4 m-[10px]  justify-center justify-items-center',
 };
