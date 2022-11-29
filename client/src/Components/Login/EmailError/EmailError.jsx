@@ -4,7 +4,7 @@ const styles = {
   container: 'w-[90%] sm:w-full bg-[#1E2235] p-1 md:px-4 rounded-lg absolute text-sm top-11 ',
   span: 'flex items-center gap-2 text-[#EF4444] ',
   icon: 'text-xl ',
-  secondText: 'text-[#ABADC6] mt-1 px-7 '
+  secondText: 'text-[#ABADC6] mt-1 px-7 ',
 };
 function EmailError() {
   return (

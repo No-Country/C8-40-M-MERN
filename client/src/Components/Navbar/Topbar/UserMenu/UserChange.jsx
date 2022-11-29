@@ -12,7 +12,7 @@ function UserChange({ profileTitle, handleGoBack, handleCloseAll }) {
     form: 'flex flex-col mt-4 gap-4 text-[#DCDEF3] text-sm ',
     input: 'py-3 px-4 rounded-xl bg-transparent outline-none border-2 border-[#424867] ',
     button:
-      'bg-[#2563EB] w-[141px] h-[44px] rounded-xl text-white text-md font-semibold tracking-wide ml-[55%] '
+      'bg-[#2563EB] w-[141px] h-[44px] rounded-xl text-white text-md font-semibold tracking-wide ml-[55%] ',
   };
 
   return (
