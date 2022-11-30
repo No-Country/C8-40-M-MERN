@@ -24,7 +24,7 @@ function Home() {
   console.log(data?.data.docs);
 
   const [filtering, setFiltering] = useState(null);
-  const { categories, category } = useParams();
+  const { category } = useParams();
 
   /*  useEffect(() => {
     setFiltering(

@@ -27,49 +27,50 @@ const styles = {
 
 function Detail() {
   const [selected, setSelected] = useState(null);
-  const cardTest = cards[0];
+
   const { id } = useParams();
   console.log(id);
   const { data, isLoading, isFetching, isError } = useGetAllPostsQuery();
+
   useEffect(() => {
     setSelected(data?.data.docs.find((elem) => elem.id === id));
+    console.log(selected);
   }, [selected, data]);
+
   return (
-    <>{selected && <p className="pt-64 pl-32 text-white ">{selected.title}</p>}</>
-    // <div className={styles.containerDetail}>
-    //   <AiOutlineArrowLeft className={styles.arrow} />
-    //   <div className={styles.detailCard}>
-    //     <div className={styles.creator}>
-    //       <img className={styles.creatorImg} src={cardTest.user.img} alt="#" />
-    //       <div className={styles.creatorInfo}>
-    //         <p className={styles.creatorName}>{cardTest.user.name}</p>
-    //         <p className={styles.creatorTitle}>{cardTest.user.title}</p>
-    //       </div>
-    //     </div>
-    //     {cardTest.img ? (
-    //       <img className={styles.img} src={cardTest.img} alt="#" />
-    //     ) : (
-    //       <iframe
-    //         title={cardTest.video}
-    //         className={styles.video}
-    //         src={cardTest.video}
-    //         allowFullScreen
-    //       />
-    //     )}
-
-    //     <div className={styles.dateTags}>
-    //       <p className={styles.date}>{cardTest.date}</p>
-
-    //       <div className={styles.tagcontainer}>
-    //         <span className={styles.tags}>{cardTest.tags[0]}</span>
-
-    //         <span className={styles.tags}>{cardTest.tags[1]}</span>
-    //       </div>
-    //     </div>
-    //     <p className={styles.title}>{cardTest.title}</p>
-    //     <p className={styles.desc}>{cardTest.desc}</p>
-    //   </div>
-    // </div>
+    <div>
+      {selected ? (
+        <div className={styles.containerDetail}>
+          <AiOutlineArrowLeft className={styles.arrow} />
+          <div className={styles.detailCard}>
+            <div className={styles.creator}>
+              {/* <img className={styles.creatorImg} src={selected.user.img} alt="#" /> */}
+              <div className={styles.creatorInfo}>
+                <p className={styles.creatorName}>{selected.user.name}</p>
+                {/* <p className={styles.creatorTitle}>{selected.user.title}</p> */}
+              </div>
+            </div>
+            <iframe
+              title={selected.url}
+              className={styles.video}
+              src={selected.url}
+              allowFullScreen
+            />
+            <div className={styles.dateTags}>
+              <p className={styles.date}>{selected.date}</p>
+              <div className={styles.tagcontainer}>
+                <span className={styles.tags}>{selected.programmingL.name}</span>
+                <span className={styles.tags}>{selected.technology.name}</span>
+              </div>
+            </div>
+            <p className={styles.title}>{selected.title}</p>
+            <p className={styles.desc}>{selected.description}</p>
+          </div>
+        </div>
+      ) : (
+        <p>Loading</p>
+      )}
+    </div>
   );
 }
 export default Detail;

@@ -11,11 +11,12 @@ const styles = {
   cardsContainer: 'flex gap-4 w-full',
 };
 
-function CardContainer({ data }) {
+function CardContainer({ data, tech }) {
+  console.log(data);
   return (
     <div className={styles.container}>
       <div className={styles.titleContainer}>
-        <h1 className={styles.categoryTitle}>Main Category</h1>
+        <h1 className={styles.categoryTitle}>{tech}</h1>
         <p className={styles.masContainer}>
           Más <AiOutlineArrowRight />
         </p>
