@@ -8,25 +8,20 @@ const categorySchema = new Schema({
       'backend',
       'qa',
       'testing',
-      'uxui',
+      'ux/ui',
       'devops',
       'architecture',
-      'datascience',
-      'machinelearning',
+      'datas science',
+      'machine learning',
     ],
     default: 'frontend',
     require: true,
   },
-  post: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'post',
-    },
-  ],
+  post: [{ type: Schema.Types.ObjectId, ref: 'post' }],
 });
 
-categorySchema.methods.toJSON = function () {
-  const { __v, _id, ...category } = this.toObject();
+categorySchema.methods.toJSON = function idSetter() {
+  const { _id, ...category } = this.toObject();
   category.id = _id;
   return category;
 };

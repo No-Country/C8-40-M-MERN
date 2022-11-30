@@ -8,6 +8,11 @@ const styles = {
     'place-self-center bg-[#DCDEF3] rounded-[8px] border-solid border-2 border-black p-[3px] w-[60px] h-[30px] ',
   detailCard:
     'w-[336px] rounded-[8px] border-solid bg-[#1E2235] m-[12px] place-self-center md:w-[70%] ',
+  creator: '',
+  creatorImg: '',
+  creatorInfo: '',
+  creatorName: '',
+  creatorTitle: '',
   img: 'w-full rounded-t-[8px] md:max-h-[450px]',
   video: 'w-full rounded-t-[8px] h-[190px] md:h-[315px] lg:h-[500px] ',
   dateTags: 'w-full mt-[8px] p-4 flex gap-2 justify-between  items-center ',
@@ -25,6 +30,13 @@ function Detail() {
     <div className={styles.containerDetail}>
       <AiOutlineArrowLeft className={styles.arrow} />
       <div className={styles.detailCard}>
+        <div className={styles.creator}>
+          <img className={styles.creatorImg} src={cardTest.user.img} alt="#" />
+          <div className={styles.creatorInfo}>
+            <p className={styles.creatorName}>{cardTest.user.name}</p>
+            <p className={styles.creatorTitle}>{cardTest.user.title}</p>
+          </div>
+        </div>
         {cardTest.img ? (
           <img className={styles.img} src={cardTest.img} alt="#" />
         ) : (

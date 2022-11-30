@@ -3,7 +3,7 @@ import { MdPlayArrow } from 'react-icons/md';
 const styles = {
   container: 'w-8 h-8 relative cursor-pointer',
   image: 'rounded-[50%] hover:border-2 hover:border-[#DCDEF3] absolute ',
-  arrow: 'absolute -bottom-1 -left-3 rotate-90 text-[#DCDEF3] text-sm'
+  arrow: 'absolute -bottom-1 -left-3 rotate-90 text-[#DCDEF3] text-sm',
 };
 function UserPhotoNavbar({ handleUserProfile }) {
   return (

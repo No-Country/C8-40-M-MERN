@@ -4,7 +4,7 @@ const styles = {
   mainContainer:
     'absolute right-16 top-16 w-[231px] h-[146px] flex flex-col gap-2 bg-[#1E2235] p-2 rounded-lg drop-shadow-xl text-[#DCDEF3] text-[16px] ',
   line: 'w-full h-[1px] bg-[#DCDEF3] ',
-  profile: 'text-white'
+  profile: 'text-white',
 };
 function UserMenu({ onClick }) {
   return (

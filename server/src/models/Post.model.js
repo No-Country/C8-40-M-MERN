@@ -1,5 +1,7 @@
 import { Schema, model } from 'mongoose';
 
+import mongoosePaginate from 'mongoose-paginate-v2';
+
 const postSchema = new Schema(
   {
     title: {
@@ -13,8 +15,8 @@ const postSchema = new Schema(
     },
     resource: {
       type: String,
-      enum: ['video', 'image', 'code'],
-      default: 'code',
+      enum: ['video', 'image', 'document'],
+      default: 'document',
       require: true,
     },
     url: {
@@ -29,9 +31,9 @@ const postSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'user',
     },
-    programming_l: {
+    programmingL: {
       type: Schema.Types.ObjectId,
-      ref: 'programming_l',
+      ref: 'programmingL',
     },
     category: {
       type: Schema.Types.ObjectId,
@@ -39,6 +41,8 @@ const postSchema = new Schema(
     },
     ranking: {
       type: Number,
+      min: 0,
+      max: 5,
     },
     technology: {
       type: Schema.Types.ObjectId,
@@ -49,15 +53,15 @@ const postSchema = new Schema(
       ref: 'tag',
     },
   },
-  {
-    timestamp: true,
-  }
+  { timestamps: true }
 );
 
-postSchema.methods.toJSON = function () {
-  const { __v, _id, ...post } = this.toObject();
+postSchema.methods.toJSON = function idSetter() {
+  const { _id, ...post } = this.toObject();
   post.id = _id;
   return post;
 };
+
+postSchema.plugin(mongoosePaginate);
 
 export default model('post', postSchema);

@@ -1,10 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const baseQuery = fetchBaseQuery({
-  // baseUrl: `http://localhost:3000/api/`,
-  baseUrl: 'https://c8-40-m-mern-kappa.vercel.app/api/',
+  // baseUrl: `http://localhost:3000/api`,
+  baseUrl: 'https://c8-40-m-mern-kappa.vercel.app/api',
   prepareHeaders: (headers, { getState }) => {
-    // const token = getState()
+    // const state = getState();
+    // console.log('state', state);
     const token = sessionStorage.getItem('token');
     if (token) headers.set('authorization', `Bearer ${token}`);
     return headers;
@@ -15,17 +16,23 @@ export const apiSlice = createApi({
   reducerPath: 'apiSlice',
   baseQuery,
   endpoints: (builder) => ({
+    // category endpoint
+    getCategories: builder.query({
+      query: () => ({
+        url: '/sidebar',
+      }),
+    }),
     // user endpoints
     loginUser: builder.mutation({
       query: (userData) => ({
-        url: `/users`,
+        url: `/auth/login`,
         method: 'POST',
         body: userData,
       }),
     }),
     createUser: builder.mutation({
       query: (userData) => ({
-        url: '/users',
+        url: '/auth/register',
         method: 'POST',
         body: userData,
       }),
@@ -33,52 +40,79 @@ export const apiSlice = createApi({
     updateUser: builder.mutation({
       query: ({ id, ...userData }) => ({
         url: `/users/${id}`,
-        method: 'PATCH',
+        method: 'PUT',
         body: userData,
+      }),
+    }),
+    getAllUsers: builder.query({
+      query: () => ({
+        url: '/users',
+      }),
+    }),
+    getUserbyId: builder.query({
+      query: (id) => ({
+        url: `/users?_id=${id}`,
       }),
     }),
     // products endpoints
     getAllPosts: builder.query({
       query: () => ({
-        url: '/post',
+        url: '/posts',
       }),
     }),
-    addNewPosts: builder.mutation({
+    getPostsById: builder.query({
+      query: (id) => ({
+        url: `/posts/${id}`,
+      }),
+    }),
+    addNewPost: builder.mutation({
       query: (postData) => ({
-        url: '/post',
+        url: '/posts',
         method: 'POST',
         body: postData,
       }),
     }),
-    getUserPosts: builder.query({
-      query: () => ({
-        url: `/post`,
-      }),
-    }),
-    updatePosts: builder.mutation({
+
+    // ??
+    // getUserPosts: builder.query({
+    //   query: () => ({
+    //     url: `/pend`,
+    //   }),
+    // }),
+    // ??
+
+    updatePost: builder.mutation({
       query: ({ id, ...postData }) => ({
-        url: `/posts`,
-        method: 'PATCH',
+        url: `/posts/${id}`,
+        method: 'PUT',
         body: postData,
       }),
     }),
-    deletePosts: builder.mutation({
-      query: (xxxx) => ({
-        url: `/posts`,
-        method: 'DELETE',
-      }),
-    }),
+
+    // ??
+    // deletePosts: builder.mutation({
+    //   query: (xxxx) => ({
+    //     url: `/posts`,
+    //     method: 'DELETE',
+    //   }),
+    // }),
+    // ??
   }),
 });
 
 export const {
+  useGetCategoriesQuery,
+
   useLoginUserMutation,
   useCreateUserMutation,
   useUpdateUserMutation,
+  useGetAllUsersQuery,
+  useGetUserbyIdQuery, // only admins
 
   useGetAllPostsQuery,
-  useAddNewPostsMutation,
-  useGetUserPostsQuery,
-  useUpdatePostsMutation,
-  useDeletePostsMutation,
+  useGetPostsByIdQuery,
+  useAddNewPostMutation,
+  // useGetUserPostsQuery,
+  useUpdatePostMutation,
+  // useDeletePostsMutation,
 } = apiSlice;
