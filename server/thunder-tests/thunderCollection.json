@@ -1,0 +1,30 @@
+[
+  {
+    "_id": "89a2bd2b-923f-43bb-a007-bf3524fbf413",
+    "colName": "sidebar",
+    "created": "2022-11-25T23:46:21.842Z",
+    "sortNum": 10000,
+    "folders": []
+  },
+  {
+    "_id": "cfaa43d9-c5cd-418e-85c0-f5576308441f",
+    "colName": "user",
+    "created": "2022-11-25T23:55:34.312Z",
+    "sortNum": 10000,
+    "folders": []
+  },
+  {
+    "_id": "147d3365-6f70-43fe-a65c-355f047b6deb",
+    "colName": "post",
+    "created": "2022-11-26T00:03:58.230Z",
+    "sortNum": 20000,
+    "folders": []
+  },
+  {
+    "_id": "f9259617-2970-40ef-ac5e-e3e57f773bda",
+    "colName": "auth",
+    "created": "2022-11-26T00:04:26.659Z",
+    "sortNum": 30000,
+    "folders": []
+  }
+]

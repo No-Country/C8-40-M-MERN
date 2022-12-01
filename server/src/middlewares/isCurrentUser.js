@@ -1,25 +1,36 @@
-import { error } from '../helpers/responses.js';
+import { error, serverError } from '../helpers/responses.js';
+
 import { findById } from '../services/post.service.js';
 
-const isCurrentUser = async (req, res, next) => {
+export default async function isCurrentUser(req, res, next) {
   const { userId, postId } = req.params;
-  const { id, role } = req;
 
-  if (userId) {
-    const newId = userId;
-    if (id !== newId && role !== 'admin') {
-      return error({ res, message: 'forbidden: unauthorized user', status: 403 });
-    }
+  const { id: tokenId, role: tokenRole } = req;
+
+  if (tokenRole === 'admin') {
     return next();
   }
-
+  if (userId && userId === tokenId) {
+    return next();
+  }
   if (postId) {
-    const post = await findById(postId);
-    if (id !== post.user._id && role !== 'admin') {
-      return error({ res, message: 'forbidden: unauthorized user', status: 403 });
-    }
-    return next();
-  }
-};
+    let matchedPost = {};
 
-export { isCurrentUser };
+    try {
+      const post = await findById(postId);
+      matchedPost = post;
+    } catch (err) {
+      return serverError({
+        res,
+        message: err.message,
+      });
+    }
+    if (tokenId === matchedPost.user?._id) return next();
+  }
+
+  return error({
+    res,
+    message: 'forbidden: unauthorized user',
+    status: 403,
+  });
+}
