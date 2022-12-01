@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Categoria",
+    "components": ["Programación FrontEnd", "Programación BackEnd", "Diseño UX/UI", "Data Science"]
+  },
+  {
+    "name": "Lenguaje",
+    "components": ["HTML", "CSS", "JavaScript"]
+  },
+  {
+    "name": "Tecnología",
+    "components": ["React", "Angular", "Vue"]
+  }
+]
