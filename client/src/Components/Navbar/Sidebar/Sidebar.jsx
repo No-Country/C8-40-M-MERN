@@ -17,7 +17,6 @@ function Sidebar({ menuPosition }) {
           <Category elem={data.data.categories} title="Categories" />
           <Category elem={data.data.programmingL} title="Lenguajes" />
           <Category elem={data.data.tags} title="Tags" />
-          <Category elem={data.data.technologies} title="Technologies" />
         </>
       )}
       <DownButtons menuPosition={menuPosition} />

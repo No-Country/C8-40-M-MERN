@@ -30,10 +30,8 @@ function Card({ element }) {
           <p className={styles.title}>{element.title}</p>
           <p className={styles.date}>Fecha: {element.date}</p>
           <div className={styles.tagcontainer}>
-            <span className={styles.tags}>Tag 1</span>
+            <span className={styles.tags}>{element.programmingL?.name}</span>
             <span className={styles.tags}>{element.technology?.name}</span>
-            {/* <span className={styles.tags}>{element.tags[0]}</span> */}
-            {/* <span className={styles.tags}>{element.tags[1]}</span> */}
           </div>
         </div>
       </Link>
