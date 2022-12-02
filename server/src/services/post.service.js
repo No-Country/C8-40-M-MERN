@@ -50,11 +50,9 @@ const findByQuery = async (query) => {
 
   const limit = parseInt(query.limit, 10) || 10;
 
-  const sort = query.sort || 'date';
+  const sortKey = query.sort || 'createdAt';
 
   const { search } = query;
-
-  console.log(query);
 
   let finalSearch = query;
 
@@ -101,7 +99,7 @@ const findByQuery = async (query) => {
         select: 'name',
       },
     ],
-    sort: sort === 'technology' ? { technology: 1 } : { createdAt: -1 },
+    sort: `-${sortKey}`,
     page,
     limit,
   };

@@ -1,4 +1,4 @@
-<h1 align="center">Library</h1>
+<h1 align="center">Biblio Tech</h1>
 
 # Sobre el proyecto:
 
@@ -6,7 +6,7 @@
 
 # Estructura:
 
-➔ Cliente: React.
+➔ Cliente: React, Redux, Axios, Tailwind.
 
 ➔ Server: Node, MongoDB, Express, Mongoose, JWT, crypto.
 
@@ -47,10 +47,12 @@ URL:
 Estructura request body:
 
       {
-      "userName":"TestUser", (debe ser único)
-      "email":"mail@mail.com",
-      "password":"Password1",
-      "avatar":"https://url.jpg"
+      "userName":"TestUser", (requerido/único/3 - 15 caracteres)
+      "email":"mail@mail.com", (requerido/único)
+      "password":"Password1",(requerido/8 caracteres, al menos 1 mayúscula y 1 número)
+      "avatar":"https://url.jpg",
+      "isActive": true,
+      "role": "dev", (enum: admin|dev)
       }
 
 Estructura respuesta:
@@ -84,8 +86,8 @@ URL:
 Estructura request body:
 
       {
-      "email":"mail@mail.com",
-      "password":"Password1",
+      "email":"mail@mail.com", (requerido/único)
+      "password":"Password1", (requerido/8 caracteres, al menos 1 mayúscula y 1 número)
       }
 
 Estructura respuesta:
@@ -128,9 +130,9 @@ el número de página. por defecto 1.
 
 el número de documentos por página. por defecto 10.
 
-      sort (asc|desc):
+      sort (string):
 
-la forma de ordenamiento a partir de la creación de los posts. por defecto descendente.
+el criterio de ordenamiento a partir de la creación de los posts. por defecto la fecha de creación del post en dirección descendente.
 
       search (string):
 
