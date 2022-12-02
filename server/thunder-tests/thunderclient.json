@@ -138,11 +138,11 @@
     "method": "POST",
     "sortNum": 50000,
     "created": "2022-11-26T00:03:58.286Z",
-    "modified": "2022-11-27T20:22:18.467Z",
+    "modified": "2022-12-02T02:07:27.240Z",
     "headers": [
       {
         "name": "Authorization",
-        "value": "{{adminToken}}"
+        "value": "{{devToken}}"
       },
       {
         "name": "User-Agent",
@@ -153,7 +153,7 @@
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"title\": \"prueba 14\",\n  \"description\": \"prueba description prueba description 15\",\n  \"resource\": \"document\",\n  \"date\": \"10-12-2022\",\n  \"category\": \"backend\",\n  \"programmingL\": \"c++\",\n  \"technology\": \"next\",\n  \"tag\": \"documentation\",\n  \"url\":\"https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty\"\n}",
+      "raw": "{\n  \"title\": \"Post 9 QA: Cypress\",\n  \"description\": \"Esta es la descripción de un posteo que referencia a una imagen con tag documentación. Este post pertenece a la categoría QA y se utiliza cypress como tecnología principal. Además, el lenguaje de programación es java. Esperamos que te resulte útil. No olvides calificarlo!\",\n  \"resource\": \"image\",\n  \"url\": \"https://miro.medium.com/max/720/1*ztz9_YUVKN41aT0qU6X7kA.webp\",\n  \"date\": \"11-15-2022\",\n  \"user\": \"Gustavo\",\n  \"category\": \"qa\",\n  \"programmingL\": \"java\",\n  \"technology\": \"cypress\",\n  \"tag\": \"documentation\"\n}",
       "form": []
     },
     "tests": []
@@ -163,11 +163,11 @@
     "colId": "147d3365-6f70-43fe-a65c-355f047b6deb",
     "containerId": "",
     "name": "GET /posts DEV",
-    "url": "{{urlDev}}posts",
+    "url": "{{urlDev}}posts?category=6377bba2c2f038f7a85c876c&sort=technology",
     "method": "GET",
     "sortNum": 60000,
     "created": "2022-11-26T00:03:58.287Z",
-    "modified": "2022-11-28T05:57:02.883Z",
+    "modified": "2022-12-02T03:11:31.750Z",
     "headers": [
       {
         "name": "Authorization",
@@ -177,8 +177,24 @@
     "params": [
       {
         "name": "category",
-        "value": "637f960df3ee5834ef0180de",
+        "value": "6377bba2c2f038f7a85c876c",
+        "isPath": false
+      },
+      {
+        "name": "resource",
+        "value": "image",
         "isDisabled": true,
+        "isPath": false
+      },
+      {
+        "name": "technology",
+        "value": "638620ecf3ee5834efad0181",
+        "isDisabled": true,
+        "isPath": false
+      },
+      {
+        "name": "sort",
+        "value": "technology",
         "isPath": false
       }
     ],
@@ -362,11 +378,11 @@
     "colId": "147d3365-6f70-43fe-a65c-355f047b6deb",
     "containerId": "",
     "name": "GET /posts/:id PRO",
-    "url": "{{urlPro}}posts/6383c6f785e452f6ffb5e765",
+    "url": "{{urlPro}}posts/6387959e8452048877bd1a66",
     "method": "GET",
     "sortNum": 73750,
     "created": "2022-11-27T20:58:31.427Z",
-    "modified": "2022-11-27T21:01:50.827Z",
+    "modified": "2022-11-30T17:47:57.320Z",
     "headers": [],
     "params": [],
     "body": {
