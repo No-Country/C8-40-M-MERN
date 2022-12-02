@@ -31,22 +31,23 @@ function Categories() {
 
   useEffect(() => {
     setCatFilter(data?.data.docs.filter((e) => e.category?.name === category));
-  }, [category]);
+  }, [category, data]);
   return (
     <main className={styles.mainContainer}>
-      <div>
+      {/* <div>
         {cat[category].map((e) => (
-          <CardsContainer data={catFilter} tech={e} />
+          <CardsContainer data={catFilter} key={e.id} tech={e} />
         ))}
       </div>
       {/* <div className={styles.container}>
         {cat[category].map((e) => {
           return <CardsContainer data={catFilter.map((f) => f.technology === e)} tech={e} />;
         })}
-      </div> */}
+      </div> 
       <div className={styles.containerM}>
         <CardsContainerM />
       </div>
+      */}
     </main>
   );
 }

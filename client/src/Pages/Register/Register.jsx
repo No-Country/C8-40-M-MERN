@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import { registerUser } from '../../Redux/Actions/userActions';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import EmailError from '../../Components/Login/EmailError/EmailError';
 
 function Login() {
-  const [data, setData] = useState({});
+  const [userData, setUserData] = useState({});
+  const { loading, userInfo, error, success } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -31,23 +34,24 @@ function Login() {
     passwordErrorText: 'text-sm text-[#EF4444] flex justify-start w-full pl-3',
   };
   const handleChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value });
+    setUserData({ ...userData, [e.target.name]: e.target.value.toLowerCase() });
   };
-  const handleOnSubmit = (data) => {
-    console.log(data);
+  const handleOnSubmit = (userData) => {
+    userData.email = userData.email.toLowerCase();
+    dispatch(registerUser(userData));
   };
 
   return (
     <main className={styles.mainContainer}>
-      <form onSubmit={handleSubmit(handleOnSubmit)} className={styles.form}>
+      <form onSubmit={handleSubmit(handleOnSubmit)} className={styles.form} method="POST">
         <h1 className={styles.logo}>Registrarse</h1>
         {errors.email?.type === 'required' && <EmailError />}
         <input
           type="text"
           className={styles.inputs}
-          name="user"
+          name="userName"
           placeholder="Ingrese su nombre de usuario"
-          {...register('user', {
+          {...register('userName', {
             onChange: (e) => {
               handleChange(e);
             },

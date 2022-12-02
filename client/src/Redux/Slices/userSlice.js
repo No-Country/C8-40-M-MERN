@@ -1,11 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { registerUser } from '../Actions/userActions';
 import { apiSlice } from '../Api/apiSlice';
 
 const initialState = {
+  loading: false,
   token: null,
   userId: null,
   isAuth: false,
-  userInfo: {},
+  userInfo: null,
+  error: false,
+  success: false,
 };
 
 const userSlice = createSlice({
@@ -19,44 +23,60 @@ const userSlice = createSlice({
       state.userInfo = {};
     },
   },
-  extraReducers: (builder) => {
-    builder
-      // ------------------------- create user promise result
-      .addMatcher(apiSlice.endpoints.createUser.matchFulfilled, (state, action) => {
-        console.log('create user matchFulfilled', action.payload);
-
-        const { token, savedUser } = action.payload.data;
-
-        sessionStorage.setItem('token', token);
-        state.token = token;
-        state.userInfo = savedUser;
-        state.userId = savedUser.id;
-        state.isAuth = true;
-      })
-      .addMatcher(apiSlice.endpoints.createUser.matchRejected, (state, action) => {
-        console.log('create user matchRejected', action);
-      })
-      // ------------------------- login user promise result
-      .addMatcher(apiSlice.endpoints.loginUser.matchFulfilled, (state, action) => {
-        console.log('login user matchFulfilled', action.payload);
-
-        const { token, user } = action.payload.data;
-
-        sessionStorage.setItem('token', token);
-        state.token = token;
-        state.userInfo = user;
-        state.userId = user.id;
-        state.isAuth = true;
-      })
-      .addMatcher(apiSlice.endpoints.loginUser.matchRejected, (state, action) => {})
-      // ------------------------- update user promise result
-      .addMatcher(apiSlice.endpoints.updateUser.matchFulfilled, (state, action) => {
-        console.log('update user matchFulfilled', action.payload);
-      })
-      .addMatcher(apiSlice.endpoints.updateUser.matchRejected, (state, action) => {
-        console.log('update user matchRejected', action.payload);
-      });
+  extraReducers: {
+    [registerUser.pending]: (state) => {
+      state.loading = true;
+    },
+    [registerUser.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.userId = payload.id;
+      state.isAuth = true;
+      state.userInfo = payload;
+      state.success = true; // registration successful
+    },
+    [registerUser.rejected]: (state) => {
+      state.loading = false;
+      state.error = true;
+    },
   },
+  // extraReducers: (builder) => {
+  //   builder
+  //     // ------------------------- create user promise result
+  //     .addMatcher(apiSlice.endpoints.createUser.matchFulfilled, (state, action) => {
+  //       console.log('create user matchFulfilled', action.payload);
+
+  //       const { token, savedUser } = action.payload.data;
+
+  //       sessionStorage.setItem('token', token);
+  //       state.token = token;
+  //       state.userInfo = savedUser;
+  //       state.userId = savedUser.id;
+  //       state.isAuth = true;
+  //     })
+  //     .addMatcher(apiSlice.endpoints.createUser.matchRejected, (state, action) => {
+  //       console.log('create user matchRejected', action);
+  //     })
+  //     // ------------------------- login user promise result
+  //     .addMatcher(apiSlice.endpoints.loginUser.matchFulfilled, (state, action) => {
+  //       console.log('login user matchFulfilled', action.payload);
+
+  //       const { token, user } = action.payload.data;
+
+  //       sessionStorage.setItem('token', token);
+  //       state.token = token;
+  //       state.userInfo = user;
+  //       state.userId = user.id;
+  //       state.isAuth = true;
+  //     })
+  //     .addMatcher(apiSlice.endpoints.loginUser.matchRejected, (state, action) => {})
+  //     // ------------------------- update user promise result
+  //     .addMatcher(apiSlice.endpoints.updateUser.matchFulfilled, (state, action) => {
+  //       console.log('update user matchFulfilled', action.payload);
+  //     })
+  //     .addMatcher(apiSlice.endpoints.updateUser.matchRejected, (state, action) => {
+  //       console.log('update user matchRejected', action.payload);
+  //     });
+  // },
 });
 
 export const userActions = userSlice.actions;
