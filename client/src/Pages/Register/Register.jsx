@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useForm } from 'react-hook-form';
 import EmailError from '../../Components/Login/EmailError/EmailError';
 
 function Login() {
+  const [data, setData] = useState({});
   const {
     register,
     handleSubmit,
@@ -29,7 +30,9 @@ function Login() {
     createAccount: 'text-[#2563EB] font-semibold ml-2 text-sm',
     passwordErrorText: 'text-sm text-[#EF4444] flex justify-start w-full pl-3',
   };
-
+  const handleChange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value });
+  };
   const handleOnSubmit = (data) => {
     console.log(data);
   };
@@ -42,24 +45,36 @@ function Login() {
         <input
           type="text"
           className={styles.inputs}
+          name="user"
           placeholder="Ingrese su nombre de usuario"
-          {...register('usuario', {
+          {...register('user', {
+            onChange: (e) => {
+              handleChange(e);
+            },
             required: true,
           })}
         />
         <input
           type="email"
+          name="email"
           className={styles.inputs}
           placeholder="Ingrese su email"
           {...register('email', {
+            onChange: (e) => {
+              handleChange(e);
+            },
             required: true,
           })}
         />
         <input
           type="password"
+          name="password"
           className={errors.password?.type === 'minLength' ? styles.errorInput : styles.inputs}
           placeholder="Ingrese su contraseña"
           {...register('password', {
+            onChange: (e) => {
+              handleChange(e);
+            },
             required: true,
             minLength: 8,
           })}
@@ -74,9 +89,13 @@ function Login() {
         )}
         <input
           type="password"
+          name="confirmPassword"
           className={errors.password?.type === 'minLength' ? styles.errorInput : styles.inputs}
           placeholder="Repita su contraseña"
           {...register('repeatPassword', {
+            onChange: (e) => {
+              handleChange(e);
+            },
             required: true,
             minLength: 8,
           })}
