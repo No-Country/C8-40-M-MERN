@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import CardsContainer from '../../Components/Cards/CardsContainer';
-import CardsContainerM from '../../Components/Cards/CardsContainerM';
+import AllCards from '../../Components/Cards/AllCards';
 import { useGetAllPostsQuery } from '../../Redux/Api/apiSlice';
 import { useParams } from 'react-router-dom';
 
@@ -22,29 +21,25 @@ const cat = {
   qa: ['cypress', 'selenium', 'gatling', 'invicti', 'lambdatest'],
 };
 
-function Categories() {
+function Searched() {
   const { data, isLoading, isFetching, isError } = useGetAllPostsQuery();
 
-  const [catFilter, setCatFilter] = useState([]);
-  const { category } = useParams();
+  const [searched, setSearched] = useState([]);
+  const { techlan } = useParams();
 
   useEffect(() => {
-    setCatFilter(data?.data.docs.filter((e) => e.category?.name === category));
-  }, [category]);
+    setSearched(data?.data.docs.filter((e) => e.technology?.id === techlan));
+  }, [techlan]);
   return (
     <main className={styles.mainContainer}>
       <div className={styles.container}>
-        {cat[category].map((e) => (
-          <CardsContainer data={catFilter} tech={e} />
-        ))}
+        {searched ? <AllCards data={searched} tech={techlan} /> : <></>}
       </div>
-      <div className={styles.containerM}>
-        {cat[category].map((e) => (
-          <CardsContainerM data={catFilter} tech={e} />
-        ))}
-      </div>
+      {/* <div className={styles.containerM}>
+        <AllCards data={catFilter} tech={e} />
+      </div> */}
     </main>
   );
 }
 
-export default Categories;
+export default Searched;

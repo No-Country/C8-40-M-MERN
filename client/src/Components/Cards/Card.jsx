@@ -16,16 +16,22 @@ function Card({ element }) {
   return (
     <div className={styles.card}>
       <Link to={'detail/' + element.id}>
-        <img
-          className={styles.img}
-          src={'https://miro.medium.com/max/640/1*Aih9FwHjvM6AEL1aBh6W2g.png'}
-          alt="#"
-        />
-        {/* {element.img ? (
-          <img className={styles.img} src={element.img} alt="#" />
+        {element.resource == 'video' ? (
+          <iframe
+            title={element.url}
+            className={styles.video}
+            src={'https://www.youtube.com/embed/' + element.url.split('=')[1]}
+            alt=":("
+          />
+        ) : element.resource == 'document' ? (
+          <img
+            className={styles.img}
+            src="https://img.freepik.com/free-vector/illustration-document-icon_53876-28510.jpg?w=2000"
+            alt=":("
+          />
         ) : (
-          <iframe className={styles.video} src={element.video} title={element.video} />
-        )} */}
+          <img className={styles.img} src={element.url} alt=":(" />
+        )}
         <div className={styles.middle}>
           <p className={styles.title}>{element.title}</p>
           <p className={styles.date}>Fecha: {element.date}</p>
