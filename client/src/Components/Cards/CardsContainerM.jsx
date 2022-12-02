@@ -17,18 +17,20 @@ const styles = {
   motionDivCard: '',
 };
 
-function CardContainerM() {
+function CardContainerM({ data, tech }) {
   const [width, setWidth] = useState(0);
   const slider = useRef();
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     setWidth(slider.current.scrollWidth - slider.current.offsetWidth);
-  }, []);
+    setPosts(data?.filter((d) => d.technology.name === tech));
+  }, [data]);
 
   return (
     <div className={styles.container}>
       <div className={styles.titleContainer}>
-        <h1 className={styles.categoryTitle}>Main Mobile</h1>
+        <h1 className={styles.categoryTitle}>{tech}</h1>
         <p className={styles.masContainer}>
           Más <AiOutlineArrowRight />
         </p>
@@ -40,7 +42,7 @@ function CardContainerM() {
             dragConstraints={{ right: 0, left: -width }}
             className={styles.motionDiv2}
           >
-            {cards?.map((e) => {
+            {posts?.slice(0, 5)?.map((e) => {
               return (
                 <motion.div className={styles.motionDivCard} key={e.date}>
                   <CardMobile key={e.id} element={e} />

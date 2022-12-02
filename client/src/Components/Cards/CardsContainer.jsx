@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Card from './Card';
-import cards from '../../Utils/cards.json';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 
 const styles = {
@@ -16,6 +15,7 @@ function CardContainer({ data, tech }) {
   useEffect(() => {
     setPosts(data?.filter((d) => d.technology.name === tech));
   }, [data]);
+
   return (
     <div className={styles.container}>
       <div className={styles.titleContainer}>
