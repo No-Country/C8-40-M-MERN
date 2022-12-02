@@ -35,7 +35,7 @@ function Detail() {
   useEffect(() => {
     setSelected(data?.data.docs.find((elem) => elem.id === id));
     console.log(selected);
-  }, [selected, data]);
+  }, [data]);
 
   return (
     <div>

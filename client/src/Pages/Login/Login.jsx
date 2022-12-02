@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useForm } from 'react-hook-form';
 import EmailError from '../../Components/Login/EmailError/EmailError';
 
 function Login() {
+  const [data, setData] = useState({});
   const {
     register,
     handleSubmit,
@@ -30,8 +31,10 @@ function Login() {
     createAccount: 'text-[#2563EB] font-semibold ml-2 text-sm',
     passwordErrorText: 'text-sm text-[#EF4444] absolute bottom-64 left-6',
   };
-
-  const handleOnSubmit = (data) => {
+  const handleChange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value });
+  };
+  const handleOnSubmit = (e) => {
     console.log(data);
   };
 
@@ -43,8 +46,12 @@ function Login() {
         <input
           type="email"
           className={styles.inputs}
+          name="email"
           placeholder="Ingrese su email"
           {...register('email', {
+            onChange: (e) => {
+              handleChange(e);
+            },
             required: true,
           })}
         />
@@ -52,8 +59,12 @@ function Login() {
         <input
           type="password"
           className={errors.password?.type === 'minLength' ? styles.errorInput : styles.inputs}
+          name="password"
           placeholder="Ingrese su contraseña"
           {...register('password', {
+            onChange: (e) => {
+              handleChange(e);
+            },
             required: true,
             minLength: 8,
           })}
