@@ -30,19 +30,23 @@ function Categories() {
 
   useEffect(() => {
     setCatFilter(data?.data.docs.filter((e) => e.category?.name === category));
-  }, [category]);
+  }, [category, data]);
   return (
     <main className={styles.mainContainer}>
+
       <div className={styles.container}>
+
         {cat[category].map((e) => (
-          <CardsContainer data={catFilter} tech={e} />
+          <CardsContainer data={catFilter} key={e.id} tech={e} />
         ))}
       </div>
+
       <div className={styles.containerM}>
         {cat[category].map((e) => (
           <CardsContainerM data={catFilter} tech={e} />
         ))}
       </div>
+      */}
     </main>
   );
 }

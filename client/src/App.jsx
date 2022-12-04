@@ -16,7 +16,7 @@ function App() {
         <Route exact path="/" element={<Home />}></Route>
         <Route exact path="/:category" element={<Categories />}></Route>
         <Route exact path="/create-post" element={<CreatePost />}></Route>
-        <Route exact path="/register" element={<Register />}></Route>
+        <Route exact path="/auth/register" element={<Register />}></Route>
         <Route exact path="/login" element={<Login />}></Route>
         <Route exact path="/detail/:id" element={<Detail />}></Route>
         <Route exact path="/searched/:techland" element={<Searched />}></Route>
