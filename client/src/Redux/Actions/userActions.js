@@ -12,14 +12,11 @@ export const registerUser = createAsyncThunk(
         },
       };
 
-      const data = await axios.post(
+      await axios.post(
         `${url}/auth/register`,
         { userName, email, password, isActive, avatar, role },
         config
       );
-      // if (data) {
-      //   alert(data.message);
-      // }
     } catch (error) {
       if (error.response && error.response.data.message) {
         return rejectWithValue(error.response.data.message);
