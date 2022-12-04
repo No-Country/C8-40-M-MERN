@@ -2,9 +2,6 @@ import React, { useState } from 'react';
 import CardsContainer from '../../Components/Cards/CardsContainer';
 import CardsContainerM from '../../Components/Cards/CardsContainerM';
 import AllCards from '../../Components/Cards/AllCards';
-
-import Detail from '../Detail';
-
 import { useParams } from 'react-router-dom';
 import TagsFilters from '../../Components/Home/TagsFilters';
 
@@ -53,14 +50,8 @@ function Home() {
       </section>
 
       <TagsFilters styles={styles} filtering={filtering} />
-      <div className={styles.container}>
-        <CardsContainer data={data?.data.docs} />
-      </div>
-      <div className={styles.containerM}>
-        <CardsContainerM data={data?.data.docs} />
-      </div>
 
-      <AllCards data={data?.data.docs} />
+      <AllCards data={data?.data.docs} tech="home" />
     </main>
   );
 }

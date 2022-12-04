@@ -6,6 +6,7 @@ import Home from './Pages/Home/Home';
 import Categories from './Pages/Categories/Categories';
 import Detail from './Pages/Detail';
 import CreatePost from './Pages/CreatePost/CreatePost';
+import Searched from './Pages/Searched/Searched';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route exact path="/auth/register" element={<Register />}></Route>
         <Route exact path="/login" element={<Login />}></Route>
         <Route exact path="/detail/:id" element={<Detail />}></Route>
+        <Route exact path="/searched/:techland" element={<Searched />}></Route>
       </Routes>
     </>
   );

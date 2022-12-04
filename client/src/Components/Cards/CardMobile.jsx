@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const styles = {
   cardmovil: 'w-[158px] h-[200px] rounded-[12px] bg-[#202234]',
@@ -12,15 +13,28 @@ const styles = {
 function CardMobile({ element }) {
   return (
     <div className={styles.cardmovil}>
-      {element.img ? (
-        <img className={styles.img} src={element.img} alt="#" />
-      ) : (
-        <iframe title={element.video} className={styles.video} src={element.video} />
-      )}
-      <div className={styles.info}>
-        <p className={styles.title}>{element.title}</p>
-        <p className={styles.date}>{element.date}</p>
-      </div>
+      <Link to={'detail/' + element.id}>
+        {element.resource == 'video' ? (
+          <iframe
+            title={element.url}
+            className={styles.video}
+            src={'https://www.youtube.com/embed/' + element.url.split('=')[1]}
+            alt=":("
+          />
+        ) : element.resource == 'document' ? (
+          <img
+            className={styles.img}
+            src="https://img.freepik.com/free-vector/illustration-document-icon_53876-28510.jpg?w=2000"
+            alt=":("
+          />
+        ) : (
+          <img className={styles.img} src={element.url} alt=":(" />
+        )}
+        <div className={styles.info}>
+          <p className={styles.title}>{element.title}</p>
+          <p className={styles.date}>{element.date}</p>
+        </div>
+      </Link>
     </div>
   );
 }
