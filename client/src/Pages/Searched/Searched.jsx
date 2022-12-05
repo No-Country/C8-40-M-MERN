@@ -35,9 +35,6 @@ function Searched() {
       <div className={styles.container}>
         {searched ? <AllCards data={searched} tech={techlan} /> : <></>}
       </div>
-      {/* <div className={styles.containerM}>
-        <AllCards data={catFilter} tech={e} />
-      </div> */}
     </main>
   );
 }

@@ -1,11 +1,7 @@
-import React, { useState } from 'react';
-import CardsContainer from '../../Components/Cards/CardsContainer';
-import CardsContainerM from '../../Components/Cards/CardsContainerM';
+import React from 'react';
 import AllCards from '../../Components/Cards/AllCards';
-import { useParams } from 'react-router-dom';
-import TagsFilters from '../../Components/Home/TagsFilters';
-
-import { useGetAllPostsQuery, useGetCategoriesQuery } from '../../Redux/Api/apiSlice';
+import Pagination from '../../Components/Pagination/Pagination';
+import { useGetAllPostsQuery } from '../../Redux/Api/apiSlice';
 
 const styles = {
   mainContainer: 'pt-[80px] md:pl-[17%] md:pr-6 w-full ',
@@ -23,34 +19,13 @@ function Home() {
   const { data, isLoading, isFetching, isError } = useGetAllPostsQuery();
   console.log(data?.data.docs);
 
-  const [filtering, setFiltering] = useState(null);
-  const { category } = useParams();
-
-  /*  useEffect(() => {
-    setFiltering(
-      info[0].categories.filter((cat) => {
-        return cat.name === category;
-      })
-    );
-
-    console.log(filtering);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [category]);
- */
   return (
     <main className={styles.mainContainer}>
-      <h1 className={styles.categoryTitle}>{filtering && filtering[0].name}</h1>
-
       <section className={styles.buttonSection}>
         <button className={styles.filterButtons}>Videos</button>
-
         <button className={styles.filterButtons}>Imagenes</button>
-
         <button className={styles.filterButtons}>Documentación</button>
       </section>
-
-      <TagsFilters styles={styles} filtering={filtering} />
-
       <AllCards data={data?.data.docs} tech="home" />
     </main>
   );
