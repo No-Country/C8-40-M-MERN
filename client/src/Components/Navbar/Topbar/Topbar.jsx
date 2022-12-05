@@ -1,12 +1,13 @@
 import React from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { BsSearch, BsFilter } from 'react-icons/bs';
+import { BsSearch } from 'react-icons/bs';
 import { HiMenuAlt1 } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
 import UserChange from './UserMenu/UserChange';
 import UserMenu from './UserMenu/UserMenu';
 import UserPhotoNavbar from './UserMenu/UserPhotoNavbar';
+import logo from '../../../Assets/logo.png';
 const styles = {
   navbar:
     'w-full fixed z-50 h-[68px] bg-[#1E2235] flex items-center justify-between px-4  md:px-[30px] text-white',
@@ -42,7 +43,9 @@ const TopNavbar = ({ handleOpenMenu }) => {
     <main className={styles.navbar}>
       <HiMenuAlt1 className={styles.menuHamburg} size="1.5rem" onClick={handleOpenMenu} />
       <Link to="/">
-        <div className={styles.logo}>Logo</div>
+        <div className={styles.logo}>
+          <img src={logo} alt="logo" />
+        </div>
       </Link>
       <form className={styles.form}>
         <BsSearch className={styles.searchIcon} size="1.1rem" />

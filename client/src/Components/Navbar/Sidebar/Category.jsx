@@ -17,7 +17,7 @@ function Category({ elem, title }) {
   return (
     <>
       <div className={styles.categories} onClick={() => setDropwDown(!dropDown)}>
-        {elem === 'Categories' ? <BiBrain /> : <BsHouseDoor />}
+        {title !== 'Categories' ? <BiBrain /> : <BsHouseDoor />}
         <h1>{title}</h1>
       </div>
       <ul className={styles.lists}>
