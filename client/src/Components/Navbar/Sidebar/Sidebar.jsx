@@ -1,23 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import GridLoader from 'react-spinners/GridLoader';
+
 import Category from './Category';
 import DownButtons from './DownButtons';
 import { useGetCategoriesQuery } from '../../../Redux/Api/apiSlice';
 
 function Sidebar({ menuPosition }) {
   const styles = {
-    sideBar: `h-[85%] overflow-y-scroll   z-30 w-[223px] text-white bg-[#1E2235] flex flex-col items-start pl-[12px] py-[100px] font-semibold fixed ${menuPosition} transition-all duration-500 `,
+    sideBar: `h-full overflow-y-scroll   z-30 w-[223px] text-white bg-[#1E2235] flex flex-col items-start pl-[12px] py-[100px] font-semibold fixed ${menuPosition} transition-all duration-500 `,
   };
-  const { data, isLoading, isFetching, isError } = useGetCategoriesQuery();
-  console.log(data, isLoading, isFetching, isError);
+  const { data } = useGetCategoriesQuery();
 
   return (
     <main className={styles.sideBar}>
-      {data && (
+      {data ? (
         <>
           <Category elem={data.data.categories} title="Categories" />
           <Category elem={data.data.programmingL} title="Lenguajes" />
-          <Category elem={data.data.tags} title="Tags" />
         </>
+      ) : (
+        <GridLoader
+          color="#b5b5b5"
+          margin={30}
+          size={10}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
       )}
       <DownButtons menuPosition={menuPosition} />
     </main>
