@@ -1,15 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { userLogin } from '../../Redux/Actions/userActions';
 import EmailError from '../../Components/Login/EmailError/EmailError';
+import ClipLoader from 'react-spinners/ClipLoader';
+import { login } from '../../Redux/Slices/userSlice';
 
 function Login() {
+  const [data, setData] = useState({});
+  const navigate = useNavigate();
+  const { loading, userInfo, error } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate('/');
+    }
+  }, [navigate, userInfo]);
 
   const styles = {
     mainContainer: 'w-full h-[80vh] flex flex-col gap-8 justify-center items-center pt-40',
@@ -30,9 +44,11 @@ function Login() {
     createAccount: 'text-[#2563EB] font-semibold ml-2 text-sm',
     passwordErrorText: 'text-sm text-[#EF4444] absolute bottom-64 left-6',
   };
-
-  const handleOnSubmit = (data) => {
-    console.log(data);
+  const handleChange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value });
+  };
+  const handleOnSubmit = (e) => {
+    dispatch(userLogin(data));
   };
 
   return (
@@ -43,8 +59,12 @@ function Login() {
         <input
           type="email"
           className={styles.inputs}
+          name="email"
           placeholder="Ingrese su email"
           {...register('email', {
+            onChange: (e) => {
+              handleChange(e);
+            },
             required: true,
           })}
         />
@@ -52,8 +72,12 @@ function Login() {
         <input
           type="password"
           className={errors.password?.type === 'minLength' ? styles.errorInput : styles.inputs}
+          name="password"
           placeholder="Ingrese su contraseña"
           {...register('password', {
+            onChange: (e) => {
+              handleChange(e);
+            },
             required: true,
             minLength: 8,
           })}
@@ -68,7 +92,17 @@ function Login() {
         )}
         <p className={styles.forgotPassword}>Olvidé mi contraseña</p>
         <button className={styles.loginButton} type="submit">
-          Ingresar
+          {loading ? (
+            <ClipLoader
+              color="#ffffff"
+              loading={loading}
+              size={30}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+          ) : (
+            <p>Ingresar</p>
+          )}
         </button>
 
         <div className={styles.linesDiv}>

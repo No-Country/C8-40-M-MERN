@@ -21,7 +21,7 @@ function Category({ elem, title }) {
       </div>
       <ul className={styles.lists}>
         {elem.map((i) => (
-          <Link to={`/${elem.name}/${i.name}`} key={i.id}>
+          <Link to={`/${i.name}`} key={i.id}>
             <li className={styles.listItem}>{i.name}</li>
           </Link>
         ))}

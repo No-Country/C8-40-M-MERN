@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import { registerUser } from '../../Redux/Actions/userActions';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
+import ClipLoader from 'react-spinners/ClipLoader';
 import EmailError from '../../Components/Login/EmailError/EmailError';
 
 function Login() {
+  const [userData, setUserData] = useState({});
+  const [passwordError, setPasswordError] = useState(false);
+  const { loading, userInfo, error, success } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -14,8 +20,8 @@ function Login() {
   const styles = {
     mainContainer: 'w-full h-[80vh] flex flex-col gap-8 justify-center items-center pt-48',
     logo: 'w-full text-[30px] text-white text-start font-semibold mb-10',
-    form: 'flex flex-col gap-3 items-center w-full sm:w-[420px] px-6 relative',
-    inputs: `w-full h-[44px] border-2 bg-transparent rounded-xl px-3 outline-none text-[#ABADC6] border-[#424867]`,
+    form: 'flex flex-col gap-3 items-center w-full sm:w-[420px] px-6  relative',
+    inputs: `w-full h-[44px] mt-2 border-2 bg-transparent rounded-xl px-3 outline-none text-[#ABADC6] border-[#424867]`,
     errorInput: `w-full h-[44px] border-2 bg-transparent rounded-xl px-3 outline-none text-[#ABADC6]
      border-[#EF4444]`,
     registerButton:
@@ -29,37 +35,59 @@ function Login() {
     createAccount: 'text-[#2563EB] font-semibold ml-2 text-sm',
     passwordErrorText: 'text-sm text-[#EF4444] flex justify-start w-full pl-3',
   };
-
-  const handleOnSubmit = (data) => {
-    console.log(data);
+  const handleChange = (e) => {
+    setUserData({ ...userData, [e.target.name]: e.target.value.toLowerCase() });
+  };
+  const handleOnSubmit = (userData) => {
+    userData.email = userData.email.toLowerCase();
+    console.log(userData);
+    if (userData.password !== userData.repeatPassword) {
+      setPasswordError(true);
+    } else {
+      dispatch(registerUser(userData));
+      setPasswordError(false);
+    }
   };
 
   return (
     <main className={styles.mainContainer}>
-      <form onSubmit={handleSubmit(handleOnSubmit)} className={styles.form}>
+      <form onSubmit={handleSubmit(handleOnSubmit)} className={styles.form} method="POST">
         <h1 className={styles.logo}>Registrarse</h1>
-        {errors.email?.type === 'required' && <EmailError />}
+        {error && <EmailError />}
         <input
           type="text"
           className={styles.inputs}
+          name="userName"
           placeholder="Ingrese su nombre de usuario"
-          {...register('usuario', {
+          {...register('userName', {
+            onChange: (e) => {
+              handleChange(e);
+            },
             required: true,
+            maxLength: 15,
           })}
         />
         <input
           type="email"
+          name="email"
           className={styles.inputs}
           placeholder="Ingrese su email"
           {...register('email', {
+            onChange: (e) => {
+              handleChange(e);
+            },
             required: true,
           })}
         />
         <input
           type="password"
+          name="password"
           className={errors.password?.type === 'minLength' ? styles.errorInput : styles.inputs}
           placeholder="Ingrese su contraseña"
           {...register('password', {
+            onChange: (e) => {
+              handleChange(e);
+            },
             required: true,
             minLength: 8,
           })}
@@ -74,6 +102,7 @@ function Login() {
         )}
         <input
           type="password"
+          name="confirmPassword"
           className={errors.password?.type === 'minLength' ? styles.errorInput : styles.inputs}
           placeholder="Repita su contraseña"
           {...register('repeatPassword', {
@@ -81,27 +110,24 @@ function Login() {
             minLength: 8,
           })}
         />
-        {errors.repeatPassword?.type === 'minLength' && (
+        {passwordError && (
           <p className={styles.passwordErrorText}>Las contraseñas deben ser iguales</p>
         )}
 
         <button className={styles.registerButton} type="submit">
-          Registrarse
+          {loading ? (
+            <ClipLoader
+              color="#ffffff"
+              loading={loading}
+              size={30}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+          ) : (
+            <p>Registrarse</p>
+          )}
         </button>
 
-        <div className={styles.linesDiv}>
-          <span className={styles.lines}></span>
-          <p>O</p>
-          <span className={styles.lines}></span>
-        </div>
-        <button className={styles.logWithGoogle}>
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png"
-            alt="google"
-            className={styles.googleImage}
-          />
-          Registrarse con Google
-        </button>
         <p className={styles.notRegister}>
           ¿Ya estas registrado?
           <Link to="/login">

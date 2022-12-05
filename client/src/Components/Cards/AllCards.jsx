@@ -6,22 +6,23 @@ import CardMobile from './CardMobile';
 const styles = {
   container: 'flex flex-col w-full ',
   sectionTitle: 'text-[#FFFFFF] px-[6px]',
-  cardsDisplayer: 'hidden md:flex gap-2 ',
+  cardsDisplayer: 'hidden md:flex flex-wrap gap-2 ',
   cardsDisplayerM:
-    'md:hidden grid grid-rows-15 grid-cols-2 gap-y-4 m-[10px]  justify-center justify-items-center',
+    'md:hidden grid grid-rows-15 grid-cols-2 gap-y-4 gap-x-1 m-[10px]  justify-center justify-items-center',
 };
 
-function AllCards() {
+function AllCards({ data, tech }) {
+  console.log(data);
   return (
     <div className={styles.container}>
-      <h1 className={styles.sectionTitle}>Home o Tecnologia</h1>
+      {tech !== 'home' ? <h1 className={styles.sectionTitle}>{tech}</h1> : <></>}
       <div className={styles.cardsDisplayer}>
-        {cards?.map((e) => {
-          return <Card key={e.id} element={e} />;
-        })}
+        {data?.map((elm) => (
+          <Card key={elm.id} element={elm} />
+        ))}
       </div>
       <div className={styles.cardsDisplayerM}>
-        {cards?.map((e) => {
+        {data?.map((e) => {
           return <CardMobile key={e.id} element={e} />;
         })}
       </div>
