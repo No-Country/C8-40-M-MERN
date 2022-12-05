@@ -1,11 +1,12 @@
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { createPost } from '../../Redux/Actions/postsActions';
+import { useForm } from 'react-hook-form';
 import DropdownPost from '../../Components/CreatePost/DropdownPost/DropdownPost';
 import PostInput from '../../Components/CreatePost/PostInput/PostInput';
 import BlueContainer from '../../Components/CreatePost/BlueContainer/BlueContainer';
 import { useGetCategoriesQuery } from '../../Redux/Api/apiSlice';
 import DropDowns from '../../Components/CreatePost/DropDowns/DropDowns';
-import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { createPost } from '../../Redux/Actions/postsActions';
 const styles = {
   main: 'w-full h-full flex justify-center items-center pt-20 text-white pb-12',
   form: 'h-[90%] w-[90%] md:w-[650px] flex flex-col gap-4 bg-[#252A41] rounded-xl py-8 px-6 md:mt-6 lg:ml-[380px] relative ',
@@ -23,6 +24,7 @@ function CreatePost() {
   const [tecnologia, setTecnologia] = useState('');
   const [missingError, setMissingError] = useState(false);
   const dispatch = useDispatch();
+  const { handleSubmit } = useForm();
 
   const [postData, setPostData] = useState({
     resource: null,
@@ -34,8 +36,7 @@ function CreatePost() {
     tecnology: null,
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleOnSubmit = () => {
     setPostData({
       ...postData,
       category: { name: categoria },
@@ -43,23 +44,26 @@ function CreatePost() {
       tecnology: { name: tecnologia },
     });
     const { resource, url, title, description, category, programmingL, tecnology } = postData;
-    if (resource && url && title && description && category && programmingL && tecnology) {
-      dispatch(createPost(postData));
-      console.log(postData);
-    } else {
-      setMissingError(true);
-    }
+    // if (resource && url && title && description && category && programmingL && tecnology) {
+    dispatch(createPost(postData));
+    // console.log(postData);
+    // } else {
+    //   setMissingError(true);
+    // }
   };
   const handleChange = (e) => {
     setPostData({ ...postData, [e.target.name]: e.target.value });
   };
   return (
     <main className={styles.main}>
-      <form className={styles.form} onSubmit={handleSubmit}>
+      <form className={styles.form} onSubmit={handleSubmit(handleOnSubmit)}>
         <h1 className={styles.titles}>Datos requeridos</h1>
 
         <div className={styles.dropwDownContainer}>
-          <DropdownPost name="Tipo de resource" data={postData.resource}>
+          <DropdownPost
+            name={postData.resource ? postData.resource : 'Tipo de recursos'}
+            data={postData.resource}
+          >
             <p className="cursor-pointer" onClick={() => (postData.resource = 'video')}>
               Video
             </p>

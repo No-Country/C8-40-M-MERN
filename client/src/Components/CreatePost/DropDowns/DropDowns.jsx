@@ -7,7 +7,7 @@ function DropDowns({ data, setCategoria, setLenguaje, setTecnologia }) {
   };
   return (
     <>
-      <DropdownPost name="Categorias">
+      <DropdownPost name={'Categorias'}>
         {data?.data.categories.map((d) => (
           <p key={d.id} onClick={() => setCategoria(d.name)} className={style.text}>
             {d.name}

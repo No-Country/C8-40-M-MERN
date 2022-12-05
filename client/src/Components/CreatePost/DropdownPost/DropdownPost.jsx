@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 
-function DropdownPost({ name, children, data }) {
+function DropdownPost({ name, children }) {
   const [dropDown, setDropDown] = useState(false);
 
   const styles = {

@@ -5,13 +5,7 @@ const initialState = {
   loading: false,
   success: false,
   error: false,
-  resource: null,
-  url: null,
-  title: null,
-  description: null,
-  category: null,
-  programmingL: null,
-  technology: null,
+  post: null,
 };
 
 const postsSlice = createSlice({
@@ -24,13 +18,7 @@ const postsSlice = createSlice({
     },
     [createPost.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.resource = payload.resource;
-      state.url = payload.url;
-      state.title = payload.title;
-      state.description = payload.description;
-      state.category = payload.category;
-      state.programmingL = payload.programmingL;
-      state.technology = payload.technology;
+      state.post = payload;
       state.success = true; // create post successful
     },
     [createPost.rejected]: (state) => {
