@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { AiOutlineArrowLeft } from 'react-icons/ai';
+//import { AiOutlineArrowLeft } from 'react-icons/ai';
+import { IoIosArrowBack } from 'react-icons/io';
 import { useGetAllPostsQuery } from '../Redux/Api/apiSlice';
 import { useParams } from 'react-router-dom';
 
 const styles = {
   containerDetail: 'pt-[80px] flex flex-col place-content-center',
   arrow:
-    'flex gap-1 rounded-[8px] h-[30px] place-self-center items-center w-[336px]  md:w-[70%] text-lg text-[#DCDEF3]',
+    'flex  rounded-[8px] h-[35px] place-self-center items-center w-[336px]  md:w-[70%] text-lg text-[#DCDEF3]',
   detailCard:
     'w-[336px] rounded-[8px] border-solid bg-[#1E2235] m-[12px] place-self-center md:w-[70%] ',
   creator: 'h-[60px] md:h-[100px] rounded-[8px]',
@@ -43,7 +44,7 @@ function Detail() {
       {selected ? (
         <div className={styles.containerDetail}>
           <div className={styles.arrow}>
-            <AiOutlineArrowLeft />
+            <IoIosArrowBack size="1.6rem" className={styles.menorque} />
             <p>Volver</p>
           </div>
           <div className={styles.detailCard}>

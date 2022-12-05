@@ -57,7 +57,7 @@ export const apiSlice = createApi({
     // products endpoints
     getAllPosts: builder.query({
       query: () => ({
-        url: '/posts',
+        url: '/posts?limit=50',
       }),
     }),
     getPostsById: builder.query({

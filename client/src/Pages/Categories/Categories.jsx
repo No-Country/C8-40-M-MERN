@@ -18,7 +18,7 @@ const styles = {
 
 const cat = {
   frontend: ['react', 'redux', 'angular', 'vue', 'svelte'],
-  backend: ['node', 'sequelize', 'nest', 'express', 'mongoose', 'django'],
+  backend: ['node', 'sequelize', 'nest', 'express', 'mongoose', 'django', 'spring boot'],
   qa: ['cypress', 'selenium', 'gatling', 'invicti', 'lambdatest'],
 };
 
@@ -27,7 +27,6 @@ function Categories() {
 
   const [catFilter, setCatFilter] = useState([]);
   const { category } = useParams();
-
   useEffect(() => {
     setCatFilter(data?.data.docs.filter((e) => e.category?.name === category));
   }, [category, data]);
