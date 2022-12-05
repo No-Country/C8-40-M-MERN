@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 
-function DropdownPost({ name, children }) {
+function DropdownPost({ name, children, data }) {
   const [dropDown, setDropDown] = useState(false);
 
   const styles = {
@@ -10,11 +10,15 @@ function DropdownPost({ name, children }) {
     dropDown: `p-4 text-white ${
       dropDown ? 'flex' : 'hidden'
     } flex-col gap-3 bg-[#424867]  rounded-xl font-semibold animate__animated animate__fadeIn capitalize`,
+    span: 'flex items-center gap-2',
   };
   return (
     <>
       <div className={styles.mainContainer} onClick={() => setDropDown(!dropDown)}>
-        {name} <MdKeyboardArrowDown size="1.5rem" />
+        {name}
+        <span className={styles.span}>
+          <MdKeyboardArrowDown size="1.5rem" />
+        </span>
       </div>
       <div className={styles.dropDown}>{children}</div>
     </>
