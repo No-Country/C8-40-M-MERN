@@ -11,6 +11,7 @@ function Category({ elem, title }) {
     lists: `pl-[28%] text-[#9EA2C6] flex-col gap-2 py-2 ${
       dropDown ? 'flex' : 'hidden'
     } animate__animated animate__flipInX `,
+    listItem: 'capitalize',
   };
 
   return (

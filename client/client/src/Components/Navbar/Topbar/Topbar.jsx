@@ -14,13 +14,13 @@ const styles = {
   form: 'relative w-[50%] flex justify-center items-center ',
   input: 'bg-[#252A41] rounded-2xl pl-[44px] py-2 w-full outline-none ',
   searchIcon: 'absolute top-3 left-4 text-[#ABADC6] ',
+  filterIcon: 'ml-2',
   lastContainer: ' flex gap-[12px] ',
   login:
     'px-[16px] py-[12px] bg-[#424867] rounded-2xl hidden md:flex hover:bg-[#303650] focus:border-2 focus:border-white focus:px-[14px] focus:py-[10px] ',
   register:
     'px-[16px] py-[12px] bg-[#2563EB] rounded-2xl hover:bg-[#1E40AF] focus:border-2 focus:border-white focus:px-[13px] focus:py-[10px] ',
   menuHamburg: 'text-[#ABADC6] cursor-pointer',
-  createPostButton: 'hidden md:flex bg-[#424867] py-1.5 px-3 rounded-lg absolute top-4 right-24 ',
 };
 
 const TopNavbar = ({ handleOpenMenu }) => {
@@ -47,11 +47,12 @@ const TopNavbar = ({ handleOpenMenu }) => {
       <form className={styles.form}>
         <BsSearch className={styles.searchIcon} size="1.1rem" />
         <input className={styles.input} type="text" placeholder="Buscar" />
+        <BsFilter className={styles.filterIcon} size="1.8rem" />
       </form>
       {userInfo ? (
         <>
           <Link to="/create-post">
-            <button className={styles.createPostButton}>Crear Post</button>
+            <button className={styles.register}>Crear Post</button>
           </Link>
           <UserPhotoNavbar handleUserProfile={handleUserProfile} />
         </>
