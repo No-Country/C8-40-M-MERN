@@ -33,20 +33,16 @@ function Categories() {
   }, [category, data]);
   return (
     <main className={styles.mainContainer}>
-
       <div className={styles.container}>
-
         {cat[category].map((e) => (
           <CardsContainer data={catFilter} key={e.id} tech={e} />
         ))}
       </div>
-
       <div className={styles.containerM}>
         {cat[category].map((e) => (
-          <CardsContainerM data={catFilter} tech={e} />
+          <CardsContainerM data={catFilter} key={e.id} tech={e} />
         ))}
       </div>
-      */}
     </main>
   );
 }

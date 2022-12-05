@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { BsSearch, BsFilter } from 'react-icons/bs';
 import { HiMenuAlt1 } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
@@ -23,10 +24,9 @@ const styles = {
 };
 
 const TopNavbar = ({ handleOpenMenu }) => {
-  const user = true;
   const [userMenu, setUserMenu] = useState(false);
-  const [selectedChange, setSelectedChange] = useState(null);
   const [userChange, setUserChange] = useState(false);
+  const { userInfo } = useSelector((state) => state.user);
 
   const handleUserProfile = () => {
     setUserMenu(!userMenu);
@@ -49,19 +49,24 @@ const TopNavbar = ({ handleOpenMenu }) => {
         <input className={styles.input} type="text" placeholder="Buscar" />
         <BsFilter className={styles.filterIcon} size="1.8rem" />
       </form>
-      {user ? (
-        <UserPhotoNavbar handleUserProfile={handleUserProfile} />
+      {userInfo ? (
+        <>
+          <Link to="/create-post">
+            <button className={styles.register}>Crear Post</button>
+          </Link>
+          <UserPhotoNavbar handleUserProfile={handleUserProfile} />
+        </>
       ) : (
         <div className={styles.lastContainer}>
-          <Link to="/login">
+          <Link to="/auth/login">
             <button className={styles.login}>Ingresar</button>
           </Link>
-          <Link to="/register">
+          <Link to="/auth/register">
             <button className={styles.register}>Registarse</button>
           </Link>
         </div>
       )}
-      {user && userMenu ? <UserMenu onClick={() => setUserChange(true)} /> : null}
+      {userInfo && userMenu ? <UserMenu onClick={() => setUserChange(true)} /> : null}
       {userChange && <UserChange handleCloseAll={handleCloseAll} handleGoBack={handleGoBack} />}
     </main>
   );

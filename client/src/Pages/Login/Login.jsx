@@ -1,16 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { userLogin } from '../../Redux/Actions/userActions';
 import EmailError from '../../Components/Login/EmailError/EmailError';
+import ClipLoader from 'react-spinners/ClipLoader';
+import { login } from '../../Redux/Slices/userSlice';
 
 function Login() {
   const [data, setData] = useState({});
-
+  const navigate = useNavigate();
+  const { loading, userInfo, error } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate('/');
+    }
+  }, [navigate, userInfo]);
 
   const styles = {
     mainContainer: 'w-full h-[80vh] flex flex-col gap-8 justify-center items-center pt-40',
@@ -35,7 +48,7 @@ function Login() {
     setData({ ...data, [e.target.name]: e.target.value });
   };
   const handleOnSubmit = (e) => {
-    console.log(data);
+    dispatch(userLogin(data));
   };
 
   return (
@@ -79,7 +92,17 @@ function Login() {
         )}
         <p className={styles.forgotPassword}>Olvidé mi contraseña</p>
         <button className={styles.loginButton} type="submit">
-          Ingresar
+          {loading ? (
+            <ClipLoader
+              color="#ffffff"
+              loading={loading}
+              size={30}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+          ) : (
+            <p>Ingresar</p>
+          )}
         </button>
 
         <div className={styles.linesDiv}>
