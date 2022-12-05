@@ -8,10 +8,11 @@ function Category({ elem, title }) {
   const styles = {
     categories:
       'flex gap-2 items-center mt-2 pl-[19px] py-2 w-full bg-[#252A41] rounded-tl-xl rounded-bl-xl text-xl text-[#DCDEF3] cursor-pointer z-50',
-    lists: `pl-[28%] text-[#9EA2C6] flex-col gap-2 py-2 ${
+    lists: ` text-[#9EA2C6] flex-col gap-2 w-full   ${
       dropDown ? 'flex' : 'hidden'
     } animate__animated animate__flipInX `,
-    listItem: 'capitalize',
+    listItem:
+      'capitalize w-full h-full hover:bg-[#252A41] h-[40px] flex items-center pl-[28%] hover:bg-[#252A41]  ',
   };
 
   return (
