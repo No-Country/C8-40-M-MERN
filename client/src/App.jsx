@@ -18,8 +18,8 @@ function App() {
         <Route exact path="/create-post" element={<CreatePost />}></Route>
         <Route exact path="/auth/register" element={<Register />}></Route>
         <Route exact path="/auth/login" element={<Login />}></Route>
-        <Route exact path="/detail/:id" element={<Detail />}></Route>
-        <Route exact path="/searched/:techland" element={<Searched />}></Route>
+        <Route path="/detail/:id" element={<Detail />}></Route>
+        <Route exact path="/searched/:techlan" element={<Searched />}></Route>
       </Routes>
     </>
   );

@@ -3,18 +3,22 @@ import React, { useState, useEffect } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
 import { useGetAllPostsQuery } from '../Redux/Api/apiSlice';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const styles = {
   containerDetail: 'pt-[80px] flex flex-col place-content-center',
   arrow:
-    'flex  rounded-[8px] h-[35px] place-self-center items-center w-[336px]  md:w-[70%] text-lg text-[#DCDEF3]',
+    'flex rounded-[8px] h-[35px] place-self-center items-center w-[336px]  md:w-[70%] text-lg text-[#DCDEF3]',
+  button: 'cursor-pointer flex flex-row',
   detailCard:
-    'w-[336px] rounded-[8px] border-solid bg-[#1E2235] m-[12px] place-self-center md:w-[70%] ',
-  creator: 'h-[60px] md:h-[100px] rounded-[8px]',
-  creatorImg: '',
-  creatorInfo: '',
-  creatorName: 'text-white',
-  creatorTitle: '',
+    'w-[336px] rounded-[8px] border-solid bg-[#1E2235] m-[1px] place-self-center md:w-[70%] ',
+  users:
+    'w-full px-2 h-[34px] md:h-[51px] rounded-[8px] flex flex-row lg:px-[50px] md:px-[20px] mt-[5px] mb-[9px] md:mt-[22px] md:mb-[30px] items-center ',
+  userImg: 'h-[34px] w-[34px] md:h-[51px] md:w-[51px] rounded-full',
+  userInfo: 'text #ABADC6 ml-[12px] md:ml-[17px] ',
+  userName: 'text-white text-[11px] md:text-[17px] ',
+  userTitle: 'text-[8px] md:text-[13px] text-[#999BB4] ',
   media: 'w-full rounded-[8px] h-[190px] lg:px-[50px] md:h-[450px] lg:h-[500px]',
   img: 'w-full rounded-[8px] md:h-[450px] ',
   doc: 'w-full rounded-[8px] md:h-[450px]  bg-white',
@@ -30,13 +34,31 @@ const styles = {
 function Detail() {
   const [selected, setSelected] = useState(null);
 
+  const navigate = useNavigate();
+
+  const user = {
+    name: 'Juanita Pendorcha',
+    img: 'https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg',
+    title: 'Pendorchera oficial',
+  };
+
   const { id } = useParams();
   console.log(id);
   const { data, isLoading, isFetching, isError } = useGetAllPostsQuery();
 
+  const getUserByID = async () => {
+    let userFind;
+    const usuario = await axios.get(
+      `https://c8-40-m-mern-kappa.vercel.app/api/users?_id=${selected.user.id}`
+    );
+    userFind = usuario;
+    return userFind;
+  };
+
   useEffect(() => {
     setSelected(data?.data.docs.find((elem) => elem.id === id));
     console.log(selected);
+    getUserByID();
   }, [data]);
 
   return (
@@ -44,15 +66,17 @@ function Detail() {
       {selected ? (
         <div className={styles.containerDetail}>
           <div className={styles.arrow}>
-            <IoIosArrowBack size="1.6rem" className={styles.menorque} />
-            <p>Volver</p>
+            <button onClick={() => navigate(-1)} className={styles.button}>
+              <IoIosArrowBack size="1.6rem" className={styles.menorque} />
+              <p>Volver</p>
+            </button>
           </div>
           <div className={styles.detailCard}>
-            <div className={styles.creator}>
-              {/* <img className={styles.creatorImg} src={selected.user.img} alt="#" /> */}
-              <div className={styles.creatorInfo}>
-                <p className={styles.creatorName}>{selected.user.userName}</p>
-                {/* <p className={styles.creatorTitle}>{selected.user.title}</p> */}
+            <div className={styles.users}>
+              <img className={styles.userImg} src={user.img} alt="#" />
+              <div className={styles.userInfo}>
+                <p className={styles.userName}>{selected.user.userName}</p>
+                <p className={styles.userTitle}>{user.title}</p>
               </div>
             </div>
             <div className={styles.media}>

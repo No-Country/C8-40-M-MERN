@@ -15,25 +15,31 @@ const styles = {
   containerM: ' md:hidden',
 };
 
-const cat = {
-  frontend: ['react', 'redux', 'angular', 'vue', 'svelte'],
-  backend: ['node', 'sequelize', 'nest', 'express', 'mongoose', 'django'],
-  qa: ['cypress', 'selenium', 'gatling', 'invicti', 'lambdatest'],
-};
-
 function Searched() {
   const { data, isLoading, isFetching, isError } = useGetAllPostsQuery();
 
   const [searched, setSearched] = useState([]);
+  const [teched, setTeched] = useState([]);
+  const [langed, setLanged] = useState([]);
+
   const { techlan } = useParams();
 
   useEffect(() => {
-    setSearched(data?.data.docs.filter((e) => e.technology?.id === techlan));
+    setTeched(data?.data.docs.filter((e) => e.technology?.name === techlan));
+    setLanged(data?.data.docs.filter((e) => e.programmingL?.name === techlan));
   }, [techlan]);
+
   return (
     <main className={styles.mainContainer}>
+      <h1 className="mt-[20px] ml-[20px] text-[#FFFFFF] ">renderiza Searched de {techlan}</h1>
       <div className={styles.container}>
-        {searched ? <AllCards data={searched} tech={techlan} /> : <></>}
+        {teched ? (
+          <AllCards data={teched} tech={techlan} />
+        ) : langed ? (
+          <AllCards data={langed} tech={techlan} />
+        ) : (
+          <></>
+        )}
       </div>
     </main>
   );
