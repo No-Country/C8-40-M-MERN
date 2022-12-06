@@ -11,9 +11,9 @@ function EmailError() {
     <div className={styles.container}>
       <span className={styles.span}>
         <FiAlertCircle className={styles.icon} />
-        <p>Hubo un problema para encontrar tu cuenta</p>
+        <p>El email o usuario ingresado son incorrectos</p>
       </span>
-      <p className={styles.secondText}>Por favor, intenta con un email diferente</p>
+      <p className={styles.secondText}>Por favor, intenta con un email o usuario diferente</p>
     </div>
   );
 }

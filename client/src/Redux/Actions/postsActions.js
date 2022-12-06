@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
 const URI = 'https://c8-40-m-mern-kappa.vercel.app/api';
 
 export const createPost = createAsyncThunk(
@@ -10,7 +9,7 @@ export const createPost = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const { token } = useSelector((state) => state.user);
+      const token = localStorage.getItem('token');
 
       const config = {
         headers: {
