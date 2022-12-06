@@ -17,16 +17,15 @@ function PostInput({ label, labelName, inputName, placeholder, titles, handleCha
       <input
         type="text"
         className={styles.inputs}
-        onChange={handleChange}
         name={inputName}
         placeholder={placeholder}
         {...register(inputName, {
+          onChange: (e) => {
+            handleChange(e);
+          },
           required: true,
         })}
       />
-      {errors.inputName?.type === 'required' && (
-        <p className={inputStyle}>Este campo es requeridp</p>
-      )}
     </>
   );
 }

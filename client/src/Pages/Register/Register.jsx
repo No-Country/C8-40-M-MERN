@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { registerUser } from '../../Redux/Actions/userActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
@@ -9,8 +9,10 @@ import EmailError from '../../Components/Login/EmailError/EmailError';
 function Login() {
   const [userData, setUserData] = useState({});
   const [passwordError, setPasswordError] = useState(false);
-  const { loading, userInfo, error, success } = useSelector((state) => state.user);
+  const [message, setMessage] = useState(false);
+  const { loading, error } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -34,18 +36,24 @@ function Login() {
     notRegister: 'text-[#ABADC6]',
     createAccount: 'text-[#2563EB] font-semibold ml-2 text-sm',
     passwordErrorText: 'text-sm text-[#EF4444] flex justify-start w-full pl-3',
+    successMessage:
+      ' py-2 px-6 border-4 border-green-400  bg-white rounded-lg text-green-800 text-lg absolute top-32 right-12 ',
   };
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value.toLowerCase() });
   };
   const handleOnSubmit = (userData) => {
     userData.email = userData.email.toLowerCase();
-    console.log(userData);
     if (userData.password !== userData.repeatPassword) {
       setPasswordError(true);
     } else {
       dispatch(registerUser(userData));
       setPasswordError(false);
+      setMessage(true);
+      setTimeout(() => {
+        setMessage(false);
+        navigate('/auth/login');
+      }, [2000]);
     }
   };
 
@@ -130,11 +138,16 @@ function Login() {
 
         <p className={styles.notRegister}>
           ¿Ya estas registrado?
-          <Link to="/login">
+          <Link to="/auth/login">
             <span className={styles.createAccount}>Ingresar</span>
           </Link>
         </p>
       </form>
+      {message && (
+        <div className={styles.successMessage}>
+          <p>Cuenta creada correctamente</p>
+        </div>
+      )}
     </main>
   );
 }

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { createPost } from '../../Redux/Actions/postsActions';
 import { useForm } from 'react-hook-form';
 import DropdownPost from '../../Components/CreatePost/DropdownPost/DropdownPost';
@@ -7,6 +7,7 @@ import PostInput from '../../Components/CreatePost/PostInput/PostInput';
 import BlueContainer from '../../Components/CreatePost/BlueContainer/BlueContainer';
 import { useGetCategoriesQuery } from '../../Redux/Api/apiSlice';
 import DropDowns from '../../Components/CreatePost/DropDowns/DropDowns';
+import { useEffect } from 'react';
 const styles = {
   main: 'w-full h-full flex justify-center items-center pt-20 text-white pb-12',
   form: 'h-[90%] w-[90%] md:w-[650px] flex flex-col gap-4 bg-[#252A41] rounded-xl py-8 px-6 md:mt-6 lg:ml-[380px] relative ',
@@ -22,6 +23,9 @@ function CreatePost() {
   const [categoria, setCategoria] = useState('');
   const [lenguaje, setLenguaje] = useState('');
   const [tecnologia, setTecnologia] = useState('');
+  const [resource, setResource] = useState('');
+  const [tag, setTag] = useState('');
+  const [date, setDate] = useState(null);
   const [missingError, setMissingError] = useState(false);
   const dispatch = useDispatch();
   const { handleSubmit } = useForm();
@@ -35,24 +39,40 @@ function CreatePost() {
     programmingL: null,
     tecnology: null,
   });
-
+  console.log(data);
+  const handleChange = (e) => {
+    setPostData({ ...postData, [e.target.name]: e.target.value });
+  };
+  let f = new Date();
+  useEffect(() => {
+    setDate(f.getMonth() + '-' + f.getDate() + '-' + f.getFullYear());
+    setPostData({
+      ...postData,
+      category: { name: categoria },
+      programmingL: { name: lenguaje },
+      technology: { name: tecnologia },
+      resource: resource,
+      tag: { name: tag },
+      date: date,
+    });
+  }, [tecnologia, lenguaje, categoria, resource, tag]);
   const handleOnSubmit = () => {
+    const { resource, url, title, description, category, programmingL, tecnology } = postData;
     setPostData({
       ...postData,
       category: { name: categoria },
       programmingL: { name: lenguaje },
       tecnology: { name: tecnologia },
+      resource: resource,
+      createdAt: date,
+      tag: { name: tag },
     });
-    const { resource, url, title, description, category, programmingL, tecnology } = postData;
-    // if (resource && url && title && description && category && programmingL && tecnology) {
-    dispatch(createPost(postData));
-    // console.log(postData);
-    // } else {
-    //   setMissingError(true);
-    // }
-  };
-  const handleChange = (e) => {
-    setPostData({ ...postData, [e.target.name]: e.target.value });
+    if (resource && url && title && description && category && programmingL && tecnology) {
+      dispatch(createPost(postData));
+      setMissingError(false);
+    } else {
+      setMissingError(true);
+    }
   };
   return (
     <main className={styles.main}>
@@ -60,18 +80,15 @@ function CreatePost() {
         <h1 className={styles.titles}>Datos requeridos</h1>
 
         <div className={styles.dropwDownContainer}>
-          <DropdownPost
-            name={postData.resource ? postData.resource : 'Tipo de recursos'}
-            data={postData.resource}
-          >
-            <p className="cursor-pointer" onClick={() => (postData.resource = 'video')}>
+          <DropdownPost name={postData?.resource || 'Tipo de recursos'} data={postData.resource}>
+            <p className="cursor-pointer" onClick={() => setResource('video')}>
               Video
             </p>
-            <p className="cursor-pointer" onClick={() => (postData.resource = 'imagen')}>
+            <p className="cursor-pointer" onClick={() => setResource('image')}>
               Imagen
             </p>
-            <p className="cursor-pointer" onClick={() => (postData.resource = 'publicación')}>
-              Publicación
+            <p className="cursor-pointer" onClick={() => setResource('document')}>
+              Documento
             </p>
           </DropdownPost>
         </div>
@@ -105,8 +122,10 @@ function CreatePost() {
         <h1 className={styles.littlerTitles}>Etiquetas</h1>
 
         <DropDowns
+          postData={postData}
           data={data}
           setCategoria={setCategoria}
+          setTag={setTag}
           setLenguaje={setLenguaje}
           setTecnologia={setTecnologia}
         />

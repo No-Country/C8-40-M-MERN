@@ -5,7 +5,6 @@ const token = localStorage.getItem('token') ? localStorage.getItem('token') : nu
 const initialState = {
   loading: false,
   token,
-  userId: null,
   isAuth: false,
   userInfo: null,
   error: false,
@@ -33,7 +32,6 @@ const userSlice = createSlice({
       state.userInfo = payload.data.user;
       state.isAuth = true;
       state.success = true;
-      state.userId = payload.id;
     },
     [userLogin.rejected]: (state, { payload }) => {
       state.loading = false;
@@ -45,7 +43,6 @@ const userSlice = createSlice({
     },
     [registerUser.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.userId = payload.id;
       state.isAuth = true;
       state.userInfo = payload;
       state.success = true; // registration successful
@@ -57,5 +54,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { login } = userSlice.actions;
+export const { login, setErrorMessage } = userSlice.actions;
 export default userSlice.reducer;

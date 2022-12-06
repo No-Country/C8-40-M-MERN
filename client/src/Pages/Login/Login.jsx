@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userLogin } from '../../Redux/Actions/userActions';
 import EmailError from '../../Components/Login/EmailError/EmailError';
 import ClipLoader from 'react-spinners/ClipLoader';
-import { login } from '../../Redux/Slices/userSlice';
 
 function Login() {
   const [data, setData] = useState({});
@@ -105,22 +104,9 @@ function Login() {
           )}
         </button>
 
-        <div className={styles.linesDiv}>
-          <span className={styles.lines}></span>
-          <p>O</p>
-          <span className={styles.lines}></span>
-        </div>
-        <button className={styles.logWithGoogle}>
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png"
-            alt="google"
-            className={styles.googleImage}
-          />
-          Ingresar con Google
-        </button>
         <p className={styles.notRegister}>
           ¿No estás registrado?
-          <Link to="/register">
+          <Link to="/auth/register">
             <span className={styles.createAccount}>Crear una cuenta</span>
           </Link>
         </p>
