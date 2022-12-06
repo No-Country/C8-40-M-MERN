@@ -26,13 +26,13 @@ function Card({ element }) {
   return (
     <div className={styles.card}>
       <Link to={'detail/' + element.id}>
-        {element.resource == 'video' ? (
+        {element.resource === 'video' ? (
           <img
             className={styles.img}
             src={'https://img.youtube.com/vi/' + element.url.split('=')[1] + '/0.jpg'}
             alt=":("
           />
-        ) : element.resource == 'document' ? (
+        ) : element.resource === 'document' ? (
           <img
             className={styles.img}
             src="https://img.freepik.com/free-vector/illustration-document-icon_53876-28510.jpg?w=2000"

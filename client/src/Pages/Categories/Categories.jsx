@@ -20,6 +20,7 @@ const cat = {
   frontend: ['react', 'redux', 'angular', 'vue', 'svelte'],
   backend: ['node', 'sequelize', 'nest', 'express', 'mongoose', 'django', 'spring boot'],
   qa: ['cypress', 'selenium', 'gatling', 'invicti', 'lambdatest'],
+  testing: ['intellitest', 'junit', 'Pytest', 'jest', 'mocha'],
 };
 
 function Categories() {
