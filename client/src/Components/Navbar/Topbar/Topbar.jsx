@@ -1,9 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { BsSearch } from 'react-icons/bs';
 import { HiMenuAlt1 } from 'react-icons/hi';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { logout } from '../../../Redux/Slices/userSlice';
 import UserChange from './UserMenu/UserChange';
 import UserMenu from './UserMenu/UserMenu';
 import UserPhotoNavbar from './UserMenu/UserPhotoNavbar';
@@ -27,8 +28,9 @@ const styles = {
 const TopNavbar = ({ handleOpenMenu }) => {
   const [userMenu, setUserMenu] = useState(false);
   const [userChange, setUserChange] = useState(false);
-  const { userInfo } = useSelector((state) => state.user);
-
+  const token = localStorage.getItem('token');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleUserProfile = () => {
     setUserMenu(!userMenu);
   };
@@ -39,6 +41,11 @@ const TopNavbar = ({ handleOpenMenu }) => {
     setUserMenu(false);
     setUserChange(false);
   };
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate('/auth/login');
+  };
+
   return (
     <main className={styles.navbar}>
       <HiMenuAlt1 className={styles.menuHamburg} size="1.5rem" onClick={handleOpenMenu} />
@@ -51,8 +58,14 @@ const TopNavbar = ({ handleOpenMenu }) => {
         <BsSearch className={styles.searchIcon} size="1.1rem" />
         <input className={styles.input} type="text" placeholder="Buscar" />
       </form>
-      {userInfo ? (
+      {token ? (
         <>
+          <button
+            className="bg-[#2563EB] font-semibold py-1.5 px-3 rounded-lg mr-16"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
           <Link to="/create-post">
             <button className={styles.createPostButton}>Crear Post</button>
           </Link>
@@ -68,7 +81,7 @@ const TopNavbar = ({ handleOpenMenu }) => {
           </Link>
         </div>
       )}
-      {userInfo && userMenu ? <UserMenu onClick={() => setUserChange(true)} /> : null}
+      {token && userMenu ? <UserMenu onClick={() => setUserChange(true)} /> : null}
       {userChange && <UserChange handleCloseAll={handleCloseAll} handleGoBack={handleGoBack} />}
     </main>
   );
