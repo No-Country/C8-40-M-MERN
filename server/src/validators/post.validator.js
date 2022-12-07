@@ -75,7 +75,7 @@ const validateQueries = [
     .optional()
     .isIn(['video', 'image', 'document']),
 
-  query('date', "Date format must be 'MM-DD-YYYY'").optional().isDate({ format: 'MM-DD-YYYY' }),
+  query('date', "Date format must be 'MM/DD/YYYY'").optional().isDate({ format: 'MM/DD/YYYY' }),
 
   query('category', 'Category must be an id').optional().isMongoId(),
 
