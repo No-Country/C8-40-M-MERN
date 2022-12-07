@@ -16,7 +16,7 @@ const styles = {
 function CardContainer({ data, tech }) {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
-    setPosts(data?.filter((d) => d.technology.name === tech));
+    setPosts(data?.filter((d) => d?.technology?.name === tech));
   }, [data]);
 
   return (
@@ -25,7 +25,7 @@ function CardContainer({ data, tech }) {
         <div className={styles.container}>
           <div className={styles.titleContainer}>
             <h1 className={styles.categoryTitle}>{tech}</h1>
-            <Link to={'searched/' + tech}>
+            <Link to={`${tech}`}>
               <p className={styles.masContainer}>
                 Ver más
                 <IoIosArrowForward size="1.6rem" />

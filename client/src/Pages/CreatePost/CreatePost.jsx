@@ -17,6 +17,7 @@ const styles = {
   button: 'py-3 px-4 bg-[#2563EB] rounded-xl text-white font-semibold ',
   dropwDownContainer: 'flex flex-col gap-4',
   missingError: ' text-[#EF4444] flex justify-start w-full pl-3',
+  input: 'bg-transparent py-2 px-3 rounded-xl border-2 border-[#424867] outline-none',
 };
 function CreatePost() {
   const { data } = useGetCategoriesQuery();
@@ -39,13 +40,15 @@ function CreatePost() {
     programmingL: null,
     tecnology: null,
   });
-  console.log(data);
   const handleChange = (e) => {
     setPostData({ ...postData, [e.target.name]: e.target.value });
   };
-  let f = new Date();
+  const handleDate = (e) => {
+    const dia = e.target.value.split('-');
+    const diasOrdenados = `${dia[1]}-${dia[2]}-${dia[0]}`;
+    setDate(diasOrdenados);
+  };
   useEffect(() => {
-    setDate(f.getMonth() + '-' + f.getDate() + '-' + f.getFullYear());
     setPostData({
       ...postData,
       category: { name: categoria },
@@ -55,7 +58,8 @@ function CreatePost() {
       tag: { name: tag },
       date: date,
     });
-  }, [tecnologia, lenguaje, categoria, resource, tag]);
+  }, [tecnologia, lenguaje, categoria, resource, tag, date]);
+
   const handleOnSubmit = () => {
     const { resource, url, title, description, category, programmingL, tecnology } = postData;
     setPostData({
@@ -73,6 +77,7 @@ function CreatePost() {
     } else {
       setMissingError(true);
     }
+    console.log(postData);
   };
   return (
     <main className={styles.main}>
@@ -92,6 +97,10 @@ function CreatePost() {
             </p>
           </DropdownPost>
         </div>
+        <label htmlFor="date" className={styles.littlerTitles}>
+          Ingrese la fecha del post
+        </label>
+        <input name="date" required type="date" onChange={handleDate} className={styles.input} />
         <PostInput
           titles={styles.littlerTitles}
           label="URL"

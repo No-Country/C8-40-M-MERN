@@ -6,6 +6,7 @@ import { IoIosArrowForward } from 'react-icons/io';
 
 import { useRef, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const styles = {
   container: ' my-12 flex flex-col gap-8',
@@ -32,10 +33,12 @@ function CardContainerM({ data, tech }) {
     <div className={styles.container}>
       <div className={styles.titleContainer}>
         <h1 className={styles.categoryTitle}>{tech}</h1>
-        <p className={styles.masContainer}>
-          Ver más
-          <IoIosArrowForward size="1.6rem" />
-        </p>
+        <Link to={`${tech}`}>
+          <p className={styles.masContainer}>
+            Ver más
+            <IoIosArrowForward size="1.6rem" />
+          </p>
+        </Link>
       </div>
       <div>
         <motion.div ref={slider} whileTap={{ cursor: 'grabbing' }} className={styles.motionDiv1}>
@@ -46,7 +49,7 @@ function CardContainerM({ data, tech }) {
           >
             {posts?.slice(0, 5)?.map((e) => {
               return (
-                <motion.div className={styles.motionDivCard} key={e.date}>
+                <motion.div className={styles.motionDivCard} key={e.id}>
                   <CardMobile key={e.id} element={e} />
                 </motion.div>
               );

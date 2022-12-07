@@ -15,7 +15,7 @@ function Sidebar({ menuPosition }) {
     <main className={styles.sideBar}>
       {data ? (
         <>
-          <Category elem={data.data.categories} title="Categories" />
+          <Category elem={data.data.categories} title="Categorias" />
           <Category elem={data.data.programmingL} title="Lenguajes" />
         </>
       ) : (

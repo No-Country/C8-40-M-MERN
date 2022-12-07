@@ -14,16 +14,15 @@ function Category({ elem, title }) {
     listItem:
       'capitalize w-full h-full hover:bg-[#252A41] h-[40px] flex items-center pl-[28%] hover:bg-[#252A41]  ',
   };
-
   return (
     <>
       <div className={styles.categories} onClick={() => setDropwDown(!dropDown)}>
-        {title !== 'Categories' ? <BiBrain /> : <BsHouseDoor />}
+        {title !== 'Categorias' ? <BiBrain /> : <BsHouseDoor />}
         <h1>{title}</h1>
       </div>
       <ul className={styles.lists}>
         {elem.map((i) => (
-          <Link to={`/${i.name}`} key={i.id}>
+          <Link to={`/${title.toLowerCase()}/${i.name}`} key={i.id}>
             <li className={styles.listItem}>{i.name}</li>
           </Link>
         ))}

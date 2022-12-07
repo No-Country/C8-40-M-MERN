@@ -10,7 +10,7 @@ const styles = {
   containerDetail: 'pt-[80px] flex flex-col place-content-center',
   arrow:
     'flex rounded-[8px] h-[35px] place-self-center items-center w-[336px]  md:w-[70%] text-lg text-[#DCDEF3]',
-  button: 'cursor-pointer flex flex-row',
+  button: 'cursor-pointer flex flex-row ',
   detailCard:
     'w-[336px] rounded-[8px] border-solid bg-[#1E2235] m-[1px] place-self-center md:w-[70%] ',
   users:
@@ -33,7 +33,6 @@ const styles = {
 
 function Detail() {
   const [selected, setSelected] = useState(null);
-
   const navigate = useNavigate();
 
   const user = {
@@ -43,8 +42,7 @@ function Detail() {
   };
 
   const { id } = useParams();
-  console.log(id);
-  const { data, isLoading, isFetching, isError } = useGetAllPostsQuery();
+  const { data } = useGetAllPostsQuery();
 
   const getUserByID = async () => {
     let userFind;
