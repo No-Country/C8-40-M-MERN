@@ -27,11 +27,10 @@ function Categories() {
   const { data } = useGetAllPostsQuery();
 
   const [catFilter, setCatFilter] = useState([]);
-  const { category, programmingL } = useParams();
+  const { category } = useParams();
   useEffect(() => {
-    setCatFilter(data?.data.docs.filter((e) => e.category.name === category));
-  }, [category, data, programmingL]);
-  console.log(catFilter);
+    setCatFilter(data?.data.docs.filter((e) => e.category?.name === category));
+  }, [category, data]);
   return (
     <main className={styles.mainContainer}>
       <div className={styles.container}>

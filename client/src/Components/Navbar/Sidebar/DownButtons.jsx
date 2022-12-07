@@ -1,7 +1,6 @@
 import React from 'react';
 import { FiLogOut } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 function DownButtons({ menuPosition }) {
   const styles = {
@@ -10,7 +9,8 @@ function DownButtons({ menuPosition }) {
     languageImg: 'w-6 h-6 rounded-[50%]',
     createPostButton: 'hidden md:flex bg-[#2563EB] text-white py-1.5 px-3 rounded-lg mt-3 ',
   };
-  const { userInfo } = useSelector((state) => state.user);
+  const token = localStorage.getItem('token');
+
   return (
     <main className={styles.mainContainer}>
       <div className={styles.container}>
@@ -21,14 +21,14 @@ function DownButtons({ menuPosition }) {
         />
         <p>Español</p>
       </div>
-      {userInfo ? (
+      {token ? (
         <Link to="/create-post">
           <button className={styles.createPostButton}>Crear Post</button>
         </Link>
       ) : (
         <div className={styles.container}>
           <FiLogOut size="1.5rem" />
-          <Link to="/login">
+          <Link to="/auth/login">
             <p>Iniciar sesión</p>
           </Link>
         </div>

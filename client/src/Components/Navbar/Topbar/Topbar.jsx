@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { BsSearch } from 'react-icons/bs';
 import { HiMenuAlt1 } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
@@ -8,7 +8,7 @@ import UserChange from './UserMenu/UserChange';
 import UserMenu from './UserMenu/UserMenu';
 import UserPhotoNavbar from './UserMenu/UserPhotoNavbar';
 import logo from '../../../Assets/logo.png';
-import { setFalseFocus, setTrueFocus, setSearchText } from '../../../Redux/Slices/searchFocusSlice';
+import { setTrueFocus, setSearchText } from '../../../Redux/Slices/searchFocusSlice';
 const styles = {
   navbar:
     'w-full fixed z-50 h-[68px] bg-[#1E2235] flex items-center justify-between px-4  md:px-[30px] text-white',
@@ -23,15 +23,14 @@ const styles = {
     'px-[16px] py-[12px] bg-[#2563EB] rounded-2xl hover:bg-[#1E40AF] focus:border-2 focus:border-white focus:px-[13px] focus:py-[10px] ',
   menuHamburg: 'text-[#ABADC6] cursor-pointer',
   createPostButton: 'hidden md:flex bg-[#424867] py-1.5 px-3 rounded-lg absolute top-4 right-24 ',
+  logoutButton: 'bg-white text-black py-2 py-3 mr-6',
 };
 
 const TopNavbar = ({ handleOpenMenu }) => {
   const [userMenu, setUserMenu] = useState(false);
   const [userChange, setUserChange] = useState(false);
   const dispatch = useDispatch();
-  const { userInfo } = useSelector((state) => state.user);
-  const { searchFocus } = useSelector((state) => state.searchFocus);
-
+  const token = localStorage.getItem('token');
   const handleUserProfile = () => {
     setUserMenu(!userMenu);
   };
@@ -61,7 +60,7 @@ const TopNavbar = ({ handleOpenMenu }) => {
           onFocus={() => dispatch(setTrueFocus())}
         />
       </form>
-      {userInfo ? (
+      {token ? (
         <>
           <Link to="/create-post">
             <button className={styles.createPostButton}>Crear Post</button>
@@ -78,7 +77,9 @@ const TopNavbar = ({ handleOpenMenu }) => {
           </Link>
         </div>
       )}
-      {userInfo && userMenu ? <UserMenu onClick={() => setUserChange(true)} /> : null}
+      {token && userMenu ? (
+        <UserMenu handleClose={() => setUserMenu(false)} onClick={() => setUserChange(true)} />
+      ) : null}
       {userChange && <UserChange handleCloseAll={handleCloseAll} handleGoBack={handleGoBack} />}
     </main>
   );
