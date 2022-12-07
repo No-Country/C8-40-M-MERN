@@ -38,8 +38,8 @@ const validateFields = [
 
   check('date', 'Enter the date the original data was created or updated')
     .exists()
-    .isDate({ format: 'MM-DD-YYYY' })
-    .withMessage("Date format: 'MM-DD-YYYY'"),
+    .isDate({ format: 'MM/DD/YYYY' })
+    .withMessage("Date format: 'MM/DD/YYYY'"),
 
   check('category', 'Enter a category').exists(),
 

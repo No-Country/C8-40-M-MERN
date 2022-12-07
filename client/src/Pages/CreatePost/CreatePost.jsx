@@ -43,12 +43,19 @@ function CreatePost() {
   const handleChange = (e) => {
     setPostData({ ...postData, [e.target.name]: e.target.value });
   };
-  const handleDate = (e) => {
-    const dia = e.target.value.split('-');
-    const diasOrdenados = `${dia[1]}-${dia[2]}-${dia[0]}`;
-    setDate(diasOrdenados);
-  };
+  // const handleDate = (e) => {
+  //   const dia = e.target.value.split('-');
+  //   const diasOrdenados = `${dia[1]}-${dia[2]}-${dia[0]}`;
+  //   setDate(diasOrdenados);
+  // };
   useEffect(() => {
+    const f = new Date();
+    const dataDate = f.toLocaleDateString('en-US', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
+    setDate(dataDate);
     setPostData({
       ...postData,
       category: { name: categoria },
@@ -97,10 +104,10 @@ function CreatePost() {
             </p>
           </DropdownPost>
         </div>
-        <label htmlFor="date" className={styles.littlerTitles}>
+        {/* <label htmlFor="date" className={styles.littlerTitles}>
           Ingrese la fecha del post
         </label>
-        <input name="date" required type="date" onChange={handleDate} className={styles.input} />
+        <input name="date" required type="date" onChange={handleDate} className={styles.input} /> */}
         <PostInput
           titles={styles.littlerTitles}
           label="URL"
