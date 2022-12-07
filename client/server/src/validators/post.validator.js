@@ -47,7 +47,7 @@ const validateFields = [
 
   check('technology', 'Enter a technology').exists(),
 
-  // check('tag', 'Enter a tag').exists(),
+  check('tag', 'Enter a tag').exists(),
 
   check('url', 'Enter a url').exists().isURL().withMessage('Enter a valid url'),
 
@@ -83,7 +83,7 @@ const validateQueries = [
 
   query('technology', 'Technology must be an id').optional().isMongoId(),
 
-  // query('tag', 'Tag must be an id').optional().isMongoId(),
+  query('tag', 'Tag must be an id').optional().isMongoId(),
 
   (req, res, next) => {
     validateResult(req, res, next);
@@ -128,10 +128,10 @@ const validateUpdateFields = [
 
   check('url', 'Enter a url').optional().isURL().withMessage('Enter a valid url'),
 
-  // check('tag')
-  //   .optional()
-  //   .isIn(['documentation', 'solution', 'article', 'news'])
-  //   .withMessage('Enter a valid tag'),
+  check('tag')
+    .optional()
+    .isIn(['documentation', 'solution', 'article', 'news'])
+    .withMessage('Enter a valid tag'),
 
   check('category')
     .optional()
