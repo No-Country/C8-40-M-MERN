@@ -36,10 +36,10 @@ const validateFields = [
     .isIn(['video', 'image', 'document'])
     .withMessage("Resource must be 'video', 'image' or 'document'"),
 
-  check('date', 'Enter the date the original data was created or updated')
-    .exists()
-    .isDate({ format: 'MM/DD/YYYY' })
-    .withMessage("Date format: 'MM/DD/YYYY'"),
+  // check('date', 'Enter the date the original data was created or updated')
+  //   .exists()
+  //   .isDate({ format: 'MM/DD/YYYY' })
+  //   .withMessage("Date format: 'MM/DD/YYYY'"),
 
   check('category', 'Enter a category').exists(),
 
@@ -75,7 +75,7 @@ const validateQueries = [
     .optional()
     .isIn(['video', 'image', 'document']),
 
-  query('date', "Date format must be 'MM/DD/YYYY'").optional().isDate({ format: 'MM/DD/YYYY' }),
+  // query('date', "Date format must be 'MM/DD/YYYY'").optional().isDate({ format: 'MM/DD/YYYY' }),
 
   query('category', 'Category must be an id').optional().isMongoId(),
 
@@ -122,9 +122,9 @@ const validateUpdateFields = [
     .isIn(['video', 'image', 'document'])
     .withMessage("Resource must be 'video', 'image' or 'document'"),
 
-  check('date', 'Enter the date the material was created or updated')
-    .optional()
-    .isDate({ format: 'MM-DD-YYYY' }),
+  // check('date', 'Enter the date the material was created or updated')
+  //   .optional()
+  //   .isDate({ format: 'MM-DD-YYYY' }),
 
   check('url', 'Enter a url').optional().isURL().withMessage('Enter a valid url'),
 
