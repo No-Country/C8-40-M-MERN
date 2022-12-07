@@ -7,7 +7,7 @@ import { useGetCategoriesQuery } from '../../../Redux/Api/apiSlice';
 
 function Sidebar({ menuPosition }) {
   const styles = {
-    sideBar: `h-full overflow-y-scroll z-30 w-[223px] text-white bg-[#1E2235] flex flex-col items-start py-[100px] font-semibold fixed ${menuPosition} transition-all duration-500 `,
+    sideBar: `h-full overflow-y-scroll z-40 w-[223px] text-white bg-[#1E2235] flex flex-col items-start py-[100px] font-semibold fixed ${menuPosition} transition-all duration-500 shadow-2xl`,
   };
   const { data } = useGetCategoriesQuery();
 

@@ -4,7 +4,7 @@ import Pagination from '../../Components/Pagination/Pagination';
 import { useGetAllPostsQuery } from '../../Redux/Api/apiSlice';
 
 const styles = {
-  mainContainer: 'pt-[80px] md:pl-[17%] md:pr-6 w-full ',
+  mainContainer: 'pt-[80px] md:pl-[17%]  md:pr-6 w-full ',
   categoryTitle: 'text-4xl text-white',
   buttonSection: 'w-full flex justify-between gap-4 mt-6',
   filterButtons: 'w-full py-2 bg-gray-300',

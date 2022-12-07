@@ -1,47 +1,52 @@
 import React, { useState, useEffect } from 'react';
-import AllCards from '../../Components/Cards/AllCards';
 import { useGetAllPostsQuery } from '../../Redux/Api/apiSlice';
-import { useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import SearchedMap from '../../Components/Searched/SearchedMap';
+import { ImCross } from 'react-icons/im';
+import { setFalseFocus } from '../../Redux/Slices/searchFocusSlice';
 
 const styles = {
-  mainContainer: 'pt-[80px] md:pl-[17%] md:pr-6 w-full ',
-  categoryTitle: 'text-4xl text-white',
-  buttonSection: 'w-full flex justify-between gap-4 mt-6',
-  filterButtons: 'w-full py-2 bg-gray-300',
-  tagsContainer: 'w-full flex flex-wrap justify-evenly gap-4 mt-6',
-  tagsButton:
-    ' py-1 w-24 flex justify-center max-h-8 text-center overflow-hidden px-6 rounded-2xl bg-gray-500',
-  container: 'hidden md:flex md:flex-col w-full',
-  containerM: ' md:hidden',
+  mainContainer:
+    'w-full min-h-full fixed overflow-y-scroll pb-12 mb-6 bg-black opacity-50 top-0 left-0 z-20 animate__animated animate__fadeInUp',
+  cardsContainer:
+    'w-[80%] min-h-full overflow-y-scroll bg-[#1E2235] fixed top-20 right-6   rounded-xl animate__animated animate__fadeInUp',
+  noneResult: 'w-full text-center mt-10 text-[#ABADC6] text-4xl text-white shadow-2xl',
+  cross: 'text-white relative top-10 left-[92%] text-xl cursor-pointer text-[#ABADC6]',
 };
 
 function Searched() {
-  const { data, isLoading, isFetching, isError } = useGetAllPostsQuery();
-
-  const [searched, setSearched] = useState([]);
-  const [teched, setTeched] = useState([]);
-  const [langed, setLanged] = useState([]);
-
-  const { techlan } = useParams();
+  const { data } = useGetAllPostsQuery();
+  const { searchText } = useSelector((state) => state.searchFocus);
+  const [filtered, setFiltered] = useState(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    setTeched(data?.data.docs.filter((e) => e.technology?.name === techlan));
-    setLanged(data?.data.docs.filter((e) => e.programmingL?.name === techlan));
-  }, [techlan]);
+    if (searchText !== '') {
+      setFiltered(
+        data.data.docs?.filter((post) =>
+          (post?.title || post.category?.name || post?.programmingL.name || post.technology.name)
+            .toLowerCase()
+            .includes(searchText.toLowerCase())
+        )
+      );
+    } else {
+      setFiltered(null);
+    }
+  }, [searchText]);
 
   return (
-    <main className={styles.mainContainer}>
-      <h1 className="mt-[20px] ml-[20px] text-[#FFFFFF] ">renderiza Searched de {techlan}</h1>
-      <div className={styles.container}>
-        {teched ? (
-          <AllCards data={teched} tech={techlan} />
-        ) : langed ? (
-          <AllCards data={langed} tech={techlan} />
-        ) : (
-          <></>
-        )}
-      </div>
-    </main>
+    <>
+      <main className={styles.mainContainer}>
+        <div className={styles.cardsContainer}>
+          <ImCross className={styles.cross} onClick={() => dispatch(setFalseFocus())} />
+          {filtered === null ? (
+            <h1 className={styles.noneResult}>Ningún resultado encontrado...</h1>
+          ) : (
+            <SearchedMap filtered={filtered} />
+          )}
+        </div>
+      </main>
+    </>
   );
 }
 

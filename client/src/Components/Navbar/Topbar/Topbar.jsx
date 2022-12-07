@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { BsSearch } from 'react-icons/bs';
 import { HiMenuAlt1 } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
@@ -8,6 +8,7 @@ import UserChange from './UserMenu/UserChange';
 import UserMenu from './UserMenu/UserMenu';
 import UserPhotoNavbar from './UserMenu/UserPhotoNavbar';
 import logo from '../../../Assets/logo.png';
+import { setFalseFocus, setTrueFocus, setSearchText } from '../../../Redux/Slices/searchFocusSlice';
 const styles = {
   navbar:
     'w-full fixed z-50 h-[68px] bg-[#1E2235] flex items-center justify-between px-4  md:px-[30px] text-white',
@@ -27,7 +28,9 @@ const styles = {
 const TopNavbar = ({ handleOpenMenu }) => {
   const [userMenu, setUserMenu] = useState(false);
   const [userChange, setUserChange] = useState(false);
+  const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.user);
+  const { searchFocus } = useSelector((state) => state.searchFocus);
 
   const handleUserProfile = () => {
     setUserMenu(!userMenu);
@@ -39,6 +42,7 @@ const TopNavbar = ({ handleOpenMenu }) => {
     setUserMenu(false);
     setUserChange(false);
   };
+
   return (
     <main className={styles.navbar}>
       <HiMenuAlt1 className={styles.menuHamburg} size="1.5rem" onClick={handleOpenMenu} />
@@ -49,7 +53,13 @@ const TopNavbar = ({ handleOpenMenu }) => {
       </Link>
       <form className={styles.form}>
         <BsSearch className={styles.searchIcon} size="1.1rem" />
-        <input className={styles.input} type="text" placeholder="Buscar" />
+        <input
+          className={styles.input}
+          onChange={(e) => dispatch(setSearchText(e.target.value))}
+          type="text"
+          placeholder="Buscar"
+          onFocus={() => dispatch(setTrueFocus())}
+        />
       </form>
       {userInfo ? (
         <>
