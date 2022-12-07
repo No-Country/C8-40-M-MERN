@@ -10,19 +10,13 @@ import ClipLoader from 'react-spinners/ClipLoader';
 function Login() {
   const [data, setData] = useState({});
   const navigate = useNavigate();
-  const { loading, userInfo, error } = useSelector((state) => state.user);
+  const { loading, error } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
-  useEffect(() => {
-    if (userInfo) {
-      navigate('/');
-    }
-  }, [navigate, userInfo]);
 
   const styles = {
     mainContainer: 'w-full h-[80vh] flex flex-col gap-8 justify-center items-center pt-40',
@@ -41,20 +35,30 @@ function Login() {
     googleImage: 'w-5',
     notRegister: 'text-[#ABADC6]',
     createAccount: 'text-[#2563EB] font-semibold ml-2 text-sm',
-    passwordErrorText: 'text-sm text-[#EF4444] absolute bottom-64 left-6',
+    passwordErrorText: 'text-sm text-[#EF4444] absolute bottom-36 left-6',
   };
+  const [errorMessage, setErrorMessage] = useState(false);
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
+  const registerToken = localStorage.getItem('registerToken');
   const handleOnSubmit = (e) => {
-    dispatch(userLogin(data));
+    if (registerToken) {
+      setErrorMessage(false);
+      dispatch(userLogin(data));
+      setTimeout(() => {
+        navigate('/');
+      }, 2000);
+    } else {
+      setErrorMessage(true);
+    }
   };
 
   return (
     <main className={styles.mainContainer}>
       <form onSubmit={handleSubmit(handleOnSubmit)} className={styles.form}>
         <h1 className={styles.logo}>Ingresar</h1>
-        {errors.email?.type === 'required' && <EmailError />}
+        {(errors.email?.type === 'required' || errorMessage) && <EmailError />}
         <input
           type="email"
           className={styles.inputs}

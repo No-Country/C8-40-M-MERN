@@ -10,26 +10,17 @@ const styles = {
   date: 'text-[14px] text-[#9A9CB4] m-[9px] ',
 };
 
-{
-  /* <iframe
-  title={element.url}
-  className={styles.video}
-  src={'https://www.youtube.com/embed/' + element.url.split('=')[1]}
-  alt=":("
-/> */
-}
-
 function CardMobile({ element }) {
   return (
     <div className={styles.cardmovil}>
-      <Link to={'detail/' + element.id}>
-        {element.resource == 'video' ? (
+      <Link to={`/${element.category.name}/detail/${element.id}`}>
+        {element.resource === 'video' ? (
           <img
             className={styles.img}
             src={'https://img.youtube.com/vi/' + element.url.split('=')[1] + '/0.jpg'}
             alt=":("
           />
-        ) : element.resource == 'document' ? (
+        ) : element.resource === 'document' ? (
           <img
             className={styles.img}
             src="https://img.freepik.com/free-vector/illustration-document-icon_53876-28510.jpg?w=2000"

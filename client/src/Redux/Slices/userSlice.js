@@ -16,7 +16,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      sessionStorage.removeItem('token');
+      localStorage.removeItem('token');
       state.userId = null;
       state.isAuth = false;
       state.userInfo = null;
@@ -35,7 +35,7 @@ const userSlice = createSlice({
     },
     [userLogin.rejected]: (state, { payload }) => {
       state.loading = false;
-      state.error = payload;
+      state.error = true;
     },
     //register user
     [registerUser.pending]: (state) => {
@@ -54,5 +54,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { login, setErrorMessage } = userSlice.actions;
+export const { logout, setErrorMessage } = userSlice.actions;
 export default userSlice.reducer;

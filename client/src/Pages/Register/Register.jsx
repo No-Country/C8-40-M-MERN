@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { registerUser } from '../../Redux/Actions/userActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
+import swal from 'sweetalert';
 import ClipLoader from 'react-spinners/ClipLoader';
 import EmailError from '../../Components/Login/EmailError/EmailError';
 
@@ -53,7 +54,7 @@ function Login() {
       setTimeout(() => {
         setMessage(false);
         navigate('/auth/login');
-      }, [2000]);
+      }, 3000);
     }
   };
 
@@ -143,11 +144,7 @@ function Login() {
           </Link>
         </p>
       </form>
-      {message && (
-        <div className={styles.successMessage}>
-          <p>Cuenta creada correctamente</p>
-        </div>
-      )}
+      {/* {message ? <div>{swal('Bienvenido', 'Te registraste correctamente', 'success')}</div> : null} */}
     </main>
   );
 }
