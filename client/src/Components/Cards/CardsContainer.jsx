@@ -5,12 +5,12 @@ import { IoIosArrowForward } from 'react-icons/io';
 import { Link } from 'react-router-dom';
 
 const styles = {
-  container: ' my-12 flex flex-col gap-8 w-[1200px]',
+  container: ' my-12 flex flex-col gap-8 w-full animate__animated animate__fadeInUp',
   titleContainer:
     'w-full flex justify-between items-center text-center text-white font-semibold text-2xl ',
   categoryTitle: 'capitalize',
   masContainer: 'flex items-center text-xl ',
-  cardsContainer: 'flex gap-4 w-100% ',
+  cardsContainer: 'flex gap-4 w-full animate__animated animate__fadeInUp ',
 };
 
 function CardContainer({ data, tech }) {

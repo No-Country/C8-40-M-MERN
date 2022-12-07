@@ -24,13 +24,14 @@ const cat = {
 };
 
 function Categories() {
-  const { data, isLoading, isFetching, isError } = useGetAllPostsQuery();
+  const { data } = useGetAllPostsQuery();
 
   const [catFilter, setCatFilter] = useState([]);
-  const { category } = useParams();
+  const { category, programmingL } = useParams();
   useEffect(() => {
-    setCatFilter(data?.data.docs.filter((e) => e.category?.name === category));
-  }, [category, data]);
+    setCatFilter(data?.data.docs.filter((e) => e.category.name === category));
+  }, [category, data, programmingL]);
+  console.log(catFilter);
   return (
     <main className={styles.mainContainer}>
       <div className={styles.container}>
