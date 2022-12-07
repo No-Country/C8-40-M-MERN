@@ -62,7 +62,6 @@ function Login() {
     <main className={styles.mainContainer}>
       <form onSubmit={handleSubmit(handleOnSubmit)} className={styles.form} method="POST">
         <h1 className={styles.logo}>Registrarse</h1>
-        {error && <EmailError />}
         <input
           type="text"
           className={styles.inputs}
@@ -76,6 +75,13 @@ function Login() {
             maxLength: 15,
           })}
         />
+        {errors.userName?.type === 'required' && (
+          <p className={styles.passwordErrorText}>Es necesario ingresar un usuario</p>
+        )}
+        {errors.password?.type === 'maxLength' && (
+          <p className={styles.passwordErrorText}>El usuario puede tener máximo 15 caractéres</p>
+        )}
+
         <input
           type="email"
           name="email"
@@ -88,6 +94,9 @@ function Login() {
             required: true,
           })}
         />
+        {errors.email?.type === 'required' && (
+          <p className={styles.passwordErrorText}>Es necesario ingresar un email</p>
+        )}
         <input
           type="password"
           name="password"
