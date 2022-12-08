@@ -5,6 +5,7 @@ export default async function isAdmin(req, res, next) {
 
   if (role !== 'admin') {
     return error({
+
       res,
       message: 'forbidden: admin access is required',
       status: 403,
