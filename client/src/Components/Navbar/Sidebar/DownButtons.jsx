@@ -21,18 +21,6 @@ function DownButtons({ menuPosition }) {
         />
         <p>Español</p>
       </div>
-      {token ? (
-        <Link to="/create-post">
-          <button className={styles.createPostButton}>Crear Post</button>
-        </Link>
-      ) : (
-        <div className={styles.container}>
-          <FiLogOut size="1.5rem" />
-          <Link to="/auth/login">
-            <p>Iniciar sesión</p>
-          </Link>
-        </div>
-      )}
     </main>
   );
 }

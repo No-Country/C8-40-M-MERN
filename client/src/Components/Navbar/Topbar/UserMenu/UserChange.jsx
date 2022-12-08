@@ -19,7 +19,7 @@ function UserChange({ profileTitle, handleGoBack, handleCloseAll }) {
     <main className={styles.mainContainer}>
       <div className={styles.buttons}>
         <span className={styles.goBack} onClick={handleGoBack}>
-          <BiArrowBack size="1.5rem" />
+          <BiArrowBack size="1.0rem" />
           <p>Volver</p>
         </span>
         <AiOutlineCloseCircle

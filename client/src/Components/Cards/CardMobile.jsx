@@ -18,16 +18,16 @@ function CardMobile({ element }) {
           <img
             className={styles.img}
             src={'https://img.youtube.com/vi/' + element.url.split('=')[1] + '/0.jpg'}
-            alt=":("
+            alt="NO-FOUND"
           />
         ) : element.resource === 'document' ? (
           <img
             className={styles.img}
             src="https://img.freepik.com/free-vector/illustration-document-icon_53876-28510.jpg?w=2000"
-            alt=":("
+            alt="NO-FOUND"
           />
         ) : (
-          <img className={styles.img} src={element.url} alt=":(" />
+          <img className={styles.img} src={element.url} alt="NO-FOUND" />
         )}
         <div className={styles.info}>
           <p className={styles.title}>{element.title}</p>

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-const URI = 'https://c8-40-m-mern-kappa.vercel.app/api';
+const URI = 'https://c8-40-m-mern-kappa.vercel.app/api' || '';
 
 export const createPost = createAsyncThunk(
   '/posts',

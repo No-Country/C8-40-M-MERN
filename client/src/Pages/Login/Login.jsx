@@ -48,7 +48,8 @@ function Login() {
       dispatch(userLogin(data));
       setTimeout(() => {
         navigate('/');
-      }, 2000);
+        window.location.reload();
+      }, 1000);
     } else {
       setErrorMessage(true);
     }
@@ -104,7 +105,10 @@ function Login() {
               data-testid="loader"
             />
           ) : (
-            <p>Ingresar</p>
+            <Link to="/">
+              {' '}
+              <p>Ingresar</p>
+            </Link>
           )}
         </button>
 

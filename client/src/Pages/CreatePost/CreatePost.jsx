@@ -38,16 +38,11 @@ function CreatePost() {
     description: null,
     category: null,
     programmingL: null,
-    tecnology: null,
+    technology: null,
   });
   const handleChange = (e) => {
     setPostData({ ...postData, [e.target.name]: e.target.value });
   };
-  // const handleDate = (e) => {
-  //   const dia = e.target.value.split('-');
-  //   const diasOrdenados = `${dia[1]}-${dia[2]}-${dia[0]}`;
-  //   setDate(diasOrdenados);
-  // };
   useEffect(() => {
     const f = new Date();
     const dataDate = f.toLocaleDateString('en-US', {
@@ -73,9 +68,9 @@ function CreatePost() {
       ...postData,
       category: { name: categoria },
       programmingL: { name: lenguaje },
-      tecnology: { name: tecnologia },
+      technology: { name: tecnologia },
       resource: resource,
-      createdAt: date,
+      date: date,
       tag: { name: tag },
     });
     if (resource && url && title && description && category && programmingL && tecnology) {
