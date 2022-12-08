@@ -7,7 +7,6 @@ import isCurrentUser from '../middlewares/isCurrentUser.js';
 import isAuth from '../middlewares/isAuth.js';
 
 import {
-  validateFields,
   validateParams,
   validateQueries,
   validateUpdateFields,
@@ -15,7 +14,7 @@ import {
 
 const router = express.Router();
 
-router.route('/').get(validateQueries, getAllPost).post(isAuth, validateFields, createPost);
+router.route('/').get(validateQueries, getAllPost).post(isAuth, createPost);
 
 router
   .route('/:postId')
