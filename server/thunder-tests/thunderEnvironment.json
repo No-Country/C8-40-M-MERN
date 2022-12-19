@@ -10,7 +10,7 @@
     "data": [
       {
         "name": "adminToken",
-        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzODI5MWQyODc0NDMzY2E5ZmY2NThmNCIsInVzZXJOYW1lIjoiVGVzdFVzZXI0Iiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjY5NTAxMzk1LCJleHAiOjE2Njk3NjA1OTV9.5VQ9Y3zkyGfGNZR4zJ1Q2sG7bKqZnW2pg7o2iSRElJ8"
+        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOGEyYjViYjE0M2ZmZTBkYjNhNmFhMSIsInVzZXJOYW1lIjoiVGVzdFVzZXIxIiwicm9sZSI6ImRldiIsImlhdCI6MTY2OTk5OTQ1MiwiZXhwIjoxNjcwMjU4NjUyfQ.44iYRS-NBgaqYsnQfOxSUv3s9SVQfVuMVr6Xi7YSTtw"
       },
       {
         "name": "adminEmail",
